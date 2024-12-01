@@ -1,0 +1,17 @@
+# github.com/ardanlabs/conf/v3 v3.1.6
+## explicit; go 1.13
+github.com/ardanlabs/conf/v3
+# github.com/google/uuid v1.3.1
+## explicit
+github.com/google/uuid
+# github.com/sendgrid/rest v2.6.9+incompatible
+## explicit
+github.com/sendgrid/rest
+# github.com/sendgrid/sendgrid-go v3.13.0+incompatible
+## explicit
+github.com/sendgrid/sendgrid-go
+github.com/sendgrid/sendgrid-go/helpers/mail
+# github.com/stretchr/testify v1.8.4
+## explicit; go 1.20
+# golang.org/x/net v0.15.0
+## explicit; go 1.17

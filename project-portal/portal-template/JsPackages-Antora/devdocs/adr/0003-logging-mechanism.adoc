@@ -1,0 +1,120 @@
+= ADR 0003: Logging Mechanism
+revdate: 2021-05-27
+
+== Status
+
+Accepted
+
+== Context
+
+Antora needs to capture, record, and communicate information about what's happening in its pipeline.
+To the end user, the application should communicate information about the application's progress, any decisions it makes, and any problems it encounters.
+To the developer, the application needs to capture and record information to aid with debugging when the application malfunctions.
+
+Reporting this diagnostic information is called logging.
+Logging helps end users and developers better understand how the application works.
+
+Messages *should not* be sent directly to the standard streams (e.g., `console.log` or `console.warn`).
+This would make the messages hard to control, lack context, and couple the application to a console environment.
+
+Instead, messages should:
+
+* be sent to a logging subsystem
+* include the timestamp when the message was recorded, and possibly a unique execution ID
+* include any information necessary to understand the context of the message (e.g., the file or content source)
+* have minimal impact on the application's performance
+
+The logging library should allow the user to:
+
+* tune the verbosity of the messages reported
+* control where messages are written / sent
+* customize how the messages are classified, marked, and formatted
+
+The logging library should also hook into Asciidoctor's logger and route messages to the Antora logger, with any relevant file context appended.
+
+In the future, we anticipate wanting to send messages to an external service for monitoring.
+Due to Node's single-threaded event loop, it's highly recommended that log processing, alert triggering, and formatting is done in a separate process.
+
+That leads to the recommended practice of emitting log messages in a structured logging/JSON format (see https://developer.ibm.com/languages/node-js/blogs/nodejs-reference-architectire-pino-for-logging/#structured-logging[structured logging]).
+Structured logging is often combined with a pipe-based architecture, in which log messages are emitted in raw format, then filtered, formatted, and/or routed using discrete applications attached by Unix pipes.
+This architecture has the benefit of eliminating the latency caused by processing long messages in situ.
+In other words, all log processing is performed in a separate process.
+It also affords the user more flexibility in how log messages are processed and even allows the use of log aggregation tools to collect logs across processes, containers, and applications that run Antora.
+
+Node.js does not provide a standard logging module.
+Therefore, we had to evaluate available logging libraries and select one.
+
+== Decision
+
+We evaluated the following logging libraries:
+
+* https://yarnpkg.com/en/package/winston[Winston] - a multi-transport sync logging library for Node.js
+* https://yarnpkg.com/en/package/pino[Pino] - a fast, JSON logger for Node.js with low overhead
+
+After reading https://developer.ibm.com/languages/node-js/blogs/nodejs-reference-architectire-pino-for-logging/[this reference architecture article] published by IBM/Red Hat and other resources, we determined that Pino is the best choice for logging over Winston.
+In addition to being small (< 1MB), fast, efficient, and extensible, Pino embraces the modern, pipe-oriented, opts-friendly approach to logging.
+In other words, it emits structured messages to stdout in JSON format.
+Those messages, in turn, can be routed to a local formatter or log collector via a pipe.
+
+That answers the question of what format to use for the messages; the format can be whatever format the Antora user requires by way of the Pino ecosystem.
+We can, however, still offer to automatically format messages for authors when using Antora locally as a convenience (without compromising the ability to use Pino for ops-friendly logging).
+
+In summary, we selected Pino because it offers the following features:
+
+* broadly adopted
+* actively maintained
+* fast and efficient
+* extensible, offering a healthy ecosystem of extensions
+* structured logging
+* log message shaping
+* custom categories
+* custom levels
+* exception handling
+* single package and small size (< 1 MB)
+* pretty printing for local use
+
+Here's a basic example of how to use Pino to log a message:
+
+[source,js]
+----
+const logger = require('pino')()
+logger.info('holler')
+----
+
+Here's an example of how to define and use a logging category (aka child):
+
+[source,js]
+----
+const rootLogger = require('pino')({ name: 'antora' })
+const childLogger = rootLogger.child({ name: '@antora/content-classifier' })
+childLogger.info('holler')
+----
+
+Here's an example of how to pretty print log messages for local use:
+
+[source,js]
+----
+const logger = require('pino')({
+  name: 'antora',
+  prettyPrint: { ignore: 'pid,hostname', translateTime: 'SYS:HH:MM:ss.l' },
+})
+logger.info('holler')
+----
+
+We decided against other loggers because they don't provide the low-overhead, structured logging architecture to the same degree that Pino does.
+
+== Consequences
+
+Adding a logging infrastructure to Antora based on Pino allows us to send messages to a logging subsystem with minimal impact to the performance of Antora's processing pipeline.
+
+A logging library does add a dependency to the project.
+However, since Node.js does not provide a built-in logging mechanism, this is unavoidable (as we've already ruled out the use of standard streams for logging in the requirements).
+
+By choosing a logging library for core, it determines the logging library that all extensions must use as well (if those extensions expect to participate in the same logging subsystem / configuration).
+
+The benefit of using a single logging mechanism is that we can allow the playbook to define the logging configuration, thus making it easy for the end user to tune the logging.
+
+== History
+
+We originally accepted this ADR with the decision to use Winston on 2017-11-18, but we never implemented the logging mechanism.
+In revisiting the ADR and current logging options in May 2021, we decided to update this ADR instead of creating a new ADR as our initial requirements were still valid, the logging ecosystem has just advanced.

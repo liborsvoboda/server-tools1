@@ -1,0 +1,36 @@
+= Images
+//:page-aliases: asciidoc:insert-image.adoc
+
+Images are source files, such as photographs, diagrams, and screenshots, that are stored in an xref:ROOT:images-directory.adoc[_images_ family directory].
+An image can be inserted into any page or partial, regardless of the module or component version it belongs to, using an AsciiDoc image macro.
+AsciiDoc supports PNG, JPG, SVG, and GIF (static and animated) image file formats.
+
+== Block and inline image macros
+
+There are two AsciiDoc image macro types, block and inline.
+A xref:block-images.adoc[block image] is displayed as a discrete element on a page.
+
+.Block image macro
+----
+This is a paragraph.
+
+image::resource-id-of-target-image.ext[]
+----
+
+An xref:inline-images.adoc[inline image] is displayed in the flow of another element, such as a paragraph or sidebar block.
+
+.Inline image macro
+----
+This sentence contains an inline image:resource-id-of-target-image.ext[] image.
+----
+
+== Link to a resource from an image macro
+
+Using the `xref` element attribute, you can reference a page, attachment, element, or even another image from an image embedded in a page.
+
+.xref element attribute assigned to an image macro
+----
+image::resource-id-of-target-image.ext[xref=resource-id.ext]
+----
+
+See xref:image-xref-and-link.adoc[] to learn more.

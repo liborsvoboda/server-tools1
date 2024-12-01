@@ -1,0 +1,41 @@
+= Security Bulletins
+
+A prompt response to software defects and security vulnerabilities is a top priority for Antora. Even though threats are a fact of life, we take quality assurance seriously with nearly 100% test coverage. This page documents the items that slipped through and how to address them.
+
+== inflight and glob deprecation notice
+
+=== Summary
+
+Asciidoctor.js depends on asciidoctor-opal-runtime, which depends on a deprecated version of the glob package.
+The glob package, in turn, depends on the deprecated inflight package.
+We're aware of this problem and are planning to eliminate glob from the dependency chain as soon as we're able to.
+
+=== Affected versions
+
+All versions of Antora.
+
+=== Remediation plan
+
+You can explicitly upgrade the glob dependency in your dependency chain, thus eliminating the warning emitted by npm, by adding the following override to your [.path]_package.json_ file:
+
+[,json]
+----
+"overrides": {
+  "asciidoctor-opal-runtime": {
+    "glob": "~10.4"
+  }
+}
+----
+
+This remediation is used in the https://gitlab.com/antora/docs.antora.org/-/blob/main/netlify/package.json[build for this site].
+Unfortunately, npm overrides can only be used by the consumer of a library, not the library itself.
+Thus, this is not a remediation solution Antora itself can enact.
+
+=== Assessment
+
+Fortunately, Antora never uses the glob library that Asciidoctor.js depends on, so this deprecation is irrelevant.
+However, we recognize that the notice is annoying and may trigger security protocols for users who see it.
+
+=== References
+
+* https://docs.npmjs.com/cli/v8/configuring-npm/package-json#overrides[package.json overrides]

@@ -1,0 +1,71 @@
+{
+  "name": "europa-preset-default",
+  "version": "6.0.0",
+  "description": "Default Europa preset",
+  "keywords": [
+    "default",
+    "europa-preset"
+  ],
+  "homepage": "https://github.com/neocotic/europa",
+  "bugs": {
+    "url": "https://github.com/neocotic/europa/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "neocotic",
+    "url": "https://github.com/neocotic"
+  },
+  "funding": [
+    {
+      "type": "individual",
+      "url": "https://github.com/sponsors/neocotic"
+    },
+    {
+      "type": "patreon",
+      "url": "https://www.patreon.com/neocotic"
+    }
+  ],
+  "main": "lib/cjs/index",
+  "module": "lib/esm/index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neocotic/europa.git",
+    "directory": "packages/europa-preset-default"
+  },
+  "dependencies": {
+    "europa-plugin-bold": "^6.0.0",
+    "europa-plugin-code": "^6.0.0",
+    "europa-plugin-description": "^6.0.0",
+    "europa-plugin-details": "^6.0.0",
+    "europa-plugin-header": "^6.0.0",
+    "europa-plugin-horizontal-rule": "^6.0.0",
+    "europa-plugin-image": "^6.0.0",
+    "europa-plugin-italic": "^6.0.0",
+    "europa-plugin-line-break": "^6.0.0",
+    "europa-plugin-link": "^6.0.0",
+    "europa-plugin-list": "^6.0.0",
+    "europa-plugin-paragraph": "^6.0.0",
+    "europa-plugin-preformatted": "^6.0.0",
+    "europa-plugin-quote": "^6.0.0"
+  },
+  "peerDependencies": {
+    "europa-core": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^4.0.3",
+    "europa-build": "^6.0.0",
+    "europa-core": "^6.0.0",
+    "europa-environment-node": "^6.0.0",
+    "europa-test-jasmine-reporter": "^6.0.0"
+  },
+  "scripts": {
+    "build": "europa-build run-script build",
+    "flint": "europa-build run-script flint",
+    "format": "europa-build run-script format",
+    "lint": "europa-build run-script lint",
+    "test": "europa-build run-script test"
+  },
+  "engines": {
+    "node": "^12.20.0 || >=14"
+  }
+}

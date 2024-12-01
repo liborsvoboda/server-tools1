@@ -1,0 +1,16 @@
+﻿{
+  "name": "EIC&ESB Easy TOOL Using",
+  "version": "2.0.0",
+  "main": "./server.js",
+  "license": "GSC",
+  "type": "module",
+  "scripts": {
+    "install": "npm install",
+    "http": "http-server --cors=* -a 0.0.0.0 -c-1 -o -p 8000 -r true",
+	"redirect": "http-server --cors=* -a 0.0.0.0 -c-1  -r true -o --proxy http://localhost:8000? ",
+    "https": "http-server --cors=* -a 0.0.0.0 -c-1 -S -C ./install/localhost.cert.pem -K ./install/key.pem -o -p 8000 -r true"
+  },
+  "dependencies": {
+    "http-server": "14.1.1"
+  }
+}

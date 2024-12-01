@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="cs-CZ">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <meta name="charset" content="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Libor Svoboda">
+    <meta name="description" content="EasyITCenter">
+    <meta name="keywords" content="System, Backend, API, EASY-DATA-Center, EASY-SYSTEM-Builder, Application, Server, IT, Solution, Help, HowTo, Javascript, HTML5, UI, Library, Web, Development, Framework">
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:description" content="" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../metro/css/metro-icons.min.css" />
+	
+	<link rel="stylesheet" href="../metro/css/metro-all.min.css" />
+	<link rel="stylesheet" href="../metro/tools/google/css/fontgoogleapisPoppins.css" />
+	<link rel="stylesheet" href="../metro/tools/google/css/fontgoogleapisNunito.css" />
+	<link rel="stylesheet" href="../metro/managed/css/site.css" />
+	<link rel="stylesheet" href="../metro/tools/animate/css/animate.css" />
+	<link rel="stylesheet" href="../metro/tools/flexslider/css/flexslider.css" />
+	<link rel="stylesheet" href="../metro/tools/summernote/css/summernote.css" />
+
+	<link rel="stylesheet" href="../metro/tools/highlightjs/styles/default.min.css" />
+	<link rel="stylesheet" id="portal-color-scheme" href="../metro/css/schemes/sky-net.css" />
+
+	<!-- <script type="text/javascript" src="./js/vue.global.js"></script> -->
+	<script type="text/javascript" src="../metro/tools/highlightjs/highlight.min.js"></script>
+	<script type="text/javascript" src="../metro/jquery/js/jquery-3.6.0.min.js" ></script>
+	<script type="text/javascript" src="../metro/addons/js/js.cookie.min.js" ></script>
+	<script type="text/javascript" src="../metro/addons/js/clipboard.min.js" ></script>
+	<script type="text/javascript" src="../metro/addons/js/bootstrap.bundle.min.js" ></script>
+	<script type="text/javascript" src="../metro/js/metro.4.5.2.min.js" ></script>
+	<script type="text/javascript" src="../metro/tools/mermaid/js/mermaid.min.cdn.js" ></script>
+	<script type="text/javascript" src="../metro/tools/flexslider/js/jquery.flexslider-min.js" ></script>
+	<script type="text/javascript" src="../metro/tools/ytplayer/js/jquery.mb.YTPlayer.min.js" ></script>
+	<script type="text/javascript" src="../metro/tools/summernote/js/summernote.min.js" ></script>
+	<script type="text/javascript" src="../metro/managed/js/system-behavior.js" ></script>
+	<script type="text/javascript" src="../metro/managed/storage/globalStorage.js" ></script>
+	<script type="text/javascript" src="../metro/managed/js/system-functions.js" ></script>
+	<script type="text/javascript" src="../metro/managed/objects/object-generators.provider.js" ></script>
+	<script type="text/javascript" src="../metro/managed/objects/object-generators.js" ></script>
+	<script type="text/javascript" src="../metro/managed/objects/object-generators.provider.js" ></script>
+	<script type="text/javascript" src="../metro/managed/objects/object-controls.js" ></script>
+	<script type="text/javascript" src="../metro/managed/objects/objects-infopanels.js" ></script>
+	<script type="text/javascript" src="../metro/managed/api/apiLibrary.provider.js" ></script>
+	<script type="text/javascript" src="../metro/managed/api/apiLibrary.js" ></script>
+	<script type="text/javascript" src="../metro/managed/api/apiLibrary.provider.js" ></script>
+	<script type="text/javascript" src="../metro/addons/js/common.js" ></script>
+	<script type="text/javascript" src="../metro/addons/js/browser.js" ></script>
+	<script type="text/javascript" src="../metro/addons/js/history.js" ></script>
+	<script type="text/javascript" src="../metro/managed/tools/system-tools.provider.js" ></script>
+	<script type="text/javascript" src="../metro/managed/tools/system-tools.js" ></script>
+	<script type="text/javascript" src="../metro/managed/tools/system-tools.provider.js" ></script>
+	<script type="text/javascript" src="../metro/addons/js/addBlocker.js" ></script>
+
+    
+
+    <!-- Google Translation -->
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>document.title = (Metro.storage.getItem('WebPagesName', null) == null ? "EDC+ESB IT GroupWare-Solution.Eu" : Metro.storage.getItem('WebPagesName', null)) + (decodeURI(window.location.pathname).split("-")[1] == undefined ? "" : decodeURI(window.location.pathname).split("-")[1])</script>
+</head>
+
+<body id="body" class="video-hero" style="height: 700px; background-image: url(../metro/images/cover_img_1.jpg);  background-size:cover; background-position: center center;background-attachment:fixed;" data-section="body">
+    <div b-a6vhv0gp2v class="overlay"></div><a b-a6vhv0gp2v id="backgroundPlayer" class="player" data-property="{videoURL:'https://www.youtube.com/watch?v=vqqt5p0q-eU',containment:'#body', showControls:false, autoPlay:true, loop:true, mute:true, startAt:0, opacity:1, quality:'default', optimizeDisplay:true}"></a>
+
+    <!-- TOOL Panel -->
+    <div b-a6vhv0gp2v id="toolPanel" data-role="bottom-sheet" class="bottom-sheet pos-fixed list-list grid-style opened" style="top: 0px; left: 90%; z-index:10000;min-width: 400px;">
+        <div b-a6vhv0gp2v class="w-100 text-left" > <audio b-a6vhv0gp2v id="radio" class="light bg-transparent" data-role="audio-player" data-src="../metro/media/hotel_california.mp3" data-volume=".5" ></audio> </div>
+        <div b-a6vhv0gp2v class="w-100 text-left" style="z-index: 1000000;"><div b-a6vhv0gp2v id="google_translate_element"></div></div>
+        <div b-a6vhv0gp2v class="w-100 d-inline-flex">
+            <div b-a6vhv0gp2v class="w-75 text-left">
+                <input b-a6vhv0gp2v id="UserAutomaticTranslate" type="checkbox" data-role="checkbox" data-cls-caption="fg-cyan text-bold" data-caption="Překládat Automaticky" onchange="UserChangeTranslateSetting">
+            </div><div b-a6vhv0gp2v class="w-25 mt-1 text-right"><button b-a6vhv0gp2v class="button secondary mini" onclick="CancelTranslation()">Zrušit Překlad</button></div>
+            </div>
+        <div b-a6vhv0gp2v class="d-flex w-100">
+            <button b-a6vhv0gp2v class="button shadowed w-25 mt-1" style="background-color: #585b5d; width:50px;" onclick="ChangeSchemeTo('darcula.css')"></button>
+            <button b-a6vhv0gp2v class="button shadowed w-25 mt-1" style="background-color: #AF0015; width:50px;" onclick="ChangeSchemeTo('red-alert.css')"></button>
+            <button b-a6vhv0gp2v class="button shadowed w-25 mt-1" style="background-color: #690012; width:50px;" onclick="ChangeSchemeTo('red-dark.css')"></button>
+            <button b-a6vhv0gp2v class="button shadowed w-25 mt-1" style="background-color: #0CA9F2; width:50px;" onclick="ChangeSchemeTo('sky-net.css')"></button>
+        </div>
+        <div b-a6vhv0gp2v class="c-pointer mif-cancel icon pos-absolute fg-red" style="top:5px;right:5px;" onclick="ShowToolPanel()"></div>
+    </div>
+
+    <!-- News Panel -->
+    <div b-a6vhv0gp2v id="NewsInfoBox" class="info-box" data-role="infobox" data-type="default" data-width="800" data-height="600" style="visibility:hidden;">
+        <span b-a6vhv0gp2v class="button square closer"></span>
+        <div b-a6vhv0gp2v class="info-box-content" style="overflow-y:auto;">
+            <div b-a6vhv0gp2v class="d-flex row ">
+                <div b-a6vhv0gp2v id="NewsListBox" class="d-block m-0 p-0" style="overflow-y: scroll;height:550px;max-height: 550px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GlobalDocBox -->
+    <div b-a6vhv0gp2v id="GlobalDocBox" class="info-box" data-role="infobox" data-type="default" data-width="70%" data-height="80%" style="visibility:hidden;">
+        <span b-a6vhv0gp2v class="button square closer"></span>
+        <div b-a6vhv0gp2v class="info-box-content" style="overflow-y:auto;width:100%;height:580px;">
+            <iframe b-a6vhv0gp2v width='100%' height='540px' src='../server-doc/md-book/book' frameborder='0' allowfullscreen style='height:540px;width:100%;'> </iframe>
+        </div>
+    </div>
+
+    <!-- GlobalToolBox -->
+    <div b-a6vhv0gp2v id="GlobalToolBox" class="info-box" data-role="infobox" data-type="default" data-width="80%" data-height="700" style="visibility:hidden;">
+        <span b-a6vhv0gp2v class="button square closer"></span>
+        <div b-a6vhv0gp2v class="info-box-content m-0 p-1" style="width:100%;height:100%;">
+            <div b-a6vhv0gp2v class="d-flex row ">
+                <div b-a6vhv0gp2v class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+                    <div b-a6vhv0gp2v class="d-block" style="overflow-y:auto;width:100%;height:630px;">
+                        <div b-a6vhv0gp2v id="ToolBoxPanel" class='skill-box bg-transparent'></div>
+                    </div>
+                    <button b-a6vhv0gp2v class="button bg-green shadowed" onclick=GlobalConsoleLogWindow();>
+                        <span b-a6vhv0gp2v class="label">Logger</span>
+                    </button>
+                    <button b-a6vhv0gp2v class="button bg-orange shadowed" onclick=OpenGlobalConsole(); >
+                        <span b-a6vhv0gp2v class="label">Konzole</span>
+                    </button>
+                </div>
+                <div b-a6vhv0gp2v class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-12">
+                    <div b-a6vhv0gp2v id="ToolBoxSummerEditor" class="supertop" style="height:calc(100% - 60px);"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- GlobalTemplateBox -->
+    <div b-a6vhv0gp2v id="GlobalTemplateBox" class="info-box" data-role="infobox" data-type="default" data-width="80%" data-height="700" style="visibility:hidden;">
+        <span b-a6vhv0gp2v class="button square closer"></span>
+        <div b-a6vhv0gp2v class="info-box-content m-0 p-1" style="width:100%;height:700px;">
+            <div b-a6vhv0gp2v class="d-flex row ">
+                <div b-a6vhv0gp2v class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+                    <div b-a6vhv0gp2v class="d-block" style="overflow-y:auto;width:100%;height:100%;">
+                        <div b-a6vhv0gp2v id="TemplateDocPanel" class='skill-box bg-transparent'></div>
+                    </div>
+                    <button b-a6vhv0gp2v class="button bg-green shadowed" onclick=GlobalTemlateDocChangeRunner(); >
+                        <span b-a6vhv0gp2v class="label">JS/HTML</span>
+                    </button>
+
+                    <button b-a6vhv0gp2v id="GTBjs" style="visibility:hidden;" class="button bg-green shadowed" onclick=OpenGlobalSummernote();>
+                        <span b-a6vhv0gp2v class="label">JS Edit</span>
+                    </button>
+                    <button b-a6vhv0gp2v id="GTBhtml" style="visibility:hidden;" class="button bg-green shadowed" onclick=OpenGlobalSummernote();>
+                        <span b-a6vhv0gp2v class="label">HTML Edit</span>
+                    </button>
+
+                    <button b-a6vhv0gp2v class="button bg-orange shadowed" onclick="OpenGlobalConsole();">
+                        <span b-a6vhv0gp2v class="label">Konzole</span>
+                    </button>
+                    <!-- 
+                        <button b-a6vhv0gp2v class="button success" onclick="LoadMetro()">Metro On</button>
+                        <button b-a6vhv0gp2v class="button alert" onclick="UnloadMetro();">Metro Off</button> 
+                     -->
+                </div>
+                <div b-a6vhv0gp2v class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-12">
+                    <div b-a6vhv0gp2v class="d-block">
+                        <div b-a6vhv0gp2v id="HtmlTemplateSection" style="visibility:visible;">
+                            <div b-a6vhv0gp2v id="TemplateCodeEditorSM" class="supertop" style="height:calc(100% - 60px);" ></div>
+                        </div>
+
+                        <link rel="stylesheet" href="../metro/tools/code-editor/css/simple-code-editor.css" />
+                        <link rel="stylesheet" href="../metro/tools/code-editor/css/themes/themes-base16.css" />
+                        <link rel="stylesheet" href="../metro/tools/code-editor/css/themes/themes.css" />
+                        <script src="../metro/tools/code-editor/js/vue@3.3.4.min.js"></script>
+                        <script src="../metro/tools/code-editor/js/highlight.min.js"></script>
+                        <script src="../metro/tools/code-editor/js/simple-code-editor.js"></script>
+                        <div b-a6vhv0gp2v id="VueTemplateSection" style="visibility:hidden;">
+                            <div b-a6vhv0gp2v class="row">
+                                <div b-a6vhv0gp2v class="w-100">
+                                    <template-editor b-a6vhv0gp2v id="TemplateCodeEditor" theme="vs2015" :line-nums="true" v-model="value" width="100%" height="630px" font-size="12px" 
+                                                     :languages="[ ['cs', 'CS'], ['javascript', 'JS'], ['html', 'HTML'], ['css', 'CSS'], ['sql', 'SQL']]"></template-editor>
+                                </div>
+                            
+                            </div>
+                        </div>
+                        <script>const VueApp = Vue.createApp({ components: { "template-editor": CodeEditor, }, data() { return { value: null }; }, }); VueApp.mount("#VueTemplateSection");</script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MessageBox Panel -->
+    <div b-a6vhv0gp2v id="charmPanel" data-role="charms" style="width:350px !important;height:calc(100% - 45px) !important;" data-position="right" data-opacity=".5">
+        <textarea b-a6vhv0gp2v id="NewMessage" data-role="textarea" data-auto-size="true" data-max-height="150" class="primary" placeholder="Napište nám..."></textarea>
+        <button b-a6vhv0gp2v id="SendMessageBtn" class="button success mb-4" onclick="SendMessage()">Save Message</button>
+        <div b-a6vhv0gp2v id="MessageBox" class="d-block m-0 p-0" style="overflow-y: scroll;max-height: 500px;"></div>
+    </div>
+
+
+    <!-- HEADER MENU -->
+    <div b-a6vhv0gp2v class="container-fluid bg-transparent fg-white pos-fixed fixed-top z-top">
+        <header data-role="appbar" class="container pos-relative fg-white" data-expand-point="md">
+            <button b-a6vhv0gp2v class="command-button shadowed pos-relative" style="left:-10px;" onclick="window.open('https://KlikneteZde.Cz:5000' , '_blank')">
+                <span b-a6vhv0gp2v class="mif-themeisle icon"></span>
+                <span b-a6vhv0gp2v id="WebPagesName" class="caption">
+                    Groupware-Solution.Eu
+                    <small b-a6vhv0gp2v id='WebPageMottos'>EDC-ESB Centralizace IT v Šablonách pro 1000 Řešení v každém jazyce</small>
+                </span>
+            </button>                
+            <div b-a6vhv0gp2v class="pt-0 mt-0 w-100">
+                <ul b-a6vhv0gp2v id="WebMainMenuPanel" class="app-bar-menu ml-auto pt-3" style="float: right; display:none; ">
+                </ul>
+            </div>
+
+        </header>
+     </div>   
+    
+    <!-- BODY -->
+    <div b-a6vhv0gp2v class="container">
+        <main b-a6vhv0gp2v id="WebPageHTMLContent" role="main" class="pb-20" style="top: 50px; position: relative;">
+        </main>
+
+
+        <!-- CALL on Reload EACH Page and STARTUP Each Page Controls Mechanism -->
+        <script>
+            showPageLoading(); $(document).ready(function () { Metro.activity.close(pageLoader);});
+            GetMessages(); 
+            RestrictionControls();
+
+            //Load menu & Every Reload Setting Menu / Web Setting 
+            $(document).ready(function () {
+                if (Metro.storage.getItem('WebMenuList', null) == null) { GetWebMenuList(); } else { SetWebMenuHtml(); }
+            });
+
+
+            if (Metro.storage.getItem('WebSettingsList', null) == null || (Metro.storage.getItem('WebSettingRefreshOnEachLoad', null) != null && Metro.storage.getItem('WebSettingRefreshOnEachLoad', null))) { 
+                GetWebSettingsList(); setTimeout(function () { ApplyLoadedWebSetting("isRuntimeChange"); }, 3000); } else {
+                $("#body")[0].style.backgroundImage = 'url("' + Metro.storage.getItem('BackgroundImageSetting', null) + '")';
+            }
+
+            //Third Party Functionalities
+            let bgVideo = function () { $('.player').mb_YTPlayer(); }; $(function () { bgVideo(); });
+
+
+            // Startup Actions
+            document.addEventListener("DOMContentLoaded", function (event) {
+                ApplyLoadedWebSetting("startup");
+
+                if (Metro.storage.getItem('LoggerEnabled', null) != null && Metro.storage.getItem('LoggerEnabled', null)) { GlobalConsoleLogWindow(); }
+                if (Metro.storage.getItem('CycleWebPageMottosEnabled', null) != null && Metro.storage.getItem('CycleWebPageMottosEnabled', null)) { GetMottoList(); }
+
+                // Startup AddOns
+                if (Metro.storage.getItem('AutoHighlightEnabled', null) != null && Metro.storage.getItem('AutoHighlightEnabled', null)) { document.querySelectorAll('pre code').forEach((block) => { hljs.highlightElement(block); }); }
+                if (Metro.storage.getItem('AutoMermaidEnabled', null) != null && Metro.storage.getItem('AutoMermaidEnabled', null)) { Mermaid(); }
+            });
+
+        </script>
+    </div>
+
+
+
+    <!-- START FOOTER PART -->
+    <footer b-a6vhv0gp2v class="fixed-bottom bg-black fixed-top z-top">
+        <div b-a6vhv0gp2v class="container">
+            <div b-a6vhv0gp2v class="text-right fg-lightCyan">
+                <ul b-a6vhv0gp2v class="inline-list mt-1 reduce-1" id="social-menu" style="margin:0px;">
+                    <li b-a6vhv0gp2v> <a b-a6vhv0gp2v href="https://Kliknetezde.cz" target="_blank" data-role="hint" data-hint-position="top" data-hint-text="Systém k Vyzkoušení Online"><span b-a6vhv0gp2v class="mif-earth2 ani-hover-ring fg-lightCyan"></span></a> </li>
+                    <li b-a6vhv0gp2v> <a b-a6vhv0gp2v href="/Downloads" target="_blank" data-role="hint" data-hint-position="top" data-hint-text="Všechny Soubory ke Stažení"><span b-a6vhv0gp2v class="mif-server ani-hover-ring fg-lightCyan"></span></a> </li>
+                    <li b-a6vhv0gp2v><a b-a6vhv0gp2v href="/server-doc/md-book/book/" target="_blank" data-role="hint" data-hint-position="top" data-hint-text="Inteligentní Rychlá Nápověda"><span b-a6vhv0gp2v class="mif-open-book ani-hover-ring fg-lightCyan"></span></a></li>
+                    <li b-a6vhv0gp2v><a b-a6vhv0gp2v href="/Docs" target="_blank" data-hint-position="top" data-role="hint" data-hint-text="Kompletní Dokumentace Portálu"><span b-a6vhv0gp2v class="mif-open-book ani-hover-ring fg-lightCyan"></span></a></li>
+                    <li b-a6vhv0gp2v><a b-a6vhv0gp2v href="https://www.facebook.com/GroupWareSolution" target="_blank" data-role="hint" data-hint-position="top" data-hint-text="Facebook"><span b-a6vhv0gp2v class="mif-facebook ani-hover-ring fg-lightCyan"></span></a></li>
+                    <li b-a6vhv0gp2v><a b-a6vhv0gp2v href="https://www.youtube.com/playlist?list=PLmE7gP9LTBimNJQ444ypG8HVce23fa2Hb" target="_blank" data-role="hint" data-hint-position="top" data-hint-text="Youtube Tutoriály"><span b-a6vhv0gp2v class="mif-youtube ani-hover-ring fg-lightCyan"></span></a></li>
+                    <li b-a6vhv0gp2v><a b-a6vhv0gp2v href="https://GroupWare-Solution.Eu/contactus" target="_blank" class="fg-lightCyan">HW/SW/IT Vývoj a Podpora</a></li>
+                </ul>
+            </div>
+
+
+            <!-- Footer Button Panel panel -->
+            <div b-a6vhv0gp2v class="bottom-nav pos-absolute pl-20 ml-20" style="bottom: 1px; width: 400px !important; zoom: 0.8;">
+                <button b-a6vhv0gp2v class="button mr-2 bg-orange shadowed" onclick=CloseAllGlobalWindow('NewsInfoBox');ShowNewsInfoBox(); >
+                    <span b-a6vhv0gp2v class="icon mif-eye ani-shuttle "></span><span b-a6vhv0gp2v class="label">Novinky</span>
+                </button>
+                <button b-a6vhv0gp2v id="UserMessagesBtn" class="button shadowed" onclick=ShowMessagePanel() >
+                    <span b-a6vhv0gp2v class="icon mif-comment"></span><span b-a6vhv0gp2v class="label">Napište</span>
+                </button>
+                <button b-a6vhv0gp2v class="button ml-2 bg-emerald shadowed" onclick=CloseAllGlobalWindow('GlobalDocBox');ShowGlobalDocBox(); >
+                    <span b-a6vhv0gp2v class="icon mif-books"></span><span b-a6vhv0gp2v class="label">Návody</span>
+                </button>
+                <button b-a6vhv0gp2v class="button ml-2 bg-green shadowed" onclick=CloseAllGlobalWindow('GlobalToolBox');ShowGlobalToolBox(); >
+                    <span b-a6vhv0gp2v class="icon mif-tools"></span><span b-a6vhv0gp2v class="label">Nástroje</span>
+                </button>
+                <button b-a6vhv0gp2v class="button ml-2 bg-darkOrange shadowed" onclick=CloseAllGlobalWindow('GlobalTemplateBox');ShowGlobalTemplateBox(); >
+                    <span b-a6vhv0gp2v class="icon mif-insert-template ani-pulze"></span><span b-a6vhv0gp2v class="label">START</span>
+                </button>
+            </div>
+
+            <div b-a6vhv0gp2v class="text-right reduce-1 fg-lightCyan">
+                <a b-a6vhv0gp2v href="https://groupware-solution.eu" class="no-wrap" target="_blank">&copy; 2008-2023 GroupWare-Solution.Eu</a>
+                <a b-a6vhv0gp2v href="https://KlikneteZde.Cz:5000" class="no-wrap" target="_blank"><b b-a6vhv0gp2v>Server používá řešení EASY-DATA-Center</b></a>
+                <small b-a6vhv0gp2v>Version <span b-a6vhv0gp2v class="text-bold">2.0.0</span> Vytvořeno pomocí <a b-a6vhv0gp2v href="https://metroui.org.ua">Metro 4</a></small>
+            </div>
+        </div>
+    </footer>
+	</body>
+</html>

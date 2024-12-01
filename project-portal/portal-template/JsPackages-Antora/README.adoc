@@ -1,0 +1,247 @@
+= Antora
+// Settings
+ifdef::env-gitlab[:outfilesuffix: .adoc]
+// Project URLs
+:url-project: https://antora.org
+:url-docs: https://docs.antora.org
+:url-org: https://gitlab.com/antora
+:url-repo: {url-org}/antora
+:url-demo-repos: {url-org}/demo
+:url-ui-repo: {url-org}/antora-ui-default
+:url-issues: {url-repo}/issues
+:url-ci-pipelines: {url-repo}/pipelines
+:url-chat: https://antora.zulipchat.com
+:url-twitter: https://twitter.com/antoraproject
+:url-twitter-hash: https://twitter.com/hashtag/antora?src=hash
+// External URLs
+:url-asciidoctor: https://asciidoctor.org
+:url-choco: https://chocolatey.org
+:url-node-releases: https://nodejs.org/en/about/releases/
+:url-nvm: https://github.com/creationix/nvm
+:url-nvm-install: {url-nvm}#installation
+:url-nvm-windows: https://github.com/coreybutler/nvm-windows
+:url-opendevise: https://opendevise.com
+:url-git-credential-store: https://git-scm.com/docs/git-credential-store
+// Versions:
+:version-node-major: 16
+:version-node: 16.20.2
+
+{url-project}[Antora] is a modular, single or multi-repository site generator designed for creating documentation sites from content composed in AsciiDoc(R) and processed with {url-asciidoctor}[Asciidoctor].
+
+Antora's toolchain and workflow help documentation and engineering teams create, manage, collaborate on, remix, and publish documentation sites sourced from one or more versioned git repositories without needing expertise in web technologies, build automation, or system administration.
+
+This project includes a command line interface (CLI) and a site generator so you can quickly start publishing documentation sites with Antora.
+
+== Code of Conduct
+
+The Antora project and its project spaces are governed by our xref:CODE-OF-CONDUCT.adoc[Code of Conduct].
+By participating, you're agreeing to honor this code.
+Let's work together to make this a welcoming, professional, inclusive, and safe environment for everyone.
+
+== Quickstart
+
+This section offers a basic tutorial for evaluating Antora.
+More comprehensive installation instructions are in the {url-docs}[Antora documentation].
+
+=== Prerequisites
+
+Antora is built on Node.js and is verified to work on Linux, macOS, and Windows.
+To install Antora, you'll need Node.js (including npm, which is bundled with Node.js) on your system.
+You may also find the base build tools for your OS helpful (which includes `git`), though they're not required.
+We recommend using the active long term support (LTS) release of Node.js.
+While you can use other versions of Node.js, Antora is only tested against {url-node-releases}[LTS releases].
+
+To check whether you have Node.js installed, and which version, open a terminal and type:
+
+ $ node -v
+
+If this command fails with an error, it means you don't yet have Node.js installed.
+If the command doesn't report a Node.js LTS version (e.g., v{version-node}), you don't have a suitable version of Node.js installed.
+
+The best way to install Node.js is to use {url-nvm}[nvm] (Node Version Manager).
+If your package manager provides Node.js and npm packages, _and you're familiar with using the tools installed system-wide_, you may choose to go that route.
+However, we believe you'll be more successful if you choose nvm.
+
+NOTE: Most CI environments use nvm to manage the version of Node.js used in the build job.
+By using nvm, you can align your local setup with the environment used to generate and publish your production site.
+
+If you're using Linux or macOS, follow {url-nvm-install}[the nvm installation instructions] to set up nvm on your machine.
+If you're using Windows, you can install the {url-nvm-windows}[Windows port of nvm] via the {url-choco}[Chocolatey package manager] using `choco install -y nvm`.
+Alternatively, you can install the active LTS release of Node.js directly using `choco install -y nodejs-lts`.
+
+Once you've installed nvm, open a *new* terminal and install the active Node.js LTS release using:
+
+ $ nvm install --lts
+
+IMPORTANT: If you're using nvm for Windows, you must enter the full version of Node.js when running commands (e.g., `nvm install {version-node}`, `nvm use {version-node}`).
+Run `nvm list available` to see a list of available Node.js versions.
+
+To make Node.js {version-node-major} the default in new terminals (Linux and macOS only), type:
+
+[subs=attributes+]
+ $ nvm alias default {version-node-major}
+
+Switch to this version of Node.js using the following command:
+
+[subs=attributes+]
+ $ nvm use {version-node-major}
+
+Now that you have Node.js installed, you can install Antora.
+
+=== Install Antora
+
+To generate a site with Antora, you need the Antora CLI and an Antora site generator.
+Once these packages are installed, you use the `antora` command to generate your site.
+To install these packages globally using npm, in your terminal, type:
+
+ $ npm install -g @antora/cli @antora/site-generator
+
+Verify the `antora` command is available on your PATH by running:
+
+ $ antora -v
+
+For more installation methods and details see the {url-docs}/antora/latest/install/install-antora/[installation documentation].
+Now that Antora is installed, you're ready to set up a playbook and generate a documentation site.
+
+=== Run Antora to Generate a Site
+
+To generate a site with Antora, you need a playbook file that points to at least one content source repository and a UI bundle.
+The {url-demo-repos}[Antora Demo repositories] are set up as an Antora documentation project, so we can use them for now as your content sources.
+Antora also provides a default UI for you to use out of the box.
+
+==== Create a Playbook File
+
+First, create a new directory for your site and switch to it.
+Next, add a playbook file named [.path]_antora-playbook.yml_ and populate it with the configuration in the following example.
+Alternatively, you can download the playbook file from the {url-demo-repos}/docs-site[Antora demo site's playbook repository].
+
+.antora-playbook.yml
+[source,yaml]
+----
+site:
+  title: Antora Demo Site
+  url: https://my-antora-demo-site.org
+  start_page: component-b::index.adoc
+content:
+  sources:
+  - url: https://@gitlab.com/antora/demo/demo-component-a.git
+    branches: HEAD
+  - url: https://gitlab.com/antora/demo/demo-component-b.git
+    branches: [v2.0, v1.0]
+    start_path: docs
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+----
+
+We're using Antora's default UI as the UI for the site.
+Antora will take care of assembling all this input together to produce a documentation site.
+
+The UI bundle can be loaded from a URI or a local filesystem path.
+If you want to use your own UI bundle, follow the instructions in the README for the {url-ui-repo}/blob/HEAD/README.adoc[Default UI].
+
+==== Run Antora
+
+To generate the site, simply point the `antora` command at your playbook file.
+In your terminal, type:
+
+ $ antora antora-playbook.yml
+
+Antora will clone the content repository, convert the AsciiDoc pages to embeddable HTML, wrap the HTML in a page template from the UI, then assemble the pages together along with the assets into the destination folder, which defaults to [.path]_build/site_.
+
+To view your site, navigate to any HTML page inside the destination folder in your browser.
+Using this example, look for the entry point file [.path]_build/site/index.html_.
+That file will redirect you to the start page.
+A site generated by Antora is designed to be viewable with or without a web server.
+
+==== Troubleshooting
+
+If something goes wrong during generation, you'll see an error message in the terminal.
+If this message does not provide enough information to fix the problem, you can ask Antora for more context.
+To tell Antora to reveal the calls leading up to the error (i.e., the stacktrace), run the `antora` command again, this time with the `--stacktrace` option:
+
+ $ antora --stacktrace antora-playbook.yml
+
+Share this stacktrace when <<Getting Help,asking for help>>.
+
+==== Using Private Repositories
+
+If any of your content repositories require authentication, Antora will look up the credentials in the default git credential store file or one that you specify using the `--git-credentials-path` CLI option.
+See the {url-docs}/antora/latest/playbook/private-repository-auth/[private repository authentication documentation] to learn more.
+
+== Getting Help
+
+Antora is designed to help you easily write and publish your documentation.
+However, we can't fully realize this goal without your feedback!
+We encourage you to report issues, ask questions, share ideas, or discuss other aspects of this project using the communication tools provided below.
+
+=== Chat
+
+*The project chat is the preferred means of communication for all Antora users.*
+This policy helps keep the project sustainable.
+If you want to ask for help, share feedback, or exchange ideas with project maintainers and fellow community members in real time, please join us in the project chat.
+
+* {url-chat}[Chat] (Zulip)
+
+The chat is partitioned into streams.
+If you find an active discussion that matches the topic of your post, feel free to join that discussion.
+Otherwise, please select a stream most relevant to your topic, click "`New Topic`", enter a subject, then write your post.
+If you aren't sure where to post, please create a new topic in the `#users` stream and a moderator may choose to reclassify it.
+
+The discussions in the project chat are archived, but there's no guarantee those logs will be saved indefinitely.
+Understand that users participate in the project chat voluntarily, so please be respectful of their time and interest.
+
+=== Issues
+
+The issue tracker is used to track changes to the software and for planning releases.
+The issue tracker is not a support portal.
+Instead, the issue tracker is reserved for reporting problems (verifiable bugs, regressions, and security vulnerabilities) and requesting new features.
+If you aren't confident that a change to the software is required, please post to the <<Chat>> instead.
+
+* {url-issues}[Issue tracker] (GitLab)
+
+Any significant change to the software or decision about the project must be logged in the issue tracker.
+
+=== Social
+
+If you want to share your experience with Antora or help promote it, we encourage you to post about it on social media.
+When you talk about Antora on Twitter, you can mention the official account for the project:
+
+* {url-twitter}[@antoraproject] -- The official Antora account on Twitter.
+
+You can also use the {url-twitter-hash}[#antora] hashtag to help promote the project or discover other people talking about it.
+
+If you decide you want to get involved to help improve the project, then you'll be interested in the information provided in the <<Contributing>> section.
+
+== Contributing
+
+If you are interested in contributing to this project, please refer to the <<contributing.adoc#,contributing guide>>.
+In this guide, you'll learn how to:
+
+* <<contributing.adoc#set-up-workspace,set up your development workspace>>
+* <<contributing.adoc#build-project,build the project>>
+* <<contributing.adoc#project-rq,submit a merge request>>
+
+Thanks in advance for helping to make this project a success!
+
+== Release Policy and Schedule
+
+The Antora core components include a site generator package, the packages the site generator delegates to, and a CLI package.
+These packages are released together and follow semantic versioning rules (*major.minor.patch*).
+Only the latest minor release will receive patch releases.
+
+== Copyright and License
+
+Copyright (C) 2017-present by OpenDevise Inc. and the individual contributors to Antora.
+
+Use of this software is granted under the terms of the https://www.mozilla.org/en-US/MPL/2.0/[Mozilla Public License Version 2.0] (MPL-2.0).
+See link:LICENSE[] to find the full license text.
+
+== Authors
+
+Development of Antora is led and sponsored by {url-opendevise}[OpenDevise].
+
+== Trademarks
+
+AsciiDoc(R) is a trademark of the Eclipse Foundation, Inc.

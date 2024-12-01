@@ -1,0 +1,128 @@
+workflow:
+  rules:
+  - if: $CI_PIPELINE_SOURCE == 'merge_request_event' || $CI_PIPELINE_SOURCE == 'schedule' || $CI_PIPELINE_SOURCE == 'web'
+  # See https://docs.gitlab.com/ee/ci/yaml/workflow.html#switch-between-branch-pipelines-and-merge-request-pipelines
+  - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_BRANCH !~ /^docs\//
+    changes:
+    - .eslintrc
+    - .gitlab-ci.yml
+    - package{-lock,}.json
+    - packages/**/*
+variables:
+  GIT_DEPTH: '5'
+  DEFAULT_NODE_VERSION: '16'
+  LINUX_DISTRO: bullseye
+  NPM_CONFIG_AUDIT: 'false'
+  NPM_CONFIG_CACHE: &npm_cache_dir .cache/npm
+  NPM_CONFIG_FUND: 'false'
+  NPM_CONFIG_PREFER_OFFLINE: 'true'
+  ENABLE_WINDOWS_JOB:
+    value: ''
+    description: Enter 1 to enable the Windows job. Note that the Windows job is automatically enabled if RELEASE_VERSION is specified.
+  RELEASE_VERSION:
+    value: ''
+    description: The version to release from the selected protected branch if the build succeeds. To enable, specify an exact version or increment keyword.
+default:
+  image: node:$DEFAULT_NODE_VERSION-$LINUX_DISTRO
+  interruptible: true
+.defs:
+- &if_docs_mr
+  rules:
+  - if: &docs_mr $CI_PIPELINE_SOURCE == 'merge_request_event' && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^docs\//
+- &if_release_rule
+  if: $CI_PIPELINE_SOURCE == 'web' && $CI_PROJECT_PATH == 'antora/antora' && $CI_COMMIT_BRANCH && $CI_COMMIT_REF_PROTECTED && $RELEASE_VERSION
+- &if_schedule_rule
+  if: $CI_PIPELINE_SOURCE == 'schedule' || ($CI_PIPELINE_SOURCE == 'web' && $CI_JOB_NAME == 'test:windows' && $ENABLE_WINDOWS_JOB) || ($CI_COMMIT_TITLE =~ /[Ww]indows/)
+- &if_release
+  rules:
+  - *if_release_rule
+- &if_release_or_schedule
+  rules:
+  - *if_release_rule
+  - *if_schedule_rule
+- &unless_docs_mr
+  rules:
+  - if: *docs_mr
+    when: never
+  - if: $CI_JOB_NAME == 'lint' && $CI_PIPELINE_SOURCE == 'push' && $CI_PROJECT_PATH != 'antora/antora'
+    when: manual
+  - when: on_success
+- &platform_info node -p '`${os.type()} ${os.release()}\nNode.js ${process.version}`'
+- &save_report_artifacts
+  artifacts:
+    when: always
+    paths:
+    - reports/lcov-report
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: reports/cobertura-coverage.xml
+      junit: reports/tests-xunit.xml
+.npm:
+  stage: test
+  <<: *if_release_or_schedule
+  before_script:
+  - *platform_info
+  - npm ci --audit --quiet
+  cache: &npm_cache
+    key: npm-cache
+    paths:
+    - *npm_cache_dir
+    policy: pull
+  script: npm test
+# this job signals success to the MR UI
+docs:
+  stage: test
+  <<: *if_docs_mr
+  script: echo 'we love docs!'
+# this job also seeds the dependency cache
+lint:
+  extends: .npm
+  stage: .pre
+  <<: *unless_docs_mr
+  cache:
+    <<: *npm_cache
+    policy: pull-push
+  script:
+  - npm run deps
+  - npm run lint
+  - if [ -n "$(npm --silent run format && git --no-pager diff --name-only)" ]; then git --no-pager diff && false; fi
+test:node-16-linux:
+  extends: .npm
+  <<: *unless_docs_mr
+  script: npm run coverage
+  coverage: '/^All files *[|] *([0-9.]+) *[|]/'
+  <<: *save_report_artifacts
+test:node-22-linux:
+  extends: .npm
+  image: node:22-$LINUX_DISTRO
+  <<: *unless_docs_mr
+  script:
+  # patch required when using Node.js 22.3.0; see https://github.com/isomorphic-git/isomorphic-git/issues/1933
+  - sed -i 's/let supportsCompressionStream = null/let supportsCompressionStream = false/' node_modules/isomorphic-git/index.cjs
+  - npm test
+#test:macos:
+#  extends: .npm
+#  image: macos-12-xcode-13
+#  tags: [shared-macos-amd64]
+# https://gitlab.com/gitlab-org/ci-cd/shared-runners/images/gcp/windows-containers/-/blob/main/cookbooks/preinstalled-software/README.md
+# https://docs.gitlab.com/ee/ci/runners/hosted_runners/windows.html (has link to preinstalled software)
+test:windows:
+  extends: .npm
+  tags: [saas-windows-medium-amd64]
+  # cache does not currently work with the shared Windows runner
+  cache: []
+  before_script:
+  - *platform_info
+  - npm ci --quiet
+  script: npm run coverage
+  <<: *save_report_artifacts
+release:
+  stage: deploy
+  interruptible: false
+  environment: releases
+  <<: *if_release
+  script:
+  - npm/release.sh
+  # NOTE docker-antora only has a single branch, so the ref will always be main for now
+  - env $(echo -en $(cat releaserc)) sh -c 'curl -o /dev/null -s -X POST -F "token=$CI_JOB_TOKEN" -F "ref=main" -F "variables[ANTORA_VERSION]=$RELEASE_VERSION" $DOCKER_IMAGE_PIPELINE_TRIGGER'

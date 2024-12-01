@@ -1,0 +1,57 @@
+{
+  "name": "ModernIE-static-code-scanner",
+  "description": "This scanner will check a website and give hints on how to be more standards compliant",
+  "version": "1.0.4",
+  "homepage": "https://github.com/MicrosoftEdge/static-code-scan",
+  "author": {
+    "name": "Microsoft"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MicrosoftEdge/static-code-scan.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MicrosoftEdge/static-code-scan/issues"
+  },
+  "license": "Apache-2.0",
+  "main": "app.js",
+  "bin": {
+    "static-code-scan": "bin/static-code-scan.js"
+  },
+  "engines": {
+    "node": "0.12.x",
+    "npm": "2.x.x"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "grunt nodeunit"
+  },
+  "dependencies": {
+    "bluebird": "^2.9.30",
+    "body-parser": "^1.13.1",
+    "chalk": "^1.1.1",
+    "cheerio": "^0.19.0",
+    "cli-table2": "^0.1.9",
+    "cssom": ">=0.2.5",
+    "express": "^4.12.4",
+    "httpntlm": "^1.5.2",
+    "inquirer": "^0.11.0",
+    "lodash": "^3.10.1",
+    "parserlib": "~0.2.3",
+    "request": "^2.58.0",
+    "tough-cookie": "^2.0.0",
+    "validator": "~0.4.22",
+    "xml2js": ">=0.2.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "0.12.0",
+    "grunt-contrib-nodeunit": "0.4.1"
+  },
+  "keywords": [
+    "scan",
+    "css",
+    "csslint",
+    "scanner"
+  ]
+}

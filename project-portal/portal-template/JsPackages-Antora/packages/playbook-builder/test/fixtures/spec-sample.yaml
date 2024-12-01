@@ -1,0 +1,10 @@
+ext: .yaml
+one:
+  one: !!str 1
+two: 42
+three: false
+four:
+- name: Ringo
+  lastname: Starr
+- name: George
+  lastname: Harrison

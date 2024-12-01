@@ -1,0 +1,10 @@
+ext = ".toml"
+one.one = "1"
+two = 42
+three = false
+[[four]]
+name = "John"
+lastname = "Lennon"
+[[four]]
+name = "Paul"
+lastname = "McCartney"

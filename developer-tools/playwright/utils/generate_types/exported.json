@@ -1,0 +1,9 @@
+{
+  "BrowserTypeLaunchOptions": "LaunchOptions",
+  "BrowserTypeConnectOptions": "ConnectOptions",
+  "BrowserContextCookies": "Cookie",
+  "BrowserNewContextOptions": "BrowserContextOptions",
+  "BrowserNewContextOptionsViewport": "ViewportSize",
+  "BrowserNewContextOptionsGeolocation": "Geolocation",
+  "BrowserNewContextOptionsHttpCredentials": "HTTPCredentials"
+}

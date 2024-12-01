@@ -1,0 +1,1564 @@
+= Antora Changelog
+
+This document provides a summary of all notable changes to the core Antora components by release.
+For a detailed view of what's changed, refer to the repository's https://gitlab.com/antora/antora/commits/main[commit history].
+
+This project utilizes semantic versioning.
+
+== Unreleased
+
+=== Fixed
+
+* *content-aggregator*: Gracefully handle case when value of nav key in component descriptor is not an array (#1147)
+
+== 3.1.9 (2024-07-05)
+
+=== Changed
+
+* *site-generator*: Detect and warn when an AsciiDoc extension is registered as an Antora extension, but do no skip it (#1141)
+* Replace "AsciiDoc extension" with "Asciidoctor extension" in log messages
+
+=== Fixed
+
+* *file-publisher*: Wrap legacy stream on file when preparing files for output providers; remove listeners limit (#1139)
+
+== 3.1.8 (2024-06-25)
+
+=== Added
+
+* *asciidoc-loader*: Detect (and skip) Antora extension that's been registered as an AsciiDoc extension and log a warning (#1084)
+* *site-generator*: Detect (and skip) AsciiDoc extension registered as an Antora extension and log a warning (#1104)
+
+=== Changed
+
+* *content-aggregator*: Replace new fs.Stats() with plain JavaScript object (#1121)
+* *ui-loader*: Replace @vscode/gulp-vinyl-zip with low-level zip file reader using yauzl (#1128)
+* *content-classifier*: Log warning if nav entry cannot be resolved (#1088)
+* *ui-loader*: Replace new fs.Stats() with plain JavaScript object (#1121)
+* *page-composer*: Fix `page.role` assignment to read value from `role` attribute instead of from (non-existent) `docrole` attribute (#1109)
+* *file-publisher*: Replace @vscode/gulp-vinyl-zip with low-level zip file writer using yazl (#1129)
+* *file-publisher*: Assign empty object to stat property of output file if file does not have stat property (#1121)
+* *file-publisher*: Replace vinyl-fs#dest with internal implementation (#1131)
+* *file-publisher*: Replace dependency on cloneable-readable with internal implementation
+* *file-publisher*: Don't include file in archive (zip) if contents property is null; matches behavior of fs publisher
+* *cli*: Update description for `extension` option to clarify it may be specified multiple times.
+* Upgrade vinyl and vinyl-fs to address security and deprecation warnings (#1133)
+
+=== Fixed
+
+* *content-aggregator*: Throw clearer error if antora.yml is empty or the data is not an object (#1112)
+* *asciidoc-loader*: Apply include tag filtering update from Asciidoctor (see https://github.com/asciidoctor/asciidoctor/pull/4233) to ported logic in Antora (#1110)
+* *redirect-producer*: Filter out cyclic aliases (i.e., redirect loops) (#1114)
+* *file-publisher*: Create files streams for file publishers to process eagerly to avoid race condition (#1134)
+* *cli*: Use raw value if attribute value set using `--attribute` option cannot be parsed as YAML (#1137)
+
+== 3.1.7 (2024-01-02)
+
+=== Changed
+
+* *content-aggregator*: Don't retry failed clone/fetch operation if playbook only has one content source URL
+* *content-aggregator*: Preserve all information in wrapped error (#1099)
+* *content-aggregator*: Upgrade isomorphic-git to incorporate patch for properly handling network error (#1098)
+* *content-aggregator*: Add cause in log message when retrying failed fetch/clone operations in series (#1098)
+* *content-aggregator*: Clear timeout and keep-alive settings on git HTTP connections that don't use custom agent (#1101)
+* *ui-loader*: Preserve all information in wrapped error (#1099)
+* *file-publisher*: Preserve all information in wrapped error (#1099)
+
+== 3.1.6 (2023-12-19)
+
+=== Added
+
+* *playbook-builder*: Add `git.read_concurrency` playbook key to control how many git indexes to load into memory at once (#1096)
+
+=== Changed
+
+* *playbook-builder*: Change default value of `git.fetch_concurrency` to 1 (#1096)
+* *content-aggregator*: Don't read git tree twice if start path is empty; add dirname to tree object in same function
+* *content-aggregator*: Fill in progress bar with incomplete marks if cloning a repository fails
+* *content-aggregator*: Mention that credentials may have been rejected if server requests them, then sends 404 response
+* *content-aggregator*: Flag git clone/fetch error as recoverable if an unexpected network error occurs (#1096)
+* *content-aggregator*: Decouple step to load (fetch or clone) repositories from step to scan repositories to discover references and start paths and collect files (#1096)
+
+=== Fixed
+
+* *logger*: Add hostname to ignore list to prevent hostname property on logged error from modifying logger name (#1070)
+* *content-aggregator*: Retry failed fetch/clone operations in serial if git.fetch_concurrency > 1 and an unexpected error occurs (#1096)
+
+== 3.1.5 (2023-11-23)
+
+=== Fixed
+
+* *asciidoc-loader*: Do not fail to load AsciiDoc if target of image macro resolves to an unpublished image (#1092)
+* *site-generator*: Retry loadUi in isolation after aggregateContent if network connection occurs when retrieving remote UI bundle (#1095)
+* *cli*: Remove empty default on description for `--extension` option
+
+=== Changed
+
+* *ui-loader*: Change gulp-vinyl-zip dependency to @vscode/gulp-vinyl-zip (no functional changes)
+* *asciidoc-loader*: Fix relative path computation when path is extensionless and to matches parent folder of from (#1094)
+* *page-composer*: Fix result of relativize helper when path is extensionless and to matches parent folder of from (#1094)
+* *file-publisher*: Change gulp-vinyl-zip dependency to @vscode/gulp-vinyl-zip (no functional changes)
+
+== 3.1.4 (2023-06-08)
+
+=== Fixed
+
+* *content-aggregator*: Try credentials from credentials store if auth fails with credentials in URL (#1063)
+* *content-aggregator*: Consider local branches in non-managed bare repository that has at least one remote branch (#1064)
+
+== 3.1.3 (2023-04-02)
+
+=== Fixed
+
+* *logger*: Restore error stack in log output when using pino-std-serializers >= 6.1 (#1049)
+* *ui-loader*: Correctly handle connection error when retrieving remote UI bundle
+* *asciidoc-loader*: Do not fail to load AsciiDoc if pub or pub.moduleRootPath properties are not set on virtual file
+
+== 3.1.2 (2022-10-28)
+
+=== Fixed
+
+* *playbook-builder*: Decouple logic to compute default log format from process environment (#1022)
+* *playbook-builder*: Allow content aggregator to parse value of `content.branches` and `content.tags` playbook keys (#1025)
+* *content-aggregator*: Fix infinite auth loop if credentials embedded in content source URL are empty and repository requires auth (#1010)
+* *content-aggregator*: Fix crash if value of `worktrees` key on content source is `~` (`null`) and at least one branch is specified (#1018)
+* *content-classifier*: Add guard to prevent `ContentCatalog#registerSiteStartPage` from registering alias loop (#1020)
+* *redirect-producer*: Preserve target when creating static route if target is an absolute URL (#1024)
+* *site-generator*: Look for IS_TTY on `playbook.env` in site generator to decouple check from process environment
+* release process: Automatically populate version and release attributes during release (#1011)
+
+== 3.1.1 (2022-09-20)
+
+=== Changed
+
+* *logger*: Use pretty log format by default if `IS_TTY` environment variable is set to `true` (#1004)
+* *site-generator*: Print success message if `IS_TTY` environment variable is set to `true` (#1004)
+
+=== Fixed
+
+* *asciidoc-loader*: Define public export `@antora/asciidoc-loader/include/resolve-include-file` for requiring `resolveIncludeFile` function
+* *asciidoc-loader*: Prevent message from ignored log message from overwriting message from next reported log message (#1003)
+* *site-generator*: Don't require custom output provider to return a report object
+* *cli*: If logger cannot be found, print error message to stderr instead of crashing during shutdown
+
+== 3.1.0 (2022-08-22)
+
+=== Added
+
+* *logger*: Add `reftype` key with value of branch or tag to source object in structured log message (#988)
+* *logger*: Add `remote` key with value of remote tracking branch to source object in structured log message, if applicable (#988)
+* *logger*: Add `local` key with path of local repository to source object in structured log message, if applicable (#988)
+* *playbook-builder*: Resolve attribute references in value of AsciiDoc attribute defined in playbook (#981)
+* *playbook-builder*: Honor escaped attribute references in value of AsciiDoc attribute defined in playbook (#989)
+* *content-aggregator*: Add `reftype` property to origin object to explicitly identify type of ref (branch or tag) (#988)
+* *content-aggregator*: Add `remote` property to origin object to identify a remote tracking branch (#988)
+* *content-aggregator*: Add `origins` property containing unique origin objects to each entry in content aggregate (#978)
+* *content-aggregator*: Attach parsed component version descriptor to `descriptor` property on origin object (#525)
+* *content-aggregator*: Log info message if no references are found for content source (#221)
+* *ui-loader*: Include target in error message for broken or cyclic symbolic link (#900)
+* *ui-loader*: Add `removeFile` method to `UiCatalog` for removing file (#814)
+* *content-classifier*: Resolve attribute references in value of AsciiDoc attribute defined in component descriptor (#981)
+* *content-classifier*: Honor escaped attribute references in value of AsciiDoc attribute defined in component descriptor (#989)
+* *content-classifier*: Add `removeFile` method to `ContentCatalog` for removing file (#814)
+* *asciidoc-loader*: Define `page-component-latest-version` attribute with value of version string from latest component version (#921)
+* *asciidoc-loader*: Define boolean `page-component-version-is-latest` attribute if page is in latest version of component (#921)
+* *asciidoc-loader*: Assign edit URL of current page, if set, to `page-edit-url` attribute (#354)
+* *asciidoc-loader*: Define boolean `page-origin-private` attribute if origin of page is private (#354)
+* *site-generator*: Add `removeFile` method to `SiteCatalog` for removing file (#814)
+* Define exports for all packages, locking down what paths can be required to the public API (#984)
+
+=== Changed
+
+* *playbook-builder*: Require that keys in the playbook be snake_case (notably entries in `site.keys`)
+* *content-aggregator*: Include target in error message for broken or cyclic symbolic link (#900)
+* *content-aggregator*: Log warning message instead of throwing fatal error if file in worktree disappears or cannot be read (#986)
+* *content-aggregator*: Set `worktree` property on origin to false when branch or tag is local but not taken from worktree (#993)
+* *ui-loader*: Add context to error and preserve cause if failure occurs when reading supplemental UI (#985)
+* *asciidoc-loader*: Move logic to collate AsciiDoc attributes to a helper function (#982)
+* *content-classifier*: Use helper function to collate AsciiDoc attributes from playbook and component version (#982)
+* *page-composer*: Use isolated handlebars environment instead of the default (global) environment
+* Consistently format origin information in log and error messages (#988)
+* Set Node.js 16.0.0 as minimum supported Node.js version
+* Upgrade dependencies that require Node.js > 12 and remove workarounds
+
+=== Fixed
+
+* *logger*: Don't append `undefined` after path of file in stack in pretty log format if line is missing
+* *page-composer*: Make warning message about missing page layout consistent with other log messages
+
+== 3.0.3 (2022-07-20)
+
+=== Changed
+
+* *playbook-builder* / *site-generator*: Defer playbook freezing until after `playbookBuilt` event is fired (#977)
+
+=== Fixed
+
+* *content-aggregator*: Apply patch to match patterns for refname, version, and start paths to workaround parsing bug in picomatch (#973)
+* *content-classifier*: Keep semantic versions in order regardless of prerelease status (#974)
+* *redirect-producer*: Use `RedirectMatch` directive for exact directory redirects in httpd redirect file to avoid infinite redirect loop (#942)
+* *file-publisher*: Clone stream on virtual file so complete contents of file is written to each destination (#975)
+
+== 3.0.2 (2022-07-07)
+
+=== Fixed
+
+* *content-classifier*: Set pub URL for splat alias of ROOT component with empty version segment to `/` instead of `/.` (#970)
+* *redirect-producer*: Drop redundant trailing slash for splat alias of ROOT component with empty version segment (#970)
+* *site-generator*: Fix race condition that was causing the `contextClosed` event to be emitted before the `sitePublished` event (#971)
+* *cli*: Ignore `COLUMNS` environment variable if it contains a non-integer value
+
+=== Maintenance
+
+* Add Node.js 18 to CI matrix to validate that Antora works on Node.js 18
+* Adjust routine to close test servers so it's compatible with Node.js 18
+
+== 3.0.1 (2022-01-12)
+
+=== Changed
+
+* *logger*: Add direct support for `FORCE_COLORS=1` environment variable to enable colors in prettified log message
+* *playbook-builder*: Make `env` property on playbook enumerable, but don't freeze value (#930)
+* *ui-loader*: Include family (UI) and path in message of duplicate UI file error (#931)
+
+=== Fixed
+
+* *content-aggregator*: Allow email address as username in content source URL defined in playbook (#929)
+* *redirect-producer*: Don't escape special regex characters in target URL of nginx rewrite rule (#935)
+
+== 3.0.0 (2021-12-25)
+
+_No changes since previous release._
+
+== 3.0.0-rc.6 (2021-12-23)
+
+=== Fixed
+
+* Really prevent the releases job from being interrupted
+
+== 3.0.0-rc.5 (2021-12-23)
+
+=== Fixed
+
+* Prevent the releases job from being interrupted
+
+== 3.0.0-rc.4 (2021-12-23)
+
+=== Fixed
+
+* *site-generator*: Allow extension listeners registered using `once` to accept context variables (#923)
+
+== 3.0.0-rc.3 (2021-12-22)
+
+=== Changed
+
+* *logger*: Undefine flushSync method on SonicBoom destination so pino#fatal doesn't try to invoke it
+* *logger*: Only trap EPIPE error and prevent future writes for standard streams
+* *content-aggregator*: Change signature of internal git http plugin to accept extra HTTP headers as `headers` keyword argument
+* *asciidoc-loader*: Use page as the default family for an include target that references a component, version, and/or module
+
+=== Fixed
+
+* *content-aggregator*: Configure progress bar to stretch width of terminal for wide terminals (#918)
+* *page-composer*: Include source in warning for missing page layout (#917)
+
+== 3.0.0-rc.2 (2021-12-08)
+
+=== Added
+
+* *site-generator*: Overload the `generateSite` function to support the signature from Antora < 3 that builds the playbook and manages the logger (#911)
+* *site-generator*: Add dependency on `@antora/site-publisher` package to restore backwards compatibility with existing site generators (#913)
+
+=== Changed
+
+* *playbook-builder*: Set `process.env` as the default value for the `env` parameter of `buildPlaybook` function (#914)
+* *playbook-builder*: Allow use of the YAML merge operator in a YAML playbook file, restoring previous behavior (#910)
+
+=== Fixed
+
+* *logger*: Map log file values '1' and '2' to process.stdout and process.stderr, respectively (instead of files) (#912)
+* *logger*: Trap broken pipe on logger destination and silence future writes (#907)
+* *content-classifier*: Detect case when site start page in playbook contains module name, but not component name, and report appropriately
+* *cli*: Remove call to `process.exit()` (instead, set and return `process.exitCode`) (#908)
+* *cli*: Drop deprecated `--google-analytics-key` CLI option in favor of `--key`.
+
+== 3.0.0-rc.1 (2021-12-06)
+
+=== Changed
+
+* *site-generator*: Remove deprecated aliases on the generator context that were introduced during the beta cycle (`GeneratorContext#halt` and `GeneratorContext#updateVars`)
+* Mark deprecations and schedule removals more clearly in source code
+
+=== Fixed
+
+* *logger*: Don't attempt to close logger destination if stream is already destroyed, such as in the case of a broken pipe (#907)
+
+== 3.0.0-beta.6 (2021-12-05)
+
+=== Changed
+
+* Switch to npm-based build for project
+
+=== Fixed
+
+* Change root package name to antora-build and update release script so npm can run version script during release
+
+== 3.0.0-beta.5 (2021-12-05)
+
+=== Added
+
+* *antora*: Add an `antora` meta package that provides both the CLI and site generator (#906)
+* *page-composer*: Export `create404Page` function to create and compose the 404 page (#899)
+* *page-composer*: Assign site-wide page attributes to `page.attributes` property of UI model of 404 page (#899)
+* Run test suite on macOS in nightly CI build (#902)
+
+=== Changed
+
+* *playbook-builder*: Enforce core YAML schema when reading YAML playbook files and values (#898)
+* *content-aggregator*: Enforce core YAML schema when reading component descriptor file (#898)
+* *navigation-builder*: Only require AsciiDoc loader if not passed into buildNavigation function
+* *document-converter*: Only require AsciiDoc loader if not passed into convertDocuments or convertDocument functions
+* *redirect-producer*: Update `produceRedirects` function to accept an array of aliases in place of the content catalog (#905)
+* *site-generator*: Register Antora extensions before registering generator functions (#903)
+* *site-generator*: When registering functions, honor any functions that have already been replaced and bypass loading corresponding built-in functions (#903)
+* *site-generator*: Move creation of 404 page to page composer (#899)
+* Reorganize the test utils as a test harness package (#897)
+
+=== Fixed
+
+* *content-aggregator*: Coerce version with numeric value 0 to '0' instead of empty string (#901)
+* *content-aggregator*: Add context info to first line of error message (#904)
+* *file-publisher*: Escape spaces in value of fileUri property in publication report for fs destination
+
+== 3.0.0-beta.4 (2021-12-01)
+
+=== Added
+
+* *site-generator*: Add `lockVariable` and `removeVariable` methods to generator context (#888)
+
+=== Changed
+
+* *logger*: Default to json log output unless stdout is TTY or CI=true (#894)
+* *content-classifier*: Look for synthetic alias in correct location when registering site start page (#892)
+* *site-generator-default*: Rename site-generator-default package to site-generator and repurpose old package as its alias (#886)
+* *site-generator*: Append /index.html to file URI in completion status message if site start page is defined (#889)
+* *site-generator*: Reword completion status message (#889)
+* *site-publisher*: Rename site-publisher package to file-publisher and repurpose old package as its alias (#887)
+* *file-publisher*: Update `publishFiles` function to accept single catalog (#891)
+* Switch from Yarn to npm to manage project dependencies (#890)
+
+=== Fixed
+
+* *content-aggregator*: Add missing glob-stream dependency declaration in package.json
+* *content-aggregator*: Ignore trailing slash on local repository URL when start path(s) are not specified
+* *content-classifier*: Align logic to register component version start page with logic to register site start page (#892)
+* *ui-loader*: Add missing glob-stream dependency declaration in package.json
+* *ui-loader*: Honor `ui.bundle.start_path` when value of `ui.bundle.url` is a local directory (#893)
+* *ui-loader*: Ignore trailing slash in `ui.bundle.url` or `ui.bundle.start_path` when reading UI files from local directory (#893)
+
+== 3.0.0-beta.3 (2021-11-25)
+
+=== Added
+
+* *document-converter*: Keep AsciiDoc source on `src.contents` property of virtual file if `keepSource` property is set in AsciiDoc config (#879)
+
+=== Changed
+
+* *logger*: Move error to `err` property on structured log object; deduplicate information (#878)
+* *logger*: Move all error formatting from CLI to logger (#878)
+* *logger*: Use more modest colorization of prettified log message; only colorize first line; colorize hint as dim neutral (#884)
+* *logger*: Set hint on hint key of log object instead of appending it to the bottom of the message (#884)
+* *logger*: Default to pretty format if logger is used before being configured
+* *playbook-builder*: Include path of playbook file in message of any error thrown by playbook builder (#882)
+* *content-aggregator*: Replace vinyl-fs.src with glob-stream in a stream.pipeline (#839)
+* *ui-loader*: Replace vinyl-fs.src with glob-stream in a stream.pipeline (#839)
+* *ui-loader*: Replace minimatch-all with picomatch
+* *site-generator-default*: Rename `asciidocConfig` context variable to `siteAsciiDocConfig` to disambiguate its scope
+
+=== Fixed
+
+* *logger*: Honor `NO_COLOR=1` environment variable; don't colorize pretty log output if environment variable is set
+* *content-aggregator*: Continue processing entries after exclusion in refname patterns (branches, tags, worktrees)
+* *content-aggregator*: Properly expand brace expressions in version pattern that contain multi-digit numbers and/or a step
+* *cli*: Use existing non-zero exit code if log failure level is met (#883)
+* *cli*: Don't overwrite message on unhandled error
+* *cli*: Remove message from stack if it matches message on error
+
+== 3.0.0-beta.2 (2021-11-16)
+
+=== Added
+
+* *content-classifier*: Drop component segment in URL (and output path) of resources if component name is ROOT (#872)
+* *site-generator-default*: Emit context lifecycle events (`contextStarted`, `contentStopped`, `contextClosed`) (#871)
+
+=== Changed
+
+* *logger*: Upgrade to pino 7 and flatten error object in structured (json) log message (#869)
+* *content-classifier*: Set component and module properties of alias for site start page to `ROOT` (instead of empty string) (#872)
+* *site-generator-default*: Rename `GeneratorContext#halt` to `GeneratorContext#stop` to more clearly convey intent (#874)
+* *site-generator-default*: Update `GeneratorContext#stop` to accept an exit code that is assigned to `process.exitCode` (#875)
+
+=== Fixed
+
+* *content-aggregator*: Rewrite concurrency limit logic to avoid superfluous unhandled promise rejection warning
+* *cli*: Configure the correct logger when Antora is installed globally (#876)
+
+== 3.0.0-beta.1 (2021-11-04)
+
+=== Added
+
+* *playbook-builder*: Allow custom site generator to be configured in playbook using `antora.generator` key (#857)
+* *playbook-builder*: Export default configuration schema as `defaultSchema` property (#857)
+* *playbook-builder*: Add `getModel` method to config object to validate the data and return a model at the specified name (#856)
+* *playbook-builder*: Add a `beforeValidate` callback as the fourth parameter to `buildPlaybook` (#856)
+* *site-generator-default*: Allow Antora extensions to replace functions on generator context used by default site generator; bind generator context to each function automatically (#868)
+* *site-generator-default*: Add `GeneratorContext#getFunctions` to access functions on generator context (#868)
+* *site-generator-default*: Add `@antora/logger` as dependency (#813)
+* *site-generator-default*: Add `GeneratorContext#getLogger` method to retrieve an instance of the logger (#813)
+* *site-generator-default*: Add `GeneratorContext#getVariables` method to access content variables (#813)
+
+=== Changed
+
+* Set Node.js 12.21.0 as minimum supported Node.js version
+* Upgrade dependencies and drop workarounds for Node.js < 12
+* *playbook-builder*: Rename `pipeline` category key in playbook schema to `antora` (e.g., `antora.extensions`) (#859)
+* *playbook-builder*: Change default branches pattern for content sources to `HEAD, v{0..9}*` to avoid matching words that begin with `v`
+* *playbook-builder*: Move logic for postprocessing config data to `beforeValidate` function defined in the schema (#864)
+* *content-aggregator*: Enable more powerful pattern matching for refname patterns (branches, tags, worktrees); align with pattern matching for start paths (#686)
+* *content-aggregator*: Ignore regex modifiers and enable extglob for all patterns (branches, tags, worktrees, version, start paths) (#870)
+* *site-generator-default*: Rename `updateVars` method on GeneratorContext to `updateVariables`
+* *site-generator-default*: Rename Pipeline class to GeneratorContext (#860)
+* *site-generator-default*: Bind the generator context to the register function of an extension unless declared as the first parameter (#860)
+* *cli*: If generator accepts a single parameter, build playbook in CLI and pass to generator (#857)
+* *cli*: Use default schema exported by playbook builder to define CLI options (#857)
+* *cli*: Configure logger in the CLI instead of the playbook builder (#862)
+
+=== Fixed
+
+* *content-aggregator*: Handle symlink target that has trailing path separator (#865)
+
+== 3.0.0-alpha.10 (2021-10-22)
+
+=== Added
+
+* *content-classifier*: Add support for `./` token at start of path in resource ID as shorthand for current topic path (#428)
+* *asciidoc-loader*: Log error if image with local target or value of xref attribute on image cannot be resolved (#800)
+* *asciidoc-loader*: Add support for `link=self` attribute on image macros (#735)
+* *asciidoc-loader*: Allow xref macro to be used to create a reference to any publishable resource, not just pages (#603)
+* *asciidoc-loader*: Allow xref attribute on image macro to be used to create a reference to any publishable resource, not just pages (#603)
+* *redirect-producer*: Add `gitlab` as a valid option for the `urls.redirect_facility` key (#847)
+* *redirect-producer*: Add `gitlab` redirect facility for generating redirects that can be used with GitLab Pages (#847)
+
+=== Fixed
+
+* *asciidoc-loader*: Don't warn if a page declares the manpage doctype (#790)
+
+=== Changed
+
+* *asciidoc-loader*: Add `unresolved` role to image if target is local and it cannot be resolved (#692)
+* *asciidoc-loader*: Add the `xref` role to the link created from a non-internal xref macro (e.g., `xref page`) (#603)
+* *asciidoc-loader*: Replace the `page` role with the `xref` role on the link created from an xref macro that could not be resolved (e.g., `xref unresolved`) (#603)
+* *asciidoc-loader*: Rename the `link-page` role to `xref-` followed by the family name (e.g., `xref-page`) on element created for an image macro that has an non-internal xref target (#603)
+* *asciidoc-loader*: Don't add role to element created for an image macro that has an internal xref target (#603)
+* *asciidoc-loader*: Add only the `xref-unresolved` role to element created for an image macro that has an unresolved xref target (#603)
+* *asciidoc-loader*: Don't pass third argument to Node#getAttribute / Node#isAttribute to turn off inheritance as it's now the default behavior
+* *cli*: Begin CLI error message with name of base call (i.e., `antora:`) instead of generic `error:` prefix (#855)
+* *cli*: Log unhandled error at fatal level (#788)
+
+== 3.0.0-alpha.9 (2021-08-27)
+
+=== Added
+
+* *playbook-builder*: Add `git.fetch_concurrency` to control the maximum number of fetch or clone operations that are permitted to run at once (#779)
+* *content-aggregator*: Limit the number of concurrent clone or fetch operations specified by the `git.fetch_concurrency` playbook key (#779)
+* *content-aggregator*: Don't use proxy if the value of the `network.no_proxy` key in the playbook is `*` (#829)
+* *ui-loader*: Don't use proxy if the value of the `network.no_proxy` key in the playbook is `*` (#829)
+
+=== Fixed
+
+* *playbook-builder*: Don't camelCase keys in value of `version` key on content source (#828)
+* *content-aggregator*: If an error is thrown while loading or scanning a repository, allow any clone or fetch operations already underway to complete (#779)
+* *content-classifier*: Always sort prerelease versions before non-prerelease versions (#838)
+* *asciidoc-loader*: Match Asciidoctor log level to Antora log level when Antora log level is debug
+* *asciidoc-loader*: Set context on Asciidoctor logger before calling register function of extensions to match behavior of Asciidoctor
+
+=== Changed
+
+* *logger*: Upgrade to sonic-boom 2.0.x (#837)
+* *playbook-builder*: Further restrict type of `runtime.log.destination.buffer_size` key in playbook schema from number to integer
+* *content-aggregator*: Switch back to versionless default cache folder for managed content repositories (#690)
+
+== 3.0.0-alpha.8 (2021-08-13)
+
+=== Added
+
+* *playbook-builder*: Add `pipeline` category to the playbook schema to configure the pipeline of the generator (#799)
+* *playbook-builder*: Add `extensions` key to the `pipeline` category to specify extensions that listen for pipeline events (#799)
+* *playbook-builder*: Map repeatable CLI option named `--extension` to add an entry to (or enable an existing one in) the `pipeline.extensions` key in the playbook (#810)
+* *playbook-builder*: Allow git plugins to be specified in the playbook using the `git.plugins` key (#775)
+* *content-aggregator*: Assign location of git directory for local or cloned remote repository to `src.origin.gitdir` property on virtual file (#305)
+* *content-aggregator*: Set `src.origin.worktree` property on virtual file to `null` if repository is local and reference is not mapped to a worktree (#305)
+* *content-aggregator*: Use git plugins specified in playbook to replace built-in git plugins (#775)
+* *site-generator-default*: Introduce an event-based extension mechanism that notifies listeners registered by extensions of key events, also providing access to in-scope pipeline variables (#799)
+* *site-generator-default*: Do not register pipeline extension if extension configuration has a key named `enabled` and its value is `false` (#810)
+* *site-generator-default*: Add the SiteCatalog class to define a formal API for the site catalog (#799)
+
+=== Fixed
+
+* *logger*: End destination stream for logger in finalize call when log format is pretty (#795)
+* *content-aggregator*: Remove unnecessary patch to symlink path read from git repository on Windows (#796)
+* *content-aggregator*: Handle case when remote URL for local content source uses explicit `ssh://` protocol and port (#816)
+* *content-classifier*: Include source information in error message for duplicate alias when component is unknown (#804)
+* *ui-loader*: Publish dot files from UI bundle if matched by an entry in the list of static files in the UI descriptor (#794)
+* *cli*: Show location and reason of syntax error when `--stacktrace` option is specified (#823)
+
+=== Changed
+
+* *playbook-builder*: Attach map of environment variables to non-enumerable `env` property on playbook (#805)
+* *content-aggregator*: Set `src.origin.url` property on virtual file when repository has no remote even when using worktree (related to #764)
+* *content-classifier*: Store files in content catalog by family (#817)
+* *ui-loader*: Ignore backup files (files that end with `+~+`) when reading supplemental UI files and UI bundle from directory (#793)
+* *ui-loader*: Store files in UI catalog by type (#817)
+* *asciidoc-loader*: Integrate @antora/user-require-helper to require Asciidoctor extensions (#802)
+* *site-publisher*: Integrate @antora/user-require-helper to require custom providers (#802)
+* *cli*: Integrate @antora/user-require-helper to require user scripts and the custom generator (#802)
+* *cli*: Output version of default site generator in addition to version of CLI when `-v` option is used (#703)
+
+== 3.0.0-alpha.7 (2021-06-26)
+
+=== Added
+
+* *logger*: Use numeric log level in JSON log message if log level format is number (#780)
+* *logger*: Add built-in support for writing log messages to a file or standard stream with additional settings for buffer size, sync, and append (#767)
+* *playbook-builder*: Add `level_format` to `log` category (default: label), mapped to `--log-level-format` CLI option, to allow log level format to be configured (#780)
+* *playbook-builder*: Add `sourcemap` option to `asciidoc` category, mapped to `--asciidoc-sourcemap` CLI option, to enable sourcemap on AsciiDoc processor (#776)
+* *asciidoc-loader*: Log error message when target of xref is not found (#403)
+* *content-classifier*: Catalog example and partial files that do not have a file extension (#368)
+* *site-generator-default*: Add completion status message to stdout that shows file URI to local site when terminal is a TTY (and `--quiet` is not set) (#220)
+* *cli*: Map `--log-file` CLI option and `ANTORA_LOG_FILE` environment variable to the `runtime.log.destination.file` key in playbook (#767)
+
+=== Fixed
+
+* *asciidoc-loader*: Port fixes for include tags processing from Asciidoctor (#771)
+
+=== Changed
+
+* *logger*: Don't set name on root logger so it isn't included in raw JSON message
+* *playbook-builder*: Remove `structured` as possible value of `log.format`, preferring `json` instead (#784)
+* *playbook-builder*: Rename `silent` value on `runtime.log.failure_level` to `none` (#785)
+* *playbook-builder*: Set `fatal` as default value for `runtime.log.failure_level`; remove `all`, `debug`, and `info` from allowable set of values
+* *content-aggregator*: Upgrade git client to isomorphic-git 1.8.x and update code to accommodate changes to its API (#774)
+* *content-aggregator*: Use internal implementation of the http plugin for all clone and fetch operations (#774)
+* *content-aggregator*: Only cache packfile and index for a git repository while scanning it instead of across the entire Antora run
+* *asciidoc-loader*: Use `Converter.for` to look up registered html5 converter instead of referring directly to name of built-in class (#769)
+* *content-aggregator*: Ignore backup files (files that end with `+~+`) when scanning content source (#706)
+* *asciidoc-loader*: Detect when registered html5 converter has changed and recreate extended converter to use it (#769)
+* *asciidoc-loader*: Change "include target" to "target of include" in error message for missing include (#403)
+* *asciidoc-loader*: Include line number and correct file in xref error message when sourcemap is enabled on AsciiDoc processor (#776)
+* *cli*: Rename `--failure-level` option to `--log-failure-level` (#785)
+* *cli*: Upgrade CLI library to commander.js 7.2 (#733)
+* *cli*: Always honor value of COLUMNS environment variable when determining width of help text (#733)
+* *cli*: Configure CLI to recognize options that accept a fixed set of values and validate value before proceeding (#778)
+* *cli*: Rename options to choices in help text (#778)
+* *cli*: Combine choices and default value together in help text for option that accepts a fixed set of values (#778)
+
+== 3.0.0-alpha.6 (2021-06-08)
+
+=== Fixed
+
+* *logger*: Fix crash if logger is called before being configured (typically outside the generator)
+* *content-aggregator*: Assign file URL to src.origin.url on virtual file if repository has no remote and not using worktree (#764)
+* *asciidoc-loader*: Add file info to reader before pushing include onto the stack so it stays in sync if include file is empty (#765)
+
+=== Added
+
+* *logger*: Introduce new component that provides the logging infrastructure for Antora (#145)
+* *logger*: Log structured (JSON) messages by default to stdout if CI=true; otherwise log pretty messages to stderr (#145)
+* *playbook-builder*: Add log category to configure the logger (level, failure_level, format) (#145)
+* *playbook-builder*: Add network category key to playbook with child keys http_proxy, https_proxy, and no_proxy (mapped to environment variables of the same names) to configure proxy settings (#749)
+* *content-aggregator*: Add support for proxy settings to git client (by way of http_proxy, https_proxy, and no_proxy environment variables mapped to the playbook schema) (#230)
+* *content-classifier*: Send warning messages to the logger (#145)
+* *ui-loader*: Add support for proxy settings to UI downloader (by way of http_proxy, https_proxy, and no_proxy environment variables mapped to the playbook schema) (#749)
+* *asciidoc-loader*: Connect Asciidoctor logger to Antora logger (#145)
+* *asciidoc-loader*: Send file, line, and stack details (if available) to Antora logger when Asciidoctor logs a message (#145)
+
+=== Changed
+
+* *ui-loader*: Replace got with simple-get as HTTP client
+* *asciidoc-loader*: Report include location in log message when include tag(s) cannot be found (#766)
+
+== 3.0.0-alpha.5 (2021-05-15)
+
+=== Added
+
+* *content-aggregator*: Add full support for resolving symlinks in the git tree of a content source (#188)
+* *content-aggregator*: Allow playbook or component descriptor to configure the component version for a content source so it's derived from the git refname (#296)
+* *content-aggregator*: Allow playbook to define a fallback version for a content source (#296)
+
+=== Fixed
+
+* *content-aggregator*: Add full support for resolving symlinks that originate from the worktree of a local content source (#747)
+* *content-aggregator*: Provide clear error message when a broken symlink or symlink cycle is detected in the worktree (#747)
+* *content-aggregator*: Provide clear error message when a broken symlink or symlink cycle is detected in the git tree (#188)
+* *content-aggregator*: Run all symlink tests on Windows in addition to Linux (#747, #188)
+
+== 3.0.0-alpha.4 (2021-05-01)
+
+=== Fixed
+
+* *content-aggregator*: Upgrade marky to allow isomorphic-git to work on Node.js 16 (#745)
+* *asciidoc-loader*: Provide fallback link text for xref when target matches relative src path of current page (#739)
+* *cli*: Fix error message from being printed twice in certain cases when `--stacktrace` option is set
+
+=== Added
+
+* *content-aggregator*: Automatically detect and use linked worktrees registered with local content source (i.e., local git clone) (#742)
+* *content-aggregator*: Allow worktrees to be filtered or disabled using the `worktrees` key on the content source (#742)
+
+=== Changed
+
+* *playbook-builder*: Update default branches pattern for content sources to `[HEAD, v*]` (#737)
+* *infrastructure*: Run tests in CI on Node.js 16 (#745)
+
+== 3.0.0-alpha.3 (2021-04-16)
+
+=== Added
+
+* *content-classifier*: Allow version in component descriptor to be `~` (shorthand for `null`) or empty string to indicate a versionless component version (#669)
+* *content-classifier*: Use the prerelease string, if set, otherwise the value `default`, as the fallback display version for a versionless component version (#669)
+* *content-classifier*: Sort the versionless component version above all other versions (semantic or non-semantic) in the same component (#669)
+* *content-classifier*: If the version of a component version is empty (`version: ~`), don't add a version segment to `pub.url` and `out.path` (even if it's a prerelease) (#669)
+* *content-classifier*: Add support for `_` keyword to refer to empty version in resource ID (#669)
+
+=== Changed
+
+* *content-classifier*: If an alias refers to an unknown component, and the version is not specified, set the version to empty string (#669)
+* *asciidoc-loader*: Upgrade to Asciidoctor.js 2 and allow use of newer patch versions (#522)
+* *infrastructure*: Migrate Windows CI pipeline from AppVeyor CI to GitLab CI (#732)
+* *infrastructure*: Run tests nightly on Node.js 12 and Node.js 14 (in addition to Node.js 10) (#731)
+
+=== Fixed
+
+* *asciidoc-loader*: Don't crash if the contents of a stem block is empty (#663)
+
+=== Deprecated
+
+* *content-classifier*: Deprecate use of the keyword `master` to represent a versionless component version; replace the value of the `version` key in the component descriptor (antora.yml) with `~` or empty string
+
+== 3.0.0-alpha.2 (2021-04-08)
+
+=== Added
+
+* *content-aggregator*: Store refname of content source on `src.origin.refname` property of virtual file (#694)
+* *ui-loader*: Allow extracted UI bundle to be loaded from directory (#150) (@g.grossetie)
+
+=== Changed
+
+* Upgrade dependencies
+
+=== Removed
+
+* *asciidoc-loader*: Remove deprecated `page-relative` attribute (replaced by `page-relative-src-path`) (#689)
+
+=== Fixed
+
+* *redirect-producer*: Add `redirect` modifier on splat alias rewrite rule for nginx (when redirect-facility=nginx) (#698)
+* *cli*: Show error message with backtrace (if available) when `--stacktrace` option is set, even if stack property is missing (#700)
+
+== 3.0.0-alpha.1 (2020-09-29)
+
+=== Added
+
+* *playbook-builder*: Add urls.latest_version_segment_strategy key to playbook schema (#314)
+* *playbook-builder*: Add urls.latest_version_segment key to playbook schema (#314)
+* *playbook-builder*: Add urls.latest_prerelease_version_segment key to playbook schema (#314)
+* *content-aggregator*: Store computed web URL of content source on `src.origin.webUrl` property of virtual file (#615)
+* *content-aggregator*: Store refname of content source on `src.origin.refname` property of virtual file (#694)
+* *content-classifier*: Extract method to register start page for component version (`ContentCatalog#registerComponentVersionStartPage`) (#605)
+* *content-classifier*: Replace latest version and/or prerelease version segment in out path and pub URL (unless version is master) with symbolic name, if specified (#314)
+* *content-classifier*: Define latestPrerelease property on component version (if applicable) and use when computing latest version segment (#314)
+* *content-classifier*: Assign primary alias to `rel` property on target page (#425)
+* *page-composer*: Assign author to `page` object in UI model (#355)
+* *redirect-facility*: Use redirect facility to implement redirect:to and redirect:from strategies for version segment in out path / pub URL of latest and latest prerelease versions (#314)
+
+=== Changed
+
+* Upgrade dependencies (#598)
+* Replace the fs-extra dependency with calls to the promise-based fs API provided by Node.js (#682)
+* *content-aggregator*: Don't use global git credentials path if custom git credentials path is specified, but does not exist (#681)
+* *content-aggregator*: Defer assignment of `mediaType` and `src.mediaType` properties on virtual file to content classifier (#693)
+* *content-classifier*: Register all component versions before adding files to content catalog (#314)
+* *content-classifier*: Only register start page for component version in `ContentCatalog#registerComponentVersion` if value of `startPage` property in descriptor is truthy (#605)
+* *content-classifier*: Call `ContentCatalog#registerComponentVersionStartPage` in content classifier to register start page after adding files (instead of before) (#605)
+* *content-classifier*: Require page ID spec for start page to include the .adoc file extension (#689)
+* *content-classifier*: Enhance `ContentCatalog#addFile` to update `src` object if missing required properties, including `mediaType` (#693)
+* *asciidoc-loader*: Require page ID spec target in xref to include the .adoc file extension (#689)
+* *asciidoc-loader*: Rename exported `resolveConfig` function in AsciiDoc loader to `resolveAsciiDocConfig`; retain `resolveConfig` as deprecated alias (#689)
+* *asciidoc-loader*: Make check for .adoc extension in value of xref attribute on image more accurate (#689)
+* *asciidoc-loader*: Interpret every non-URI image target as a resource ID (#689)
+* *page-composer*: Follow aliases when computing version lineage for page and canonical URL in UI model (#425)
+
+=== Fixed
+
+* *content-aggregator*: Show sensible error message if cache directory cannot be created (#680)
+* *ui-loader*: Show sensible error message if cache directory cannot be created (#680)
+* *asciidoc-loader*: Add support for optional option on include directive to silence warning if target is missing (#678)
+* *asciidoc-loader*: Don't crash when loading or converting AsciiDoc document if content catalog is not passed to `loadAsciiDoc` (#695)
+
+=== Deprecated
+
+* *content-classifier*: Deprecate `getAll` method on ContentCatalog; superceded by `getFiles` (#689)
+* *ui-loader*: Deprecate `getAll` method on UiCatalog; superceded by `getFiles` (#689)
+* *asciidoc-loader*: Deprecate exported `resolveConfig` function in AsciiDoc loader (#689)
+* *asciidoc-loader*: Deprecate use of page ID spec without .adoc file for page alias (#689)
+* *asciidoc-loader*: Deprecate use of non-resource ID spec (e.g., parent path) as target of include directive (#689)
+* *site-generator-default*: Deprecate `getAll` method on site catalog; superceded by `getFiles` (#689)
+* *cli*: Deprecate the `--google-analytics-key` CLI option; superceded by the `--key` option (#689)
+
+=== Removed
+
+* Drop support for Node.js 8 and set minimum required version to 10.17.0 (the version of Node.js 10 in which fs.promises became a stable API) (#679)
+* *playbook-builder*: Remove `pull` key from `runtime` category in playbook; superceded by `fetch` key (#689)
+* *playbook-builder*: Remove `ensureGitSuffix` key from `git` category in playbook file (but not playbook model); renamed to `ensure_git_suffix` (#689)
+* *content-classifier*: Remove fallback to resolve site-wide AsciiDoc config in `classifyContent` function (#689)
+* *content-classifier*: Drop `latestVersion` property on component version object; superceded by `latest` property (#689)
+* *content-classifier*: Remove deprecated getComponentMap and getComponentMapSortedBy methods on ContentCatalog (#689)
+
+== 2.3.4 (2020-09-17)
+
+=== Changed
+
+* *playbook-builder*: Show path to playbook file in error message if file not found (#650)
+* *playbook-builder*: Disallow file URI as value of `site.url` in playbook (#675)
+* *content-aggregator*: Drop use of transitive escape-string-regexp dependency
+* *content-classifier*: Show more informative message if component name is missing in start page for site (#665)
+* *content-classifier*: Change ContentCatalog#resolveResource to return false instead of throw error when resource ID spec has invalid syntax (#676)
+* *content-classifier*: Warn instead of crash when start page specified for site or component version has invalid syntax (#676)
+* *ui-loader*: Retain the cwd property (and thus base property) for supplemental UI files read from the local filesystem (#627)
+* *ui-loader*: Set stat.size on files extracted from UI bundle
+
+=== Fixed
+
+* *playbook-builder*: Show informative error message if value of map or primitive-map key in playbook file is a String (#673)
+* *content-classifier*: Don't modify the file extension of an AsciiDoc file in the attachments family (#644)
+* *content-classifier*: Don't register alias that shadows index page when start page points to a different page (#653)
+* *content-classifier*: If an alias conflicts with an existing page, show the resource spec of the page that defines the alias in the error message (#648)
+* *content-classifier*: Show more detailed error message when attempting to add a duplicate file (#587)
+* *ui-loader*: Allow dot file (aka hidden file) in supplemental UI directory to be used as static file (#627)
+
+== 2.3.3 (2020-05-30)
+
+=== Fixed
+
+* *page-composer*: Fix crash computing canonical URL for page that only exists in prerelease version (#639)
+
+== 2.3.2 (2020-05-24)
+
+=== Changed
+
+* Upgrade dependencies
+
+=== Fixed
+
+* *content-classifier*: Fix cases when page ID with no file extension fails to resolve (#635)
+* *asciidoc-loader*: Process image xref that points to page ID with fragment (#636)
+
+== 2.3.1 (2020-04-29)
+
+=== Changed
+
+* *page-composer*: Set `page.next` in UI model for component version start page to first page in navigation tree if start page not found in navigation tree (#623)
+* *page-composer*: Set `page.previous` in UI model for first page in navigation tree to component version start page (#623)
+
+=== Fixed
+
+* *playbook-builder*: Replace deep-freeze-node dependency with internal implementation (#621)
+* *page-composer*: Skip over references to current page when computing `page.next` property for UI model (#622)
+* *page-composer*: Skip over references to fragments of previous page when computing `page.previous` property for UI model (#624)
+* *site-mapper*: Generate robots exclusion file (robots.txt) if site URL is set to any allowable value (#625)
+
+== 2.3.0 (2020-04-22)
+
+_No changes since previous release._
+
+== 2.3.0-rc.4 (2020-04-22)
+
+_No changes since previous release._
+
+== 2.3.0-rc.3 (2020-04-22)
+
+_No changes since previous release._
+
+== 2.3.0-rc.2 (2020-04-21)
+
+=== Added
+
+* *page-composer*: Map role on AsciiDoc document to `page.role` in UI model (#437)
+
+=== Changed
+
+* *asciidoc-loader*: Rename intrinsic `page-src-path` page attribute to `page-relative-src-path` (#568)
+* *page-composer*: Rename `srcPath` on page UI model to `relativeSrcPath` (#568)
+* *page-composer*: Modify `resolvePage` and `resolvePageURL` UI helpers to inherit context (i.e., page ID) from current page (#541)
+
+== 2.3.0-rc.1 (2020-04-15)
+
+=== Added
+
+* *cli*: Add `--key` option to `generate` command to define entries for site.keys; may be specified multiple times (#486)
+
+=== Changed
+
+* *playbook-builder*: Make site.keys map in playbook schemaless; ensure values are primitive (#486)
+* *content-classifier*: Deprecate `getComponentMap` and `getComponentMapSortedBy` methods on content catalog (#614)
+* *page-composer*: Promote `contentCatalog` to top-level variable in UI model (#614)
+* *page-composer*: Use exported content catalog to build UI model (#614)
+* *page-composer*: Report the name and type of UI template that caused the Handlebars error (#616)
+
+=== Fixed
+
+* *asciidoc-loader*: Declare the opal-runtime package as a direct dependency (#613)
+* *document-converter*: Always consult media type when looking for AsciiDoc pages in document converter (#607)
+
+== 2.3.0-beta.2 (2020-04-06)
+
+=== Added
+
+* *asciidoc-loader*: Add support for xref attribute on image macros to reference internal anchor or page (#330)
+* *content-classifier*: Register alias to start page from index page of component version if index page is missing (#379)
+* *content-classifier*: Extract logic to register site start page to `ContentCatalog#registerSiteStartPage()`
+* *content-classifier*: Assign component name to read-only name property on component version object (#606)
+
+=== Changed
+
+* *content-classifier*: Don't append `.adoc` file extension to page or alias without a file extension when parsing resource ID
+
+=== Fixed
+
+* *asciidoc-loader*: Don't allow path document attribute to interfere with internal xref
+* *content-classifier*: Restrict start page for component version to component version (#524)
+* *content-classifier*: Set media type on alias file to `text/html` (instead of media type of rel file); use `text/asciidoc` media type on `src` property
+* *content-classifier*: Don't set (irrelevant) path property on alias file
+* *content-classifier*: Drop requirement for `src.stem` and `src.basename` to be set on argument to `ContentCatalog#addFile()`
+* *page-composer*: Fix relativize helper function to preserve fragment identifier on URL
+* *page-composer*: Map `page.srcPath` to `page.src.relative` instead of `page.src.path`
+
+== 2.3.0-beta.1 (2020-03-22)
+
+=== Added
+
+* *content-aggregator*: Assign the SHA-1 commit hash for the content source ref (branch or tag) to the `src.origin.refhash` property on the virtual file unless file is taken from worktree (#578)
+* *content-aggregator*: Make `refhash` available as template variable in the edit URL pattern (#578)
+* *content-aggregator*: Do not sort component version entries in content aggregate (leave them in order they are discovered) (#121)
+* *content-classifier*: If `ContentCatalog#resolvePage` cannot locate page, look for an alias and dereference if found (#586)
+* *content-classifier*: Add `getComponentVersion` method to exported API
+* *content-classifier*: Map `asciidoc` property on component to `asciidoc` property on latest version of component (#543)
+* *asciidoc-loader*: Allow target of xref to be a page alias (#586)
+* *asciidoc-loader*: Assign value of family-relative path of page to `page-src-path` page attribute (#568)
+* *asciidoc-loader*: Assign the SHA-1 commit hash for the content source ref (branch or tag) to the `page-origin-refhash` attribute on document unless page is taken from worktree (#578)
+* *asciidoc-loader*: Add function for extracting metadata from the AsciiDoc header (#310)
+* *asciidoc-loader*: Use automatic reference text (i.e., xreftext) if contents of page xref is empty (#310)
+* *asciidoc-loader*: Use target as fallback content for unresolved or invalid xref (#594)
+* *document-converter*: Load the AsciiDoc header for all pages before any page is converted so xref can reference page alias (#586)
+* *document-converter*: Map `title` property on file to AsciiDoc doctitle (#593)
+* *navigation-builder*: Use automatic reference text (i.e., navtitle attribute or xreftext) if contents of page xref is empty (#310)
+* *page-composer*: Add `relativize` as built-in UI helper (#555)
+* *cli*: Allow COLUMNS environment variable to control help information width when output is not a TTY
+
+=== Fixed
+
+* *content-aggregator*: Use state file to verify repository in cache is valid; reclone repository if file is missing (i.e., corrupt) (#556)
+* *content-aggregator*: Brace pattern in start paths value should match whole filename segment, even if pattern contains a wildcard (#583)
+* *content-aggregator*: Brace pattern in start paths value should match fixed entries if wildcard entry is also present (#584)
+* *content-classifier*: Update `ContentCatalog#getPages` to accept a filter function to filter pages
+* *asciidoc-loader*: Fix crash if contents of include file is undefined
+* *page-composer*: Latest page version should never be newer than latest component version (#565)
+
+=== Changed
+
+* *content-aggregator*: Ignore dot (hidden) folders when matching start paths unless pattern itself begins with a dot (#581)
+* *content-classifier*: Modify `ContentCatalog#registerComponentVersion` to return component version added (#561)
+* *content-classifier*: Modify `ContentCatalog#addFile` to return file added (#562)
+* *content-classifier*: Don't assign `out` property when adding file to content catalog if out property has falsy value (#563)
+* *content-classifier*: Rename `asciidocConfig` property on component version object to `asciidoc` (#542)
+* *content-classifier*: Change `ContentCatalog#resolvePage` to delegate to `ContentCatalog#resolveResource` (#597)
+* *asciidoc-loader*: Don't relativize absolute pub URL (#564)
+* *page-composer*: Rename `resolvePageUrl` UI helper to `resolvePageURL` (#589)
+* *page-composer*: Upgrade Handlebars to fix performance regression (#551)
+* *page-composer*: Fix `resolvePage` and `resolvePageUrl` helpers to retrieve content catalog independent of template context (#554)
+* *page-composer*: Make `resolvePage` and `resolvePageUrl` helpers resilient against falsy page spec (#554)
+* *page-composer*: Don't prepend site URL to absolute canonical URL (#564)
+* *page-composer*: Update `resolvePage` helper to return page model instead of virtual file object; can be disabled using `model=false` argument (#541)
+* *page-composer*: Assign value of family-relative path of page to `srcPath` property on page UI model (#568)
+* *redirect-producer*: Modify netlify redirects to be forced as recommended by Netlify (e.g., 301!) (#595)
+
+== 2.3.0-alpha.2 (2019-12-18)
+
+=== Added
+
+* *playbook-builder*: Add httpd keyword to urls.redirect_facility option (#192)
+* *content-classifier*: Add `getPages()` method to content catalog to retrieve all pages (#537)
+* *page-composer*: Expose public API of content catalog to UI model as `site.contentCatalog` (#328)
+* *page-composer*: Add built-in helpers `resolvePage` and `resolvePageUrl` to resolve pages and their publish URLs in UI templates (#328)
+* *redirect-producer*: Add support for Apache httpd via .htaccess (#192)
+* *redirect-producer*: Add trailing newline to all generated files (#494)
+
+=== Changed
+
+* *content-aggregator*: Add start path to error message thrown while aggregating files (#531)
+* *content-aggregator*: Report clearer error if component descriptor cannot be parsed (#532)
+* *content-aggregator*: Consistently enclose details in error message in round brackets (#531)
+* *content-classifier*: Rename `getFiles()` method on content catalog to `getAll()`; retain `getFiles()` as deprecated method (#538)
+* *ui-loader*: Rename `getFiles()` method on UI catalog to `getAll()`; retain `getFiles()` as deprecated method (#538)
+* *site-mapper*: Add trailing newline to all generated files (#494)
+* *site-publisher*: Call `getAll()` method on catalog if available, otherwise `getFiles()` (#538)
+
+== 2.3.0-alpha.1 (2019-11-20)
+
+=== Added
+
+* *content-aggregator*: Allow multiple start paths to be specified per content source using the `start_paths` key (#495)
+* *content-aggregator*: Allow values of `start_paths` key on content source to be scan+filter glob (wildcard and/or brace) patterns (#495)
+* *content-classifier*: Recognize AsciiDoc attributes defined in the component (version) descriptor (#251)
+* *content-classifier*: Store the component version-scoped AsciiDoc configuration on the `asciidocConfig` property of the component version instance (#251)
+* *content-classifier*: Add the site-wide AsciiDoc config as the optional third argument of the classifyContent function; compute from playbook if absent (#251)
+* *navigation-builder*: Add `addNavigation` function to NavigationCatalog for registering all trees for component version at once (#251)
+* *ui-loader*: Verify downloaded UI bundle is a valid zip file before caching; throw error if invalid (#517)
+
+=== Changed
+
+* *content-aggregator*: Apply camelCase transformation to keys in the component (version) descriptor, excluding the `asciidoc` key (#251)
+* *content-aggregator*: Condense repeating slashes in start path value(s) (#495)
+* *ui-loader*: Preserve stack from got (HTTP client) error when downloading UI (#516)
+* *ui-loader*: Report clearer error when local or cached UI bundle is not valid or cannot otherwise be read (#517)
+* *site-generator-default*: Pass the site-wide AsciiDoc config to the classifyContent function (#251)
+
+== 2.2.0 (2019-11-02)
+
+=== Added
+
+* *playbook-builder*: Add `edit_url` key to content category for configuring pattern for edit URL globally (#292)
+* *content-aggregator*: Make fs object used by git pluggable (assign fs property to git core named "antora") (#476)
+* *content-aggregator*: Prune stale branches and tags when fetching repository updates (#374)
+* *content-aggregator*: Split src.editUrl on file object into src.editUrl and src.fileUri so both values can coexist (#292)
+* *content-aggregator*: Allow edit URL to be disabled or configured from pattern using edit_url key on content category in playbook or on content source (#292)
+* *asciidoc-loader*: Enable `page-partial` attribute by default so all pages can be included out of the box (#487)
+* *asciidoc-loader*: Add support for `lines` attribute on include directive; filters lines by individual line numbers or line number ranges (#412)
+* *page-composer*: Map src.fileUri to fileUri property on page UI model (#292)
+* *site-mapper*: Generate a robots.txt file if the site.robots key is set in the playbook (#219) (@djencks)
+
+=== Changed
+
+* *content-aggregator*: Upgrade isomorphic-git (#476)
+* *content-aggregator*: Preserve stack from original clone error thrown by git client (#497)
+* *content-aggregator*: Automatically unregister any managed git plugin (e.g., fs and credentialManager) (#476)
+* *content-aggregator*: The tags and branches keys defined on content source replace inherited value, even when value is falsy (#510)
+* *content-aggregator*: Clean auth from remote URL assigned to src.origin.url resolved from git config of local repository (#513)
+* *content-aggregator*: Coerce remote URL resolved from git config of local repository to HTTPS URL (#292)
+* *content-aggregator*: Only assign src.origin.url property on file object using value of remote URL, if available (#292)
+* *content-classifier:* Make detection of semantic versions more robust (#505)
+* Upgrade development dependencies
+
+== 2.1.2 (2019-10-02)
+
+=== Fixed
+
+* *playbook-builder*: Don't allow spaces in pathname of site.url
+* *content-aggregator*: Decode characters in credentials parsed from URL for private content source (#489)
+* *content-aggregator*: Remove empty embedded auth (i.e., credentials) from content source URL (#485)
+* *content-aggregator*: Encode spaces in the file.src.editUrl property for files in the content aggregate (#491)
+* *content-classifier*: Encode spaces in the file.pub.url property for files in the content catalog (#491)
+* *asciidoc-loader*: Resolve correct value for page-component-display-version attribute (#480)
+* *ui-loader*: Emit specific message when remote UI bundle can't be found / downloaded (#466)
+* *redirect-producer*: Enclose paths in an nginx rewrite rule in quotes to escape spaces (instead of escaping with backslash) (#492)
+
+== 2.1.1 (2019-09-09)
+
+=== Changed
+
+* Upgrade dependencies
+*page-composer*: Allow site.url in playbook to be a pathname (i.e., root-relative path) (#478)
+*page-composer*: Site site.path in UI model to empty string if site.url in playbook is a pathname (#478)
+*redirect-producer*: Build redirects even when site.url in playbook is a pathname (#478)
+*site-mapper*: Skip site mapping unless site.url in playbook is an absolute URL (#478)
+
+=== Fixed
+
+* *playbook-builder*: Map git.ensure_git_suffix key in playbook schema and deprecate git.ensureGitSuffix key (#477)
+* *playbook-builder*: Validate value of site.url key in playbook is an absolute URL or pathname (i.e., root-relative path) (#479)
+* *content-aggregator*: Set the mtime of files read from git to undefined instead of an invalid date (#471)
+* *ui-bundle*: Set the mtime of supplemental UI files created from the playbook to undefined instead of an invalid date (#471)
+
+== 2.1.0 (2019-08-27)
+
+_No changes since previous release._
+
+== 2.1.0-rc.1 (2019-08-26)
+
+=== Added
+
+* *asciidoc-loader*: Allow resource ID spec to be used in target of image macro (#228)
+* *asciidoc-loader*: Set page-component-display-version attribute on each AsciiDoc file (#465)
+* *asciidoc-loader*: Assign implicit page attributes for navigation files (AsciiDoc files in nav family) (#430)
+
+=== Changed
+
+* *content-aggregator*: Add git.ensureGitSuffix key (default: true) to playbook to control whether git client appends .git suffix to URL if absent (#414)
+* *content-classifier*: Make assets parent folder optional for images and attachments (#464)
+* *asciidoc-loader*: Preserve content (i.e., linked text) of unresolved page reference (#421)
+* *asciidoc-loader*: Put unresolved page ID spec in fragment identifier of link (e.g., `href="#unresolved.adoc`) (#421)
+* *asciidoc-loader*: Add "unresolved" role (i.e., class) to unresolved page reference (#421)
+* *navigation-builder*: Add `unresolved: true` property to the navigation entry of an unresolved page reference (#421)
+* *page-composer*: Prepend site path (pathname of site URL) to siteRootPath and uiRootPath on 404 page (#258)
+
+=== Fixed
+
+* *page-composer*: Assign pathname of site URL (if specified) to the site.path property in UI model; use empty value if pathname is / (#258)
+* *redirect-producer*: Trim trailing slash from site URL before extracting path to use as prefix for paths in rewrite rule (#468)
+
+== 2.0.1 (2019-08-22)
+
+=== Changed
+
+* Upgrade dependencies
+
+=== Fixed
+
+* *content-aggregator*: Delete empty repository in cache if clone fails (#455)
+* *content-aggregator*: Disallow path segments in component name (#459)
+* *content-classifier*: Warn instead of abort if start page for site or component version cannot be resolved (#456)
+* *content-classifier*: Clean path segment of resource ID (remove self references, parent references, and repeat separators) (#457)
+* *content-classifier*: Prevent page alias from referencing itself through the use of self references, parent references, and/or repeat separators (#457)
+* *content-classifier*: Allow path (i.e., relative) of xref target to begin with @ (#433)
+* *asciidoc-loader*: Verify xref target is publishable; otherwise, leave unresolved (#434)
+* *asciidoc-loader*: Fix reference to page from nav file that has same root-relative path as nav file (#463)
+* *asciidoc-loader*: Report correct line number when include target or tag cannot be resolved (#462)
+* *page-composer*: Use URL of most recent non-prerelease version of page as canonical URL (#315)
+* *redirect-producer*: Escape spaces in paths of redirect rule (#458)
+
+== 2.0.0 (2018-12-25)
+
+=== Added
+
+* *asciidoc-loader*: Emit error message if target of include is not found (#393)
+* What's New page for Antora 2.0 release (#366)
+* *ADR*: Add ADR 0012: Add TOML, Drop CSON (#392)
+* Add Security Bulletins page (#350)
+
+== 2.0.0-rc.3 (2018-12-25)
+
+=== Added
+
+* *asciidoc-loader*: Implement include tag warnings (#389)
+* *ADR*: Add ADR 0010: Replace Git Client describing decision to replace nodegit with isomorphic-got (#380)
+* *ADR*: Add ADR 0011: Align Node.js Support with Node.js LTS Schedule (#381)
+
+=== Changed
+
+* Upgrade dependencies
+* Migrate project build to Gulp 4 (#370)
+* *playbook-builder*: Remove `ANTORA_PLAYBOOK` environment variable.
+* *playbook-builder*: Rename runtime.pull option to runtime.fetch (still honoring the old name, if specified) (#391)
+* *content-aggregator*: Don't show clone progress after authentication credentials were rejected during fetch
+* *asciidoc-loader*: Allow doctype option to be set in AsciiDoc config (#376)
+* *cli*: Rename --pull option to --fetch (still honoring the old name, if specified) (#391)
+* Move project roadmap to docs.antora.org and update for 2019 (#223)
+* Replace CSON references with TOML references in documentation (#387)
+
+=== Fixed
+
+* *content-aggregator*: Set src.origin.private property on file to correct value even when runtime.pull not enabled (#375)
+* *content-aggregator*: Fix logic for adapting custom credential manager and add tests
+* *asciidoc-loader*: Enforce max include depth constraint to prevent hang if file includes itself (#383)
+* *asciidoc-loader*: Split tags on either comma or semi-colon, but not both (comma wins) (#389)
+* *navigation-builder*: Force doctype of navigation file to be article (#376)
+
+== 2.0.0-rc.2 (2018-12-17)
+
+=== Changed
+
+* Upgrade dependencies
+* *playbook-builder*: Remove workaround for updating map from pairs passed using CLI args
+
+=== Fixed
+
+* *content-aggregator*: Remove workarounds for bug in isomorphic-git that was causing hang when indexing pack files
+
+== 2.0.0-rc.1 (2018-12-11)
+
+=== Added
+
+* *playbook-builder*: Add support for playbook files written in TOML (#365)
+* *page-composer*: Set page.displayVersion property in UI model (#362)
+
+=== Changed
+
+* Upgrade dependencies
+
+=== Fixed
+
+* *content-aggregator*: Convert file mode to octal when reading file from git repository (#359)
+* *content-aggregator*: Honor umask when setting file permission of file read from git repository (#364)
+* *content-aggregator*: Fix shallow cloning for repositories with a large number of branches (#360)
+
+=== Removed
+
+* _(breaking)_ *playbook-builder*: Drop support for playbook files written in CSON (#365)
+
+== 2.0.0-beta.1 (2018-12-07)
+
+=== Added
+
+* Add support for Node.js 10
+* *playbook-builder*: Map `content.tags` in playbook schema
+* *playbook-builder*: Allow git credentials file path or contents to be configured using `git.credentials` key (path or contents) in playbook (#264)
+* _(breaking)_ *playbook-builder*: Rename `PLAYBOOK` environment variable to `ANTORA_PLAYBOOK`
+* *content-aggregator*: Read credentials for private repository from git credential store file by default ($HOME/.git-credentials or $XDG_CONFIG_HOME/git/credentials) (#264)
+* *page-composer*: Add next, previous, and parent properties to the page UI model to access adjacent pages (#233)
+* *cli*: Add `--git-credentials-path` option and `GIT_CREDENTIALS_PATH` environment variable to override location of git credential store file (#264)
+* *cli*: Read git credentials from `GIT_CREDENTIALS` environment variable, if set (#264)
+* *asciidoc-loader*: Pass attributes defined on xref to converter (#290)
+
+=== Changed
+
+* *content-aggregator*: Replace nodegit with isomorphic-git as git client library (#264)
+* *content-aggregator*: Make credential manager pluggable (assign credentialManager property to git core named "antora") (#264)
+* *content-aggregator*: Automatically coerce a git SSH URL into an HTTPS URL (#264)
+* *content-aggregator*: Put cloned repositories in a version folder under cache dir (#264)
+* *page-composer*: Remap `page.versions.latest` as `page.latest` in UI model (#325)
+* *asciidoc-loader*: Upgrade to Asciidoctor.js 1.5.9 (#290)
+* *asciidoc-loader*: Set partial-option attribute when pushing include onto stack (#290)
+* *asciidoc-loader*: Set docname attribute to file.src.relative minus the file extension (#290)
+* Upgrade dependencies
+
+=== Removed
+
+* _(breaking)_ *content-aggregator*: Drop support for SSH as a transport protocol / authentication mechanism (#264)
+
+== 1.1.1 (2018-09-17)
+
+=== Added
+
+* *page-composer*: Make latest page version accessible from UI model as `page.versions.latest` (#307)
+* *page-composer*: Set the `latest` property on the latest version in the `page.versions` collection in the UI model (#307)
+* *asciidoc-loader*: Assign `site-url` and `site-title` AsciiDoc attributes if site url and title are set in playbook, respectively (#304)
+* *asciidoc-loader*: Assign `page-version` AsciiDoc attribute as alias for `page-component-version` attribute
+
+=== Changed
+
+* *content-classifier*: Add default family argument to parseResourceId and resolveResource functions
+* *asciidoc-loader*: Assign site-wide built-in AsciiDoc attributes in resolveConfig instead of loadAsciiDoc
+* Upgrade dependencies
+
+=== Fixed
+
+* *content-classifier*: Allow a page alias to reference any component or component version, regardless of whether they exist in the catalog (#303)
+* *asciidoc-loader*: Fix memory leak caused by Asciidoctor converter extension (#306)
+* *asciidoc-loader*: Fix memory leak caused by custom Asciidoctor extensions registered using the DSL (#306)
+* *asciidoc-loader*: Leave include unresolved if target matches resource ID but family segment is missing (#297)
+
+== 1.1.0 (2018-08-28)
+
+=== Added
+
+* *content-aggregator*: Compute edit URLs for pages sourced from repositories hosted at pagure.io (#283)
+* *content-classifier*: Look for partial files in the partials folder directly under the module folder (in addition to pages/_partials) (#254)
+* *content-classifier*: Add additional methods to content catalog: getComponentsSortedBy(), getComponentMap(), getComponentMapSortedBy() (#253)
+* *content-classifier*: Add ContentCatalog#getComponentVersion(component, version) method (#287)
+* *content-classifier*: Allow display version to be set in component descriptor using `display_version` key; assign `displayVersion` property to component version object (#288)
+* *content-classifier*: If the `prerelease` key is set in component descriptor and the display version is not set, automatically compute display version and assign to `displayVersion` property on component version object (#288)
+* *content-classifier*: Add parseResourceId function to parse resource ID (`version@component:module:family$path`) (#226)
+* *content-classifier*: Add resolveResource function and ContentCatalog#resourceResource method to resolve resource file object from resource ID (#226)
+* *content-classifier*: Remove parsePageId and resolvePage functions (replaced by parseResourceId and resolveResource, respectively) (#226)
+* *asciidoc-loader*: Allow resource ID to be specified in target of include directive (unless target begins with `\{partialsdir}` or `\{examplesdir}`) (#226)
+* *asciidoc-loader*: Attach context of current file to file property on Asciidoctor reader (#226)
+* *navigation-builder*: Attach navigation (set) to each component version object to make it accessible via UI template (#281)
+* *page-composer*: Pass the source origin information for a page to the UI model as `page.origin` (#293)
+* *cli*: Add `--generator` option to specify a custom site generator library or script (#178)
+
+=== Changed
+
+* *content-aggregator*: Set component title to component name if title is not defined
+* *content-classifier*: Skip component version flagged as prerelease when determining latest version unless all versions are prereleases (#287)
+* *content-classifier*: Rename ContentCatalog#addComponentVersion(...) method to ContentCatalog#registerComponentVersion(...) (#287)
+* *content-classifier*: Change arguments of ContentCatalog#registerComponentVersion(...) to `name, version, { title, prerelease, startPage } = {}` (#287)
+* *content-classifier*: Rename latestVersion property on component version to latest; add alias for latestVersion (#287)
+* *page-composer*: Set canonicalUrl to qualified URL of latest page version unless version is a prerelease (#287)
+* *page-composer*: Look up page version using ContentCatalog#getById(resourceId) instead of ContentCatalog#findBy(criteria) (#287)
+* *page-composer*: Assign components to `site.components` as a map instead of an array (#253)
+
+=== Fixed
+
+* *content-aggregator*: Coerce component name to a string
+
+== 1.0.3 (2018-08-07)
+
+=== Fixed
+
+* *navigation-builder*: Preserve list items in navigation tree that are siblings of open blocks (#265)
+
+== 1.0.2 (2018-08-06)
+
+=== Improved
+
+* *content-aggregator*: Include start path and name of reference in error messages that pertain to antora.yml (#267)
+* *content-aggregator*: Honor HEAD branch name when using remote URL (resolves to default branch) (#272)
+* *content-aggregator*: Use worktree when branch is HEAD and repository is not on a branch (#279)
+* *content-aggregator*: Show informative message when start path in content repository doesn't exist or isn't a directory (#274)
+* *navigation-builder*: Allow navigation sublists to be enclosed in open blocks (#265)
+* *cli*: Recommend adding the --stacktrace option when the CLI exits with an error (#273)
+* *playbook-builder*: Upgrade convict and remove workarounds for environment isolation and parsing custom data formats
+* *redirect-producer*: Add directory redirects to Netlify redirect config for URLs ending in /index.html when using default HTML URL extension style (#278)
+* Upgrade dependencies
+
+=== Fixed
+
+* *content-aggregator*: CLI --attribute option updates map of attributes defined in playbook file instead of replacing it (#250)
+* *content-aggregator*: Fix crash when resolving HEAD reference by copying branches array before modifying it (#261)
+* *content-aggregator*: Convert ref patterns (branches and tags) defined in playbook to strings (#262)
+* *content-aggregator*: Remove authentication credentials from repository URL when used in error messages (#270)
+* *content-aggregator*: Fetch all tags when the runtime pull option is enabled (#271)
+
+=== Documented
+
+* A .nojekyll file must be used to publish an Antora-generated site to GitHub Pages (#194)
+* Explain how to use private content repositories with Antora (#139)
+* Share trick to prevent Antora from using the worktree for a local URL (#236)
+* Branches remain enabled even when tags are set
+* Packages required to install/recompile nodegit on RHEL
+
+== 1.0.1 (2018-05-06)
+
+=== Improved
+
+* *asciidoc-loader*: Upgrade to Asciidoctor.js from 1.5.6-rc.1 to 1.5.6 (final)
+* *asciidoc-loader*: Don't register include in catalog (to avoid mangling page references)
+* *content-aggregator*: Add support for basic authentication tokens in a git URL (#238)
+* *ui-loader*: Allow keys in the UI descriptor to be written in snake_case (#245)
+* *page-composer*: Add entry for current page to breadcrumbs when page is discrete (a page not present in navigation tree) (#243)
+
+=== Fixed
+
+* *playbook-builder*: Recognize .yaml as a valid YAML extension for a playbook file (when specified explicitly) (#229)
+* *content-aggregator*: Don't select branches that match the name of internal properties (store branches in a Map) (#241)
+* *page-composer*: Ignore fragment in URL of navigation entry when comparing URLs to resolve breadcrumb path (#244)
+
+== 1.0.0 (2018-03-31)
+
+* First stable release!
+
+=== Changed
+
+* *site-publisher*: The publishSite function returns an array of report objects collected from calling the destination providers
+* *site-publisher*: The destination provider functions are expected to return a report object
+* *site-publisher*: The built-in destination providers (fs and archive) return a report object that contains publishing information
+
+== 1.0.0-rc.2 (2018-03-30)
+
+=== Added
+
+* *ui-loader*: Use outputDir specified in ui.yml of bundle if ui.outputDir is not specified in playbook
+
+=== Changed
+
+* *playbook-builder*: Remove automatic migration of legacy ui keys in playbook data
+* *content-classifier*: Change compareVersion function to compare non-semantic versions as strings
+* *content-classifier*: Change compareVersion function to always prefer a non-semantic version over a semantic version
+* *content-classifier*: Change compareVersion function to take into account prerelease identifiers
+* *content-classifier*: Don't publish underscore files (files with a filename that starts with an underscore or files below a directory that starts with an underscore)
+* *content-classifier*: Don't drop _attributes.adoc files found inside pages directory from content catalog
+* *asciidoc-loader*: Lock version of Asciidoctor.js to 1.5.6-rc.1
+* *document-converter*: Don't convert documents that are not published (don't have an out property)
+* *site-mapper*: Change mapSite to accept a collection of pages (virtual files) instead of the content catalog
+* Lock version of image used for CI job to prevent future CI outages
+* Remove commitlint
+
+=== Fixed
+
+* *content-classifier*: Only fail to register a component version if version number is an exact match of a registered version
+
+=== Documentation
+
+* *redirect-producer*: Add architecture guidebook for redirect producer component
+* Document how to register Asciidoctor extensions
+* Document the `page-partial` attribute and including standard pages and example files
+* Document ability to set AsciiDoc page attributes in the playbook and via the CLI
+* Expand documentation for content navigation, including assembly, file structure, functionality, and registration
+
+== 1.0.0-rc.1 (2018-03-27)
+
+=== Added
+
+* *asciidoc-loader*: Pass information from src property on page available to AsciiDoc document via document attributes
+* *page-composer*: Make environment variables available to UI templates by assigning to `env` variable of UI model
+
+=== Changed
+
+* *playbook-builder*: Allow Google Analytics key to be set using GOOGLE_ANALYTICS_KEY environment variable
+* *page-composer*: Move antoraVersion property from site to top-level variable in UI model
+* *page-composer*: Prepare a sparse UI model for the 404 page
+* *site-generator-default*: Create and compose a 404 page if the `site.url` key is set in the playbook
+* *site-generator-default*: Remove unhandled rejection listener; move to CLI, but leave disabled
+
+== 1.0.0-beta.3 (2018-03-23)
+
+=== Added
+
+* *content-aggregator*: Interpret string branches and tags patterns defined on a content source as CSV (e.g., `main, v*`)
+* *page-composer*: Bind Antora version to antoraVersion variable in UI model
+* *default-ui*: Add support for additional languages in highlight.js configuration (Kotlin, Scala, Haskell, and nix)
+* *demo*: Upgrade playbook for demo site to use the latest Antora features
+* *demo*: Create two versions in Demo Component B to demonstrate the component selector drawer and page version selector in default UI
+
+=== Changed
+
+* *content-aggregator*: Name folder of cloned repository using pattern <basename>-<sha1>.git
+* *content-aggregator*: No longer necessary to posixify path from git tree
+* *asciidoc-loader*: Upgrade to Asciidoctor.js 1.5.6-rc.1 and switch to public API where possible
+* Upgrade dependencies
+
+=== Fixed
+
+* *content-aggregator*: Only clone each remote content source once (group operations that share the same URL)
+* *cli*: Fix duplicate error prefix when site generator is not found
+* *default-ui*: Isolate expand/collapse state for each nav menu
+* *default-ui*: Fix Google Tag Manager (gtag) script
+* *default-ui*: Link to correct component version in root navigation and breadcrumb entries
+* Correct `site.start_page` and component descriptor `start_page` page IDs in documentation examples
+* Correct `sources.branches` key YAML syntax; when branch names are in a comma-separated list, the list must be enclosed in square brackets (`[]`)
+
+== 1.0.0-beta.2 (2018-03-13)
+
+=== Added
+
+* *playbook-builder*: Add `runtime.pull` key to playbook schema to control whether remote resources are pulled
+* *playbook-builder*: Map `runtime.pull` playbook key to `--pull` CLI flag
+* *redirect-producer*: Add Netlify redirect facility to redirect producer (activate by setting `urls.redirect_facility` to `netlify`)
+
+=== Changed
+
+* *playbook-builder*: Remap `ui.bundle` key to `ui.bundle.url`
+* *playbook-builder*: Remap `ui.start_path` key to `ui.bundle.start_path`
+* *playbook-builder*: Update description of `urls.html_url_extension_style` key
+* *playbook-builder*: Update description of `asciidoc.attributes` key
+* *content-aggregator*: Only run fetch operation on cached repository if runtime pull option is enabled
+* *content-aggregator*: Move all but first argument to openOrCloneRepository function to option hash
+* *content-aggregator*: Make transfer progress callback asynchronous so progress bar updates don't affect transfer
+* *ui-loader*: Always download UI bundle from URL if runtime pull option is enabled and bundle is marked as a snapshot
+* *ui-loader*: Read bundle URL from `ui.bundle.url` key in playbook
+* *ui-loader*: Read bundle start path from `ui.bundle.start_path` key in playbook
+* *cli*: Rename `--ui-bundle` option to `--ui-bundle-url`
+
+=== Fixed
+
+* *content-aggregator*: Show friendly error message along with repository URL when clone fails
+
+== 1.0.0-beta.1 (2018-03-07)
+
+=== Added
+
+* *content-aggregator*: Allow content to be aggregated from tags in a content repository
+* *content-classifier*: Add ContentCatalog#getSiteStartPage method
+* *page-composer*: Set `site.homeUrl` variable in UI model if site start page is set
+* *page-composer*: Set `page.home` variable in UI model; true if page is site start page (page URL matches `site.homeUrl`)
+
+=== Changed
+
+* *content-aggregator*: Don't select all branches if branch pattern is undefined
+* *content-aggregator*: Use blob action instead of edit action in `src.editUrl` for files taken from tag
+* *content-aggregator*: Pass tag patterns to selectRefs (read from `tags` on content source or shared content key)
+* *content-aggregator*: Rename selectBranches function to selectRefs and change return value of selectRefs to include ref type
+
+== 1.0.0-alpha.9 (2018-03-06)
+
+=== Added
+
+* *playbook-builder*: Add key to playbook schema to control how HTTP redirects are produced (`urls.redirect_facility`)
+* *content-aggregator*: Honor `runtime.quiet` and `runtime.silent` flags if set in playbook (don't show progress bars)
+* *content-aggregator*: Add progress bar for all git operations using multi-progress (only activate when running in a tty)
+* *content-classifier*: Add support for alias files (family=alias) in content catalog
+* *content-classifier*: Add ContentCatalog#registerPageAlias method for adding an alias for a page
+* *document-converter*: Register aliases defined in page-aliases document attribute with content catalog
+* *redirect-producer*: Add component responsible for generating HTTP redirects to a page from its registered aliases
+
+=== Changed
+
+* *content-aggregator*: Require runtime property to be set in playbook in content aggregator
+* *content-classifier*: Move parsePageId function from asciidoc-loader to content-classifier
+* *content-classifier*: Move resolvePage function from asciidoc-loader to content-classifier
+* *content-classifier*: Add ContentCatalog#resolvePage method (delegates to resolvePage function)
+* *content-classifier*: Move computation of pub and out properties to ContentCatalog#addFile
+* *content-classifier*: Skip files in aggregate which cannot be classified
+* *content-classifier*: Use ContentCatalog#resolvePage to resolve start page for component version and site
+* *content-classifier*: Store select settings from playbook in ContentCatalog (htmlUrlExtensionStyle)
+* *content-classifier*: Rename ContentCatalog#registerComponentVersion to ContentCatalog#addComponentVersion
+* *content-classifier*: Move resolveStartPageUrl logic into ContentCatalog#addComponentVersion
+* *content-classifier*: Don't call getById in ContentCatalog#resolvePage if component not found
+* *site-mapper*: Rename generateSitemaps function to mapSite function in site mapper component
+* Clean up tests and add additional coverage
+
+=== Fixed
+
+* *content-aggregator*: Report URL of repository when component descriptor is missing or invalid
+* *content-classifier*: Use fallback URL for component version if implicit start page is missing (and no start page has been set)
+* *content-classifier*: Report location of file when attempt is made to add duplicate file to catalog
+* *playbook-builder*: Remove obsolete keys
+
+== 1.0.0-alpha.8 (2018-02-27)
+
+=== Added
+
+* *content-aggregator*: Make cache directory configurable; default to antora folder in user cache directory
+* *ui-loader*: Make cache directory configurable; default to antora folder in user cache directory
+* *playbook-builder*: Add `runtime.cache_dir` property to playbook schema; can be set using `ANTORA_CACHE_DIR` environment variable
+* *cli*: Add `--cache-dir` CLI option for setting the cache directory
+* *document-converter*: Introduce convertDocuments function to encapsulate conversion of documents from AsciiDoc to embeddable HTML
+
+=== Changed
+
+* Allow paths in playbook to be anchored to various locations
+ ** Expand leading `.` segment to directory of playbook file
+ ** Expand leading `~` segment to user home directory
+ ** Expand leading `~+` segment to current working directory
+ ** BREAKING: Resolve unanchored path relative to current working directory
+* Delegate to new @antora/expand-path-helper module to expand relative path to absolute path
+* *content-aggregator*: Add dependency on @antora/expand-path-helper and cache-directory
+* *ui-loader*: Add dependency on @antora/expand-path-helper and cache-directory
+* *site-publisher*: Add dependency on @antora/expand-path-helper
+* Set NODE_ENV=test when running tests
+* Document extra package requirement for installing on Alpine
+
+=== Fixed
+
+* *content-aggregator*: Make URI and drive letter regular expressions more accurate so SSH URIs aren't mistaken for local directory paths
+* *cli*: Don't show default value for CLI option if value is object
+
+== 1.0.0-alpha.7 (2018-02-20)
+
+=== Added
+
+* *playbook-builder*: Allow global AsciiDoc attributes to be defined via the playbook (`asciidoc.attributes`)
+* *playbook-builder*: Allow global and scoped AsciiDoc extensions to be defined via the playbook (`asciidoc.extensions`)
+* *cli*: Add support for defining global AsciiDoc attributes using a CLI option (`--attribute`)
+* *cli*: Add a CLI option for preloading scripts or node modules (`--require`)
+* *asciidoc-loader*: Introduce resolveConfig function to resolve AsciiDoc configuration object from playbook
+* *asciidoc-loader*: Define API on extension functions (`register(registry, context)`) to allow extensions to self-register
+* *asciidoc-loader*: Register scoped extensions defined in playbook with the extension registry (per processor instance)
+* *site-publisher*: Add architecture guidebook
+* *site-mapper*: Add architecture guidebook
+* Define and document the software versioning and maintenance policy
+
+=== Changed
+
+* *asciidoc-loader*: Modify loadAsciiDoc function to accept AsciiDoc configuration object
+* *asciidoc-loader*: Reorder parameters of convertDocument function; fold opts into AsciiDoc config
+* *asciidoc-loader*: Use public Asciidoctor.js API where possible
+* *document-converter*: Modify convertDocument function to accept AsciiDoc configuration object
+* *document-converter*: Reorder parameters of convertDocument function
+* *document-converter*: Reorder parameters of buildNavigation function
+* *navigation-builder*: Modify buildNavigation function to accept AsciiDoc configuration object
+* *navigation-builder*: Use public Asciidoctor.js API where possible
+* *site-generator-default*: Add dependency on asciidoc-loader component
+* *site-generator-default*: Use AsciiDoc loader to resolve AsciiDoc configuration object
+* *site-generator-default*: Pass AsciiDoc configuration object through pipeline instead of raw AsciiDoc attributes
+* *site-generator-default*: Remove unnecessary async keywords
+* *playbook-builder*: Move definition of custom formats in playbook schema to dedicated function
+* *cli*: Show full stacktrace if site generator fails to load and --stacktrace option is specified
+* *cli*: Delegate to function to exit with error message
+* Write all regular expressions using shorthand notation
+* Set cache directory for nyc explicitly
+* Upgrade dependencies
+
+=== Fixed
+
+* *playbook-builder*: Remove warning about coffee-script when installing the default site generator package
+* When requiring modules, only pass starting paths (with node_modules as last segment) to require.resolve
+
+== 1.0.0-alpha.6 (2018-02-09)
+
+=== Added
+
+* *docs*: Add Getting Help section to README
+* *content-aggregator*: Assign src.editUrl property on file if applicable
+* *page-composer*: Pass defined site.keys to UI model (as site.keys)
+* *page-composer*: Pass edit URL for page to UI model (as page.editUrl)
+* *playbook-builder*: Add ui.supplemental_files property to playbook schema
+* *ui-loader*: Append supplemental files to UI bundle
+
+=== Changed
+
+* *docs*: Prepare documentation for initial publication to docs.antora.org
+* *content-aggregator*: Report accurate messages if local directory doesn't exist or isn't a git repository (@benignbala)
+* *content-aggregator*: Move src.origin.git property to src.origin with type qualifier property
+* *content-aggregator*: Share src.origin data between files taken from the same branch
+* *content-aggregator*: Set src.origin.url to absolute repository path if remote url can't be resolved
+* *content-aggregator*: Add src.origin.worktree flag for files taken from worktree
+* *content-aggregator*: Force set remote name to 'origin' when using repository from cache
+* *content-aggregator*: Use async operation to remove cached repository directory
+* *content-aggregator*: Remove local branch created by nodegit in cached (bare) repository
+* *ui-loader*: Improve how UI bundle is loaded
+
+=== Fixed
+
+* *asciidoc-loader*: Output correct href value for self-referencing page reference (with and without fragment)
+* *content-aggregator*: Prefer remote branches over local branches in a bare repository
+* *site-generator-default*: Await function calls properly to avoid unhandled promise rejections
+
+== 1.0.0-alpha.5 (2018-02-01)
+
+=== Added
+
+* *site-mapper*: First release of component
+* *site-generator-default*: Add support for site start page defined in playbook (redirect from index.html)
+
+=== Changed
+
+* Resolve relative paths in playbook relative to directory of playbook file (playbook.dir)
+* *content-aggregator*: Append .git to the bare repository folder in the content cache
+* *content-classifier*: Don't set pub.absoluteUrl property on virtual content files
+* *asciidoc-loader*: Default to latest version of component when resolving a page reference
+* *playbook-builder*: Set file and dir properties on playbook model
+* *playbook-builder*: Make playbook file optional (still required by CLI)
+* Switch Gulp build from minimist to yargs-parser for parsing CLI arguments
+
+=== Fixed
+
+* *content-aggregator*: Clean value of start path on content source data
+* *content-aggregator*: Make URI and drive letter regular expressions more accurate
+
+== 1.0.0-alpha.4 (2018-01-28)
+
+=== Changed
+
+* Fixed release process to publish README in correct format
+
+== 1.0.0-alpha.3 (2018-01-28)
+
+=== Added
+
+* *site-publisher*: First release of component
+* *content-aggregator*: Recognize HEAD and . in playbook as placeholder for current branch
+* Update installations instructions in README to cover Windows
+* Add AppVeyor CI build for testing on Windows
+* Configure CI to automate releases
+* Document in README how to use serve package to preview site through local web server
+* Document the base build tools required on Linux and macOS in README
+
+=== Changed
+
+* *content-aggregator*: Only select git references which are branches
+* *ui-loader*: Switch from download to got
+* Replace chai-as-promised with async/await in test suite
+
+=== Fixed
+
+* Make code portable to Windows
+* Compute correct URL path for self-referencing index page
+
+== 1.0.0-alpha.2 (2018-01-28)
+
+* Release failed to complete
+
+== 1.0.0-alpha.1 (2018-01-12)
+
+* Initial alpha release

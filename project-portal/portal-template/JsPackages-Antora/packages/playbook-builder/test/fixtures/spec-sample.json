@@ -1,0 +1,21 @@
+// line comments are supported
+{
+    "ext": ".json",
+    "one": {
+        "one": "1"
+    },
+    "two": 42,
+    "three": false,
+    "four": [
+        {
+            // keys don't have to be quoted
+            // string values can be enclosed in single quotes
+            name: 'John',
+            lastname: 'Lennon'
+        },
+        {
+            "name": "Paul",
+            "lastname": "McCartney"
+        },
+    ],
+}

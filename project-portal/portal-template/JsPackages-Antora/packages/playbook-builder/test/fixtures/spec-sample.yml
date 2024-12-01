@@ -1,0 +1,10 @@
+ext: .yml
+one: !!map
+  one: '1'
+two: 42
+three: false
+four: !!seq
+- name: John
+  lastname: Lennon
+- name: Paul
+  lastname: McCartney

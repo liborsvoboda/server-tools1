@@ -1,0 +1,53 @@
+{
+  "private": true,
+  "name": "antora-build",
+  "version": "3.1.9",
+  "description": "The development build for the Antora monorepo.",
+  "license": "MPL-2.0",
+  "author": "OpenDevise Inc. (https://opendevise.com)",
+  "homepage": "https://antora.org",
+  "repository": "gitlab:antora/antora",
+  "bugs": {
+    "url": "https://gitlab.com/antora/antora/issues"
+  },
+  "scripts": {
+    "build": "npm test && npm run lint",
+    "coverage": "nyc _mocha",
+    "deps": "node npm/validate-deps.js",
+    "format": "node npm/format.js packages/${npm_config_package},npm",
+    "lint": "eslint \"{docs,npm}/**/*.js\" \"packages/${npm_config_package:-*}/{lib,test}/**/*.js\"",
+    "prepareForDev": "node npm/prepare-for-dev.js",
+    "test": "_mocha",
+    "tidy": "npm run lint && npm run format && npm run deps",
+    "version": "node npm/version.js"
+  },
+  "devDependencies": {
+    "eslint": "~8.42",
+    "eslint-config-standard": "~17.1",
+    "mocha": "~10.4",
+    "nyc": "~15.1",
+    "prettier-eslint": "~16.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "nyc": {
+    "cache": true,
+    "cacheDir": "node_modules/.cache/nyc",
+    "include": [
+      "packages/*/{bin,lib}/**/*.js"
+    ],
+    "exclude": [
+      "packages/test-harness/lib/**/*.js"
+    ],
+    "reporter": [
+      "cobertura",
+      "lcov",
+      "text"
+    ],
+    "reportDir": "reports"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

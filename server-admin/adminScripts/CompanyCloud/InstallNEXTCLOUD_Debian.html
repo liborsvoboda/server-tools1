@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PJQPGJF');
+</script>
+<meta content='width=device-width, initial-scale=1' name='viewport'>
+<title>Installing and Configuring Nextcloud on Debian 12 | Reintech media
+</title>
+<meta content='Nextcloud, Debian 12, Install Nextcloud, Configure Nextcloud, Nextcloud setup, private cloud, Debian server
+' name='keywords'>
+<meta content='Step-by-step guide on installing and configuring Nextcloud on Debian 12 for creating a secure and private cloud service. Learn how to set up your server with Nextcloud.
+' name='description'>
+<meta name="twitter:site" content="@reintech_io"/>
+
+<meta content='no-cache' name='turbolinks-cache-control'>
+<script type='application/ld+json'>{"@context":"http://schema.org","@type":"SocialMediaPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://reintech.io/media"},"headline":"Installing and Configuring Nextcloud on Debian 12","image":["https://img.reintech.io/variants/pc3geuw6uzvsk9snhu1mglro3d9n/e7b4ce09c703210ab8f75b017c7eaf0951c5a95b737ee8120602845c1c1d944b"],"datePublished":"2024-01-16T12:00:18.044Z","dateModified":"2024-01-16T18:40:02.162Z","author":{"url":"/blog/author/arthur-c-codex","name":"Arthur C. Codex","@type":"Person"},"publisher":{"@type":"Organization","name":"Reintech"},"description":"Step-by-step guide on installing and configuring Nextcloud on Debian 12 for creating a secure and private cloud service. Learn how to set up your server with Nextcloud.","name":"Installing and Configuring Nextcloud on Debian 12","url":"/blog/installing-configuring-nextcloud-debian-12"}
+</script>
+<link href='https://reintech.io/assets/home_page/_src/icons/yellow_mini_logo-3f999b5e8c490b4112514a05955f538da06eab6279ba8e8e51dd1a7b324c6a38.svg' rel='icon' type='image/svg+xml'>
+<meta content='https://reintech.io/blog/installing-configuring-nextcloud-debian-12' property='og:url'>
+<meta content='website' property='og:type'>
+<meta content='Installing and Configuring Nextcloud on Debian 12 | Reintech media
+' property='og:title'>
+<meta content='Step-by-step guide on installing and configuring Nextcloud on Debian 12 for creating a secure and private cloud service. Learn how to set up your server with Nextcloud.
+' property='og:description'>
+<meta content='https://reintech.io/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBcXp2IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--056633b13cd4cc3b7b3f04089d7244164661c270/gew6pmsswbjlza3j81ackom6zid4
+' property='og:image'>
+<meta content='198317151088375' property='fb:app_id'>
+
+<link rel="stylesheet" media="all" href="https://reintech.io/assets/media-9268c510adbd4e86c6f424c06801e657cdf390c498ee2bf5f39ae97076ea82f8.css" data-turbolinks-track="reload" />
+<script src="https://reintech.io/assets/media-b680e16113d53598c8d654650b88ede118ccafbbde28eab631349d994eb3754d.js" data-turbolinks-track="reload"></script>
+<script src="https://reintech.io/packs/media-cebddf7827ee8085a268.js"></script>
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="1BnB8/0aytbxZy+prXXe8CyDUMDz/bKizLJ1VTs3Jbw1kxecI60bDiWvkD3TCJb5WwovXUL8agRbrd4MQeth6w==" />
+<link rel="stylesheet" href="/prism.css">
+<script src="/prism.js"></script>
+
+<meta content='article' property='og:type'>
+<meta content='Installing and Configuring Nextcloud on Debian 12' property='og:title'>
+<meta content='This guide provides detailed instructions on installing and configuring Nextcloud on a Debian 12 server. It covers system updates, Apache and PHP setup, database configuration, Nextcloud installation, Apache configuration, and finalizing the installation through the web interface.' property='og:description'>
+<meta content='2024-01-16 12:00:18 UTC' property='article:published_time'>
+<meta content='2024-01-16 18:40:02 UTC' property='article:modified_time'>
+<meta content='Arthur C. Codex' name='author'>
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+      "@type": "Organization",
+        "name": "Reintech",
+          "url": "https://reintech.io"
+            }
+              </script>
+<meta name="facebook-domain-verification" content="rp0my1g2g2hu5b1tprxk2c9zgac983" />
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital@0;1&display=swap" rel="stylesheet">
+
+
+</head>
+<body data-locale='en' data-turbolinks='false'>
+<header>
+<div class='media-header d-flex flex-wrap justify-content-between align-items-center'>
+<a class="logo" href="/blog"><img class="logo" alt="Reintech logo" src="https://reintech.io/assets/media/logotype-1f401e7d307c0b33313fa0492eefe277e22c7792bbcbcfcf5ea80fa0c74527ec.svg" />
+</a><a href="/"><span class='nav-media show-hide mr-2 ua active'>Home</span>
+</a><a class="nav-media active show-hide en" href="/login">Sign in</a>
+<a class="nav-media show-hide en" id="apply" target="_blank" href="/#contact_us">Contact us</a>
+<p class='drop hide-show'>
+<a aria-controls="header-menu" aria-expanded="false" data-toggle="collapse" role="button" href="#header-menu"><img alt="burger menu icon" src="https://reintech.io/assets/media/burgermenu_icon-663fcc7777349bda49a287fe585bc58b8ffdc83fcd4798983e5190fe64895a35.png" />
+</a></p>
+</div>
+<div class='collapse' id='header-menu'>
+<ul class='nav flex-column mt-4'>
+<li class='nav-item'>
+<a class="nav-link menu-link en" href="/login">Sign in</a>
+</li>
+<div class='dropdown-divider'></div>
+<li class='nav-item'>
+<a class="nav-link menu-link en" target="_blank" href="/#contact_us">Contact us</a>
+</li>
+<div class='dropdown-divider'></div>
+<li class='nav-item'>
+<a class="nav-link menu-link en" href="/">Home</a>
+</li>
+<div class='dropdown-divider'></div>
+<li class='nav-item'>
+<div class='d-flex justify-content-between'>
+<span class='nav-link menu-link en active active_language'>English</span>
+<a class="nav-link menu-link ua default" href="/media">Українська</a>
+</div>
+</li>
+</ul>
+</div>
+
+</header>
+<main role='main'>
+<script src='https://www.google.com/recaptcha/api.js?render=6LcfZQMqAAAAAKmlFt71BZCG0ksF1W8SmvHmEZC-'></script>
+<div class='main-media-page'>
+<div class='categories d-flex'>
+<a class="btn btn-outline-primary grey-btn mr-2 active en" type="button" href="/blog">All</a>
+<a class="btn btn-outline-primary grey-btn mr-2  en" type="button" href="/blog/recruiting-remote-developers">Recruiting</a>
+<a class="btn btn-outline-primary grey-btn mr-2  en" type="button" href="/blog/developers">Engineering</a>
+<a class="btn btn-outline-primary grey-btn mr-2  en" type="button" href="/blog/career">Career</a>
+<a class="btn btn-outline-primary grey-btn mr-2  en" type="button" href="/blog/managing-remote-developers">Managing</a>
+<a class="btn btn-outline-primary grey-btn mr-2  en" type="button" href="/blog/soft-skills">Soft Skills</a>
+<a class="btn btn-outline-primary grey-btn mr-2  en" type="button" href="/blog/success-stories">Success stories</a>
+</div>
+</div>
+<div class='show-media-page'>
+<div class='row main-content'>
+<div class='main-post col-lg-8'>
+<div class='main-post'>
+<div class='post-information d-flex flex-wrap align-items-center'>
+<span class='mr-3 mb-1 mt-1 grey'>January 16, 2024</span>
+<span class='mr-3 mb-1 mt-1 grey en'>1 min read</span>
+<span class='mr-3 mb-1 mt-1 grey d-none en'>views 10456</span>
+<span class='mr-3 mb-1 mt-1 grey en'><a href="/blog/author/arthur-c-codex">Arthur C. Codex</a></span>
+<a href="/blog/installing-configuring-nextcloud-debian-12#chats-box"><span class='mr-3 mb-1 mt-1 grey en'>chats: 6</span>
+</a><a type="button" class="mb-1 mt-1 en" href="/blog/developers"><span class='mr-2 purple en'>Engineering</span>
+</a><a type="button" class="mb-1 mt-1 en" href="/blog?technology=devops"><span class='mr-2 green en'>DevOps</span>
+</a><div data-react-class="media/Heart" data-react-props="{&quot;post_id&quot;:&quot;5140&quot;,&quot;ids&quot;:[],&quot;count&quot;:522,&quot;main&quot;:true,&quot;locale&quot;:&quot;en&quot;}" data-react-cache-id="media/Heart-0" class="wrapper-small-heart-main"></div>
+
+</div>
+
+<h1 class='mt-1 en'>Installing and Configuring Nextcloud on Debian 12</h1>
+<div class='post-body'>
+<p>Nextcloud is a powerful, open-source software solution for file hosting and sharing, offering similar functionalities to Dropbox and Google Drive, but with the benefit of having full control over your data. Installing and configuring Nextcloud on Debian 12 ensures that you have a secure and private cloud service. This guide will walk you through the steps necessary to set up Nextcloud on your Debian 12 server.<p><img class="img-fluid main-image" alt="Installing and Configuring Nextcloud on Debian 12 image" src="https://img.reintech.io/variants/pc3geuw6uzvsk9snhu1mglro3d9n/e7b4ce09c703210ab8f75b017c7eaf0951c5a95b737ee8120602845c1c1d944b" /></p></p>
+<h2>Prerequisites</h2>
+<ul>
+  <li>A server running Debian 12.</li>
+  <li>Root or sudo user privileges.</li>
+  <li>Apache or Nginx web server (Apache will be used in this guide).</li>
+  <li>PHP and its extensions.</li>
+  <li>MariaDB or MySQL database.</li>
+</ul>
+<h2>Step 1: Update System Packages</h2>
+<pre><code class="language-sh">apt update && apt upgrade -y</pre></code>
+<p>Ensure your system is up-to-date before proceeding with the installation.</p>
+<h2>Step 2: Install Apache Web Server</h2>
+<pre><code class="language-sh">apt install apache2 libapache2-mod-php -y</pre></code>
+<p>After the installation, enable Apache to start on boot and start the service:</p>
+<pre><code class="language-sh">systemctl enable apache2
+systemctl start apache2</pre></code>
+<h2>Step 3: Install PHP and Required Extensions</h2>
+<p>Nextcloud requires PHP and certain PHP extensions to function correctly. Install them using the following command:</p>
+<pre><code class="language-sh">apt install php php-gd php-json php-mysql php-curl php-mbstring php-intl php-imagick php-xml php-zip -y</pre></code>
+<h2>Step 4: Install and Configure Database Server</h2>
+<p>Install MariaDB server and client:</p>
+<pre><code class="language-sh">apt install mariadb-server mariadb-client -y</pre></code>
+<p>Run the secure installation script:</p>
+<pre><code class="language-sh">mysql_secure_installation</pre></code>
+<p>Create a database and user for Nextcloud:</p>
+<pre><code class="language-sh">mysql -u root -p
+CREATE DATABASE nextcloud;
+GRANT ALL PRIVILEGES ON nextcloud.* TO 'nextclouduser'@'localhost' IDENTIFIED BY 'your_password';
+FLUSH PRIVILEGES;
+EXIT;</pre></code>
+<h2>Step 5: Download and Install Nextcloud</h2>
+<p>Download the latest version of Nextcloud from the official website:</p>
+<pre><code class="language-sh">wget https://download.nextcloud.com/server/releases/nextcloud-20.0.4.zip
+apt install unzip
+unzip nextcloud-20.0.4.zip -d /var/www/html/</pre></code>
+<p>Set the correct permissions:</p>
+<pre><code class="language-sh">chown -R www-data:www-data /var/www/html/nextcloud/
+chmod -R 755 /var/www/html/nextcloud/</pre></code>
+<h2>Step 6: Configure Apache for Nextcloud</h2>
+<p>Create an Apache configuration file for Nextcloud:</p>
+<pre><code class="language-sh">nano /etc/apache2/sites-available/nextcloud.conf</pre></code>
+<p>Add the following configuration to the file:</p>
+<pre><code class="language-sh">&lt;VirtualHost *:80&gt;
+  ServerAdmin <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2647424b4f4866435e474b564a430845494b">[email&#160;protected]</a>
+  DocumentRoot /var/www/html/nextcloud/
+  ServerName your-domain.com
+
+  Alias /nextcloud "/var/www/html/nextcloud/"
+
+  &lt;Directory /var/www/html/nextcloud/&gt;
+    Options +FollowSymlinks
+    AllowOverride All
+    Require all granted
+    &lt;IfModule mod_dav.c&gt;
+      Dav off
+    &lt;/IfModule&gt;
+  &lt;/Directory&gt;
+
+  ErrorLog ${APACHE_LOG_DIR}/nextcloud_error.log
+  CustomLog ${APACHE_LOG_DIR}/nextcloud_access.log combined
+&lt;/VirtualHost&gt;</pre></code>
+<p>Enable the new site and rewrite module:</p>
+<pre><code class="language-sh">a2ensite nextcloud
+a2enmod rewrite
+systemctl restart apache2</pre></code>
+<h2>Step 7: Finalizing Nextcloud Installation</h2>
+<p>Complete the installation through the web interface by navigating to 'http://your-domain.com/nextcloud'. Follow the on-screen instructions to set up your admin account, database connection, and other settings.</p>
+<h2>Conclusion</h2>
+<p>You have now successfully installed and configured Nextcloud on your Debian 12 server, creating a private cloud for managing and sharing files securely. For further customization and optimization, explore Nextcloud's extensive plugin system and configuration options.</p>
+<p>If you're looking to scale your Nextcloud deployment or need assistance with complex configurations, consider the option to <a href="https://reintech.io/hire-remote-devops-engineers">hire a remote DevOps engineer</a> to streamline your operations and ensure optimal performance.</p>
+</div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  function encodePreElements() {
+    var pre = document.getElementsByTagName('code');
+    for(var i = 0; i < pre.length; i++) {
+      var txt = pre[i].innerHTML;
+      txt = txt.replaceAll('&quot;', '"')
+      if(txt.indexOf('>') >=0 && txt.indexOf('<') >= 0){
+        var encoded = htmlEncode(txt);
+  
+        encoded = encoded.replaceAll('&lt;br&gt;', '');
+        encoded = encoded.replaceAll('&lt;p&gt;', '');
+        encoded = encoded.replaceAll('&lt;/p&gt;', '');
+        pre[i].innerHTML = encoded;
+      }
+    }
+  };
+  
+  function htmlEncode(value) {
+    var div = document.createElement('div');
+    var text = document.createTextNode(value);
+    div.appendChild(text);
+    return div.innerHTML;
+  }
+</script>
+<script>
+  encodePreElements();
+</script>
+<div data-react-class="media/OutdatedContent" data-react-props="{&quot;post_id&quot;:&quot;5140&quot;,&quot;url&quot;:&quot;/media/installing-configuring-nextcloud-debian-12/create_outdated_report&quot;,&quot;reports&quot;:[],&quot;locale&quot;:&quot;en&quot;}" data-react-cache-id="media/OutdatedContent-0" class="wrapper-outdated-content mt-2 mb-2"></div>
+
+<div class='social-links-block d-flex flex-wrap'>
+<span class='mr-3 mt-2 mb-2 en'>Share:</span>
+<div aria-label='Basic example' class='btn-group btn-group-sm mt-2 mb-2' role='group'>
+<a class="en btn btn-outline-success" data-network="facebook" onclick="window.open(&#39;https://www.facebook.com/sharer/sharer.php?u=https://reintech.io/media/installing-configuring-nextcloud-debian-12&#39;, &#39;facebook-share-dialog&#39;, &#39;width=626,height=436&#39;); return false;" href="#">Facebook</a>
+<a class="en btn btn-outline-success" target="_blank" href="http://twitter.com/share?text=Installing and Configuring Nextcloud on Debian 12&amp;url=https://reintech.io/media/installing-configuring-nextcloud-debian-12">Twitter</a>
+<a class="en btn btn-outline-success" target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url=https://reintech.io/media/installing-configuring-nextcloud-debian-12">LinkedIn</a>
+</div>
+<div data-react-class="media/BigHeart" data-react-props="{&quot;post_id&quot;:&quot;5140&quot;,&quot;ids&quot;:[],&quot;count&quot;:522,&quot;locale&quot;:&quot;en&quot;}" data-react-cache-id="media/BigHeart-0" class="wrapper-big-heart mt-2 mb-2"></div>
+
+</div>
+<div data-react-class="media/chat_posts/ChatBox" data-react-props="{&quot;locale&quot;:&quot;en&quot;,&quot;url&quot;:&quot;/post_chats&quot;,&quot;post_id&quot;:&quot;installing-configuring-nextcloud-debian-12&quot;,&quot;user_uid&quot;:&quot;YrgfXmXrgfNpG6mQ&quot;,&quot;not_available&quot;:false,&quot;server_time&quot;:&quot;2024-08-14 13:17&quot;,&quot;chats&quot;:[{&quot;id&quot;:7309,&quot;summary&quot;:&quot;The user reported an issue with the &#39;a2ensite&#39; command during a Nextcloud installation, and troubleshooting steps were provided.&quot;,&quot;updated_at&quot;:&quot;2024-05-30 03:00&quot;,&quot;created_at&quot;:&quot;2024-05-29 23:58:32&quot;,&quot;user_uid&quot;:&quot;tWtJQll5FFjR0zCG&quot;,&quot;messages&quot;:[{&quot;id&quot;:42397,&quot;body&quot;:&quot;\u003cp\u003eIf manually creating the symbolic link and enabling the rewrite module did not resolve the issue, let&#39;s break down the process further to identify any additional steps that may be needed. Here are some further checks and steps to ensure your Apache setup is working correctly:\u003c/p\u003e\n\n\u003ch3\u003e1. Verify Apache is Running\u003c/h3\u003e\n\u003cp\u003eEnsure that Apache is running correctly:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003esystemctl status apache2\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eIf it is not running, start it with:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003esystemctl start apache2\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003e2. Check Apache Logs for Errors\u003c/h3\u003e\n\u003cp\u003eReview the Apache error logs for any clues as to why the site might not be loading:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003etail -f /var/log/apache2/error.log\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003e3. Confirm the Nextcloud Configuration File\u003c/h3\u003e\n\u003cp\u003eEnsure that the \u003ccode\u003enextcloud.conf\u003c/code\u003e file in \u003ccode\u003e/etc/apache2/sites-available/\u003c/code\u003e is correctly formatted and exists:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003els /etc/apache2/sites-available/nextcloud.conf\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eIf the file is correctly placed and formatted, you should be able to see it listed.\u003c/p\u003e\n\n\u003ch3\u003e4. Re-enable Default Apache Site\u003c/h3\u003e\n\u003cp\u003eSometimes re-enabling the default site configuration can help debug the root cause. Check if the default Apache site is enabled:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003ea2ensite 000-default.conf\nsystemctl reload apache2\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eThen try reloading your server to see if returning to a default state helps isolate the issue.\u003c/p\u003e\n\n\u003ch3\u003e5. Verify Apache Configuration\u003c/h3\u003e\n\u003cp\u003eCheck if the configurations are loaded properly:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003eapache2ctl -S\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eThis command will show you the current configuration, including virtual hosts and any errors that might be present.\u003c/p\u003e\n\n\u003ch3\u003e6. Check Firewall Settings\u003c/h3\u003e\n\u003cp\u003eEnsure your firewall is not blocking HTTP traffic. Allow HTTP (port 80) and HTTPS (port 443) traffic:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003eufw allow 80/tcp\nufw allow 443/tcp\nufw reload\u003c/code\u003e\u003c/pre\u003e\n\n\u003cp\u003eAfter these steps, try accessing the Nextcloud setup again at \u003ccode\u003ehttp://your-domain.com/nextcloud\u003c/code\u003e. If you still encounter issues, please share any relevant outputs or error messages so further troubleshooting can be provided.\u003c/p\u003e&quot;,&quot;sender&quot;:&quot;gpt&quot;,&quot;created_at&quot;:&quot;2024-05-30 00:05:57&quot;},{&quot;id&quot;:42396,&quot;body&quot;:&quot;doesn&#39;t help&quot;,&quot;sender&quot;:&quot;user&quot;,&quot;created_at&quot;:&quot;2024-05-30 00:05:47&quot;},{&quot;id&quot;:42395,&quot;body&quot;:&quot;\u003cp\u003eGreat to hear that there are no errors in the configuration. If \&quot;a2ensite\&quot; is still not found but Apache is properly installed, you can proceed by manually enabling the site configuration as highlighted earlier. Here’s a summary of the steps:\u003c/p\u003e\n\n\u003ch3\u003e1. Create a Symbolic Link to Enable the Site Configuration\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003eln -s /etc/apache2/sites-available/nextcloud.conf /etc/apache2/sites-enabled/nextcloud.conf\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003e2. Enable the Rewrite Module\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003ea2enmod rewrite\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003e3. Restart Apache\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003esystemctl restart apache2\u003c/code\u003e\u003c/pre\u003e\n\n\u003cp\u003eBy creating the symbolic link, you are effectively enabling the site configuration manually, bypassing the need for \&quot;a2ensite\&quot;. Additionally, ensuring the rewrite module is enabled and restarting Apache should fully apply the necessary changes for Nextcloud to be accessible.\u003c/p\u003e\n\n\u003cp\u003eAfter completing these steps, you should be able to access your Nextcloud setup by navigating to \u003ccode\u003ehttp://your-domain.com/nextcloud\u003c/code\u003e.\u003c/p\u003e\n\n\u003cp\u003eLet me know if you encounter any further issues or need additional assistance.\u003c/p\u003e&quot;,&quot;sender&quot;:&quot;gpt&quot;,&quot;created_at&quot;:&quot;2024-05-29 23:59:24&quot;},{&quot;id&quot;:42394,&quot;body&quot;:&quot;no errors&quot;,&quot;sender&quot;:&quot;user&quot;,&quot;created_at&quot;:&quot;2024-05-29 23:59:20&quot;},{&quot;id&quot;:42393,&quot;body&quot;:&quot;\u003cp\u003eThe \&quot;a2ensite\&quot; command may not be available if you only have certain components of Apache installed or if something went wrong during the package installation. Here’s how you can troubleshoot and resolve this issue:\u003c/p\u003e\n\n\u003ch3\u003e1. Ensure Apache is Properly Installed\u003c/h3\u003e\n\u003cp\u003eMake sure Apache is installed correctly by running:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003eapt update\napt install apache2 -y\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003e2. Verify Apache Utilities Are Installed\u003c/h3\u003e\n\u003cp\u003eEnsure the Apache utilities package, which includes \&quot;a2ensite\&quot;, is installed:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003eapt install apache2-utils -y\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003e3. Manually Enable the Site Configuration\u003c/h3\u003e\n\u003cp\u003eIf \&quot;a2ensite\&quot; is still not found, you can manually create a symbolic link in the sites-enabled directory:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003eln -s /etc/apache2/sites-available/nextcloud.conf /etc/apache2/sites-enabled/\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003e4. Reload Apache\u003c/h3\u003e\n\u003cp\u003eAfter enabling the site, reload Apache to apply the changes:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003esystemctl reload apache2\u003c/code\u003e\u003c/pre\u003e\n\n\u003ch3\u003e5. Check Apache Configuration\u003c/h3\u003e\n\u003cp\u003eEnsure there are no syntax errors in your Apache configuration:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003eapache2ctl configtest\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eIf there are any errors, they will be reported here. Address those issues before restarting the Apache service.\u003c/p\u003e\n\n\u003cp\u003eLet me know if you need further assistance with any of these steps.\u003c/p\u003e&quot;,&quot;sender&quot;:&quot;gpt&quot;,&quot;created_at&quot;:&quot;2024-05-29 23:58:39&quot;},{&quot;id&quot;:42392,&quot;body&quot;:&quot;a2ensite not found&quot;,&quot;sender&quot;:&quot;user&quot;,&quot;created_at&quot;:&quot;2024-05-29 23:58:32&quot;}]},{&quot;id&quot;:4253,&quot;summary&quot;:&quot;The user is facing an issue with the &#39;a2ensite nextcloud&#39; command not working, and assistance was provided to troubleshoot and resolve the problem.&quot;,&quot;updated_at&quot;:&quot;2024-02-16 16:00&quot;,&quot;created_at&quot;:&quot;2024-02-16 12:20:14&quot;,&quot;user_uid&quot;:&quot;VHS3zO95hQefdU2o&quot;,&quot;messages&quot;:[{&quot;id&quot;:19705,&quot;body&quot;:&quot;Para resolver el problema con el comando `a2ensite` que no funciona, sigue los pasos a continuación:\n\n1. Asegúrate de que el archivo de configuración `nextcloud.conf` haya sido creado correctamente en el directorio `/etc/apache2/sites-available/`. Puedes comprobar la existencia del archivo con el comando:\n\nsh\nls /etc/apache2/sites-available/\n\n\n2. Si el archivo no está presente o si hay un error de escritura en el nombre, tendrás que crearlo o corregir el nombre. Aquí te dejo cómo crear el archivo de nuevo:\nsh\nnano /etc/apache2/sites-available/nextcloud.conf\n\nY asegúrate de copiar la configuración correcta dentro del archivo.\n\n3. Si el archivo `nextcloud.conf` ya existe, verifica que su sintaxis sea correcta. Puedes hacerlo con el siguiente comando:\nsh\napache2ctl configtest\n\n\n4. Si la prueba de sintaxis retorna \&quot;Syntax OK\&quot;, entonces puedes intentar habilitar el sitio nuevamente con:\nsh\na2ensite nextcloud\n\n\n5. Si se muestra algún error durante la prueba de sintaxis, deberás corregir los errores en el archivo de configuración y luego intentar habilitar el sitio nuevamente.\n\n6. Una vez habilitado el sitio, recuerda reiniciar Apache para aplicar los cambios:\nsh\nsystemctl restart apache2\n\n\nSi sigues teniendo problemas, comprueba los logs de error de Apache para obtener más información sobre lo que podría estar mal:\nsh\ncat /var/log/apache2/error.log\n\n\nEstos pasos deberían ayudarte a solucionar el problema con el comando `a2ensite`.&quot;,&quot;sender&quot;:&quot;gpt&quot;,&quot;created_at&quot;:&quot;2024-02-16 12:20:44&quot;},{&quot;id&quot;:19704,&quot;body&quot;:&quot;no me va el a2ensite nextcloud&quot;,&quot;sender&quot;:&quot;user&quot;,&quot;created_at&quot;:&quot;2024-02-16 12:20:14&quot;}]},{&quot;id&quot;:4123,&quot;summary&quot;:&quot;The user is instructed on setting up a Nextcloud instance without purchasing a domain, using the server&#39;s IP address for access instead.&quot;,&quot;updated_at&quot;:&quot;2024-02-14 11:00&quot;,&quot;created_at&quot;:&quot;2024-02-14 07:26:19&quot;,&quot;user_uid&quot;:&quot;KBXXnL3ObA650gUu&quot;,&quot;messages&quot;:[{&quot;id&quot;:19119,&quot;body&quot;:&quot;\u003cp\u003eTo create a functioning Nextcloud instance without a domain, you can use your server&#39;s IP address to access it. Follow these steps:\u003c/p\u003e\n\n\u003col\u003e\n  \u003cli\u003eProceed with the installation guide as described in the article.\u003c/li\u003e\n  \u003cli\u003eWhen editing the Apache configuration file for Nextcloud, replace the \u003ccode\u003eServerName\u003c/code\u003e directive with your server&#39;s IP address. Your configuration might look like this:\u003c/li\u003e\n\u003c/ol\u003e\n\n\u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003e\u0026lt;VirtualHost *:80\u0026gt;\n  ServerAdmin admin@example.com\n  DocumentRoot /var/www/html/nextcloud/\n  ServerName your-server-ip\n  \n  Alias /nextcloud \&quot;/var/www/html/nextcloud/\&quot;\n\n  \u0026lt;Directory /var/www/html/nextcloud/\u0026gt;\n    Options +FollowSymlinks\n    AllowOverride All\n    Require all granted\n    \u0026lt;IfModule mod_dav.c\u0026gt;\n      Dav off\n    \u0026lt;/IfModule\u0026gt;\n  \u0026lt;/Directory\u0026gt;\n  \n  ErrorLog ${APACHE_LOG_DIR}/nextcloud_error.log\n  CustomLog ${APACHE_LOG_DIR}/nextcloud_access.log combined\n\u0026lt;/VirtualHost\u0026gt;\n\u003c/code\u003e\u003c/pre\u003e\n\n\u003col start=\&quot;3\&quot;\u003e\n  \u003cli\u003eComplete Step 6 and restart Apache as instructed.\u003c/li\u003e\n  \u003cli\u003eAccess Nextcloud by navigating to &#39;http://your-server-ip/nextcloud&#39; in your web browser to finalize the installation.\u003c/li\u003e\n\u003c/ol\u003e\n\n\u003cp\u003eNote that when using an IP to access Nextcloud, you may not be able to obtain an SSL certificate from providers like Let&#39;s Encrypt, but you can still enable HTTPS with a self-signed certificate if security is a concern.\u003c/p\u003e&quot;,&quot;sender&quot;:&quot;gpt&quot;,&quot;created_at&quot;:&quot;2024-02-14 07:26:32&quot;},{&quot;id&quot;:19117,&quot;body&quot;:&quot;how can i create a functioning nextcloud without paying for a domain&quot;,&quot;sender&quot;:&quot;user&quot;,&quot;created_at&quot;:&quot;2024-02-14 07:26:19&quot;}]},{&quot;id&quot;:4122,&quot;summary&quot;:&quot;The user inquired about setting up Nextcloud locally and received instructions for installing it on a local machine.&quot;,&quot;updated_at&quot;:&quot;2024-02-14 11:00&quot;,&quot;created_at&quot;:&quot;2024-02-14 07:25:34&quot;,&quot;user_uid&quot;:&quot;KBXXnL3ObA650gUu&quot;,&quot;messages&quot;:[{&quot;id&quot;:19118,&quot;body&quot;:&quot;\u003cp\u003eYes, you can install and set up Nextcloud locally on your own computer for personal use or testing purposes. Here are generalized steps for setting up Nextcloud on a local machine:\u003c/p\u003e\n\n\u003col\u003e\n  \u003cli\u003e\n    Install prerequisites: You&#39;ll need a web server like Apache, PHP, and a database server like MariaDB or MySQL.\n    \u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003esudo apt install apache2 mariadb-server libapache2-mod-php7.4\nsudo apt install php7.4-gd php7.4-json php7.4-mysql php7.4-curl php7.4-mbstring php7.4-intl\nsudo apt install php7.4-imagick php7.4-xml php7.4-zip\u003c/pre\u003e\u003c/code\u003e\n  \u003c/li\u003e\n  \u003cli\u003e\n    Configure your database server (for example, MariaDB):\n    \u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003esudo mysql_secure_installation\nsudo mysql -u root -p\nCREATE DATABASE nextcloud;\nGRANT ALL PRIVILEGES ON nextcloud.* TO &#39;nextclouduser&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;your_password&#39;;\nFLUSH PRIVILEGES;\nEXIT;\u003c/pre\u003e\u003c/code\u003e\n  \u003c/li\u003e\n  \u003cli\u003e\n    Download Nextcloud:\n    \u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003ewget https://download.nextcloud.com/server/releases/nextcloud-latest.zip\nsudo apt install unzip\nunzip nextcloud-latest.zip -d /var/www/html/\u003c/pre\u003e\u003c/code\u003e\n  \u003c/li\u003e\n  \u003cli\u003e\n    Set correct permissions:\n    \u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003esudo chown -R www-data:www-data /var/www/html/nextcloud/\nsudo chmod -R 755 /var/www/html/nextcloud/\u003c/pre\u003e\u003c/code\u003e\n  \u003c/li\u003e\n  \u003cli\u003e\n    Configure your web server (for example, create a virtual host config for Apache):\n    \u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003esudo nano /etc/apache2/sites-available/nextcloud.conf\u003c/pre\u003e\u003c/code\u003e\n  \u003c/li\u003e\n  \u003cli\u003e\n    Enable the site and Apache modules:\n    \u003cpre\u003e\u003ccode class=\&quot;language-sh\&quot;\u003esudo a2ensite nextcloud\nsudo a2enmod rewrite headers env dir mime\nsudo systemctl restart apache2\u003c/pre\u003e\u003c/code\u003e\n  \u003c/li\u003e\n  \u003cli\u003e\n    Complete the installation by navigating to \u003ccode\u003ehttp://localhost/nextcloud\u003c/code\u003e in your web browser and following the on-screen instructions to set up your admin account and database connection.\n  \u003c/li\u003e\n\u003c/ol\u003e\n\n\u003cp\u003eNote that these instructions are for a Debian-like system. Depending on your operating system, the commands might differ slightly. Adjustments might also be needed for PHP versions and additional setups like enabling SSL/TLS for secure connections, even for local development.\u003c/p\u003e&quot;,&quot;sender&quot;:&quot;gpt&quot;,&quot;created_at&quot;:&quot;2024-02-14 07:26:25&quot;},{&quot;id&quot;:19116,&quot;body&quot;:&quot;can you create a nextcloud locally&quot;,&quot;sender&quot;:&quot;user&quot;,&quot;created_at&quot;:&quot;2024-02-14 07:25:34&quot;}]},{&quot;id&quot;:4113,&quot;summary&quot;:&quot;The user inquired about the PHP version compatible with Nextcloud.&quot;,&quot;updated_at&quot;:&quot;2024-02-14 04:00&quot;,&quot;created_at&quot;:&quot;2024-02-13 23:14:52&quot;,&quot;user_uid&quot;:&quot;wNw91uVvg3FOL8LY&quot;,&quot;messages&quot;:[{&quot;id&quot;:19085,&quot;body&quot;:&quot;\u003cp\u003eLa version spécifique de PHP requise peut varier selon la version de Nextcloud que vous installez. Pour Nextcloud 20.0.4, qui est mentionnée dans l&#39;article, PHP 7.2 ou supérieur est généralement recommandé. Il est conseillé de consulter la documentation officielle de Nextcloud pour les exigences de la version de PHP pour les versions plus récentes de Nextcloud.\u003c/p\u003e&quot;,&quot;sender&quot;:&quot;gpt&quot;,&quot;created_at&quot;:&quot;2024-02-13 23:15:11&quot;},{&quot;id&quot;:19084,&quot;body&quot;:&quot;quel version de php &quot;,&quot;sender&quot;:&quot;user&quot;,&quot;created_at&quot;:&quot;2024-02-13 23:15:04&quot;},{&quot;id&quot;:19083,&quot;body&quot;:&quot;\u003cp\u003eHello! How can I assist you with Nextcloud today?\u003c/p\u003e&quot;,&quot;sender&quot;:&quot;gpt&quot;,&quot;created_at&quot;:&quot;2024-02-13 23:14:53&quot;},{&quot;id&quot;:19082,&quot;body&quot;:&quot;coucou&quot;,&quot;sender&quot;:&quot;user&quot;,&quot;created_at&quot;:&quot;2024-02-13 23:14:52&quot;}]},{&quot;id&quot;:3844,&quot;summary&quot;:&quot;The user inquired about the purpose of Apache directory configuration directives in the context of Nextcloud installation on Debian 12.&quot;,&quot;updated_at&quot;:&quot;2024-02-07 23:00&quot;,&quot;created_at&quot;:&quot;2024-02-07 19:36:35&quot;,&quot;user_uid&quot;:&quot;wUU4iYnPX0HQmvPI&quot;,&quot;messages&quot;:[{&quot;id&quot;:17769,&quot;body&quot;:&quot;To jest konfiguracja Apache dla katalogu, w którym zainstalowano Nextcloud. Oto szczegóły dla każdej dyrektywy:\n\n`Options +FollowSymlinks` – ta dyrektywa pozwala Apache na śledzenie symbolicznych linków w tym katalogu. Oznacza to, że jeśli w katalogu znajduje się dowiązanie symboliczne wskazujące na inny plik lub katalog, serwer będzie mógł go użyć.\n\n`AllowOverride All` – umożliwia lokalnym plikom `.htaccess` nadpisywanie niektórych konfiguracji serwera Apache. Jest to ważne dla Nextcloud, ponieważ może wykorzystywać plik `.htaccess` do dostosowywania ustawień czy zabezpieczeń bez konieczności dostępu do głównych plików konfiguracyjnych Apache.\n\n`Require all granted` – pozwala na dostęp do katalogu dla wszystkich użytkowników. To oznacza, że żadne ograniczenia dostępu nie są stosowane i każdy może zobaczyć zawartość katalogu.\n\n`\u0026lt;IfModule mod_dav.c\u003e Dav off \u003c/IfModule\u003e` – ta dyrektywa sprawdza, czy moduł mod_dav Apache (implementacja WebDAV - Web-based Distributed Authoring and Versioning) jest zainstalowany. Jeśli tak, to ustawia wartość `Dav off`, aby wyłączyć obsługę WebDAV dla tego katalogu. Jest to konieczne, ponieważ Nextcloud ma własny mechanizm zarządzania plikami, a użycie WebDAV przez Apache mogłoby powodować konflikty.\n\nPowyższe ustawienia są konieczne, aby Nextcloud działał poprawnie pod kontrolą serwera Apache.&quot;,&quot;sender&quot;:&quot;gpt&quot;,&quot;created_at&quot;:&quot;2024-02-07 19:37:05&quot;},{&quot;id&quot;:17768,&quot;body&quot;:&quot; \u003cDirectory /var/www/html/nextcloud/\u003e     Options +FollowSymlinks     AllowOverride All     Require all granted     \u003cIfModule mod_dav.c\u003e       Dav off     \u003c/IfModule\u003e   \u003c/Directory\u003e co ro robi&quot;,&quot;sender&quot;:&quot;user&quot;,&quot;created_at&quot;:&quot;2024-02-07 19:36:35&quot;}]}]}" data-react-cache-id="media/chat_posts/ChatBox-0" class="wrapper-chat_box" id="chats-box"></div>
+</div>
+<div class='main-post apply-subscribe-block' style='padding: 0'>
+</div>
+<div class='central-author-column'>
+<div class='banner-mobile'>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3829025371632739"
+     crossorigin="anonymous"></script>                                            
+  <!-- blog ad -->                                                           
+       <ins class="adsbygoogle"                                                 
+       style="display:block"                                                  
+        data-ad-client="ca-pub-3829025371632739"                             
+          data-ad-slot="8442875499"                                          
+               data-ad-format="auto"                                            
+             data-full-width-responsive="true"></ins>                       
+                <script>                                                     
+                  (adsbygoogle = window.adsbygoogle || []).push({});         
+                  </script>
+
+</div>
+<div class='dropdown-divider mt-4 mb-4'></div>
+</div>
+</div>
+<div class='col-lg-4'>
+<div class='reply-to-block'>
+<p>If you're interested in enhancing this article or becoming a contributing author, we'd love to hear from you.</p>
+<p>Please contact Sasha at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4c3f2d3f242d0c3e29252238292f24622523">[email&#160;protected]</a> to discuss the opportunity further or to inquire about adding a direct link to your resource. We welcome your collaboration and contributions!</p>
+</div>
+<div class='terms'>
+</div>
+<div class='mt-5'>
+<p>
+<a href="/hire-remote-devops-nodejs-developers-java-spring-framework">Hire Remote DevOps and Node.js Developers Skilled in Java Spring Framework</a>
+</p>
+<p>
+<a href="/hire-remote-devops-nodejs-developers-with-nginx-skills">Hire Top-tier Remote DevOps and Node.js Developers Skilled in Nginx</a>
+</p>
+<p>
+<a href="/hire-remote-devops-nodejs-developers-skilled-soap">Hire Top Remote DevOps and Node.js Developers Skilled in SOAP</a>
+</p>
+</div>
+
+<div class='banner-right'>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3829025371632739"
+     crossorigin="anonymous"></script>                                            
+  <!-- blog ad -->                                                           
+       <ins class="adsbygoogle"                                                 
+       style="display:block"                                                  
+        data-ad-client="ca-pub-3829025371632739"                             
+          data-ad-slot="8442875499"                                          
+               data-ad-format="auto"                                            
+             data-full-width-responsive="true"></ins>                       
+                <script>                                                     
+                  (adsbygoogle = window.adsbygoogle || []).push({});         
+                  </script>
+
+</div>
+</div>
+</div>
+</div>
+<div class='show-media-second-part'>
+<div class='row mr-0'>
+<div class='col-lg-8 pr-0'>
+</div>
+<div class='col-lg-4'></div>
+</div>
+</div>
+
+</main>
+<script type="text/javascript" src="https://secure.food9wave.com/js/218872.js" ></script>
+<noscript><img alt="secure.food" src="https://secure.food9wave.com/218872.png" style="display:none;" /></noscript>
+
+<footer>
+<div class='media-footer'>
+<div class='desctop'>
+<div class='row'>
+<div class='col-lg-8'>
+<a href="/blog"><img alt="Reintech logo" src="https://reintech.io/assets/media/logo_footer-11f826977160fbe430f0dc0516912582bb93bf2fe55252eac336ba13b0aa36ef.svg" />
+</a></div>
+<div class='col-lg-4'></div>
+</div>
+<div class='row categories'>
+<div class='col-lg-2'>
+<p class='label'>Categories</p>
+<p class='name'>
+<a class="en" href="/blog/recruiting-remote-developers">Recruiting</a>
+</p>
+<p class='name'>
+<a class="en" href="/blog/developers">Engineering</a>
+</p>
+<p class='name'>
+<a class="en" href="/blog/career">Career</a>
+</p>
+<p class='name'>
+<a class="en" href="/blog/managing-remote-developers">Managing</a>
+</p>
+<p class='name'>
+<a class="en" href="/blog/soft-skills">Soft Skills</a>
+</p>
+<p class='name'>
+<a class="en" href="/blog/success-stories">Success stories</a>
+</p>
+<p class='name'>
+<a class="en" href="/glossary">Glossary</a>
+</p>
+</div>
+<div class='col-lg-2'>
+<p class='label en'>Social Media</p>
+<p class='name en'>
+<a target="_blank" class="en" href="https://www.instagram.com/reintech.io/">Instagram</a>
+</p>
+<p class='name en'>
+<a target="_blank" class="en" href="https://www.facebook.com/reintech.io">Facebook</a>
+</p>
+<p class='name en'>
+<a target="_blank" class="en" href="https://www.linkedin.com/company/reintech-ltd">LinkedIn</a>
+</p>
+<p class='name en'>
+<a target="_blank" class="en" href="https://twitter.com/reintech_io">Twitter</a>
+</p>
+</div>
+<div class='col-lg-4'>
+<p class='label en'>Apply as Developer</p>
+<a class="apply en" href="/developer/apply"><span>Apply</span>
+</a></div>
+<div class='col-lg-4'>
+<p class='label en'>Contact us</p>
+<a class="apply en" href="/#contact_us">Send us a message</a>
+</div>
+</div>
+</div>
+<div class='planshet'>
+<div class='row'>
+<div class='col-6'>
+<a href="/blog"><img alt="Reintech logo" src="https://reintech.io/assets/media/logo_footer-11f826977160fbe430f0dc0516912582bb93bf2fe55252eac336ba13b0aa36ef.svg" />
+</a></div>
+<div class='col-6 language d-none'>
+<div class='dropdown drop'>
+<a class="dropdownMenuLink dropdown-toggle" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button" href="#">Eng</a>
+<div aria-labelledby='dropdownMenuLink' class='dropdown-menu'>
+<span class='dropdown-item en'>English</span>
+<a class="dropdown-item ua" href="/media">Українська</a>
+</div>
+</div>
+</div>
+</div>
+<div class='row categories'>
+<div class='col-sm-6 mb-4'>
+<p class='label en'>Categories</p>
+<div class='row'>
+<div class='col-6'>
+<p class='name en'>
+<a class="en" href="/blog/recruiting-remote-developers">Recruiting</a>
+</p>
+</div>
+<div class='col-6'>
+<p class='name en'>
+<a class="en" href="/blog/developers">Engineering</a>
+</p>
+</div>
+<div class='col-6'>
+<p class='name en'>
+<a class="en" href="/blog/career">Career</a>
+</p>
+</div>
+<div class='col-6'>
+<p class='name en'>
+<a class="en" href="/blog/managing-remote-developers">Managing</a>
+</p>
+</div>
+<div class='col-6'>
+<p class='name en'>
+<a class="en" href="/blog/soft-skills">Soft Skills</a>
+</p>
+</div>
+<div class='col-6'>
+<p class='name en'>
+<a class="en" href="/blog/success-stories">Success stories</a>
+</p>
+</div>
+<div class='col-6'>
+<p class='name'>
+<a class="en" href="/glossary">Glossary</a>
+</p>
+</div>
+</div>
+</div>
+<div class='col-sm-6 mb-4'>
+<p class='label en'>Social Media</p>
+<div class='row'>
+<div class='col-6'>
+<p class='name en'>
+<a target="_blank" class="en" href="https://www.instagram.com/reintech.io/">Instagram</a>
+</p>
+</div>
+<div class='col-6'>
+<p class='name en'>
+<a target="_blank" class="en" href="https://www.facebook.com/reintech.io">Facebook</a>
+</p>
+</div>
+<div class='col-6'>
+<p class='name en'>
+<a target="_blank" class="en" href="https://www.linkedin.com/company/reintech-ltd">LinkedIn</a>
+</p>
+</div>
+<div class='col-6'>
+<p class='name en'>
+<a target="_blank" class="en" href="https://twitter.com/reintech_io">Twitter</a>
+</p>
+</div>
+</div>
+</div>
+<div class='col-sm-6 mb-4'>
+<p class='label en'>Apply as Developer</p>
+<a class="apply en" href="/developer/apply"><span>Apply</span>
+</a></div>
+<div class='col-sm-6 mb-4'>
+<p class='label en'>Contact us</p>
+<a class="apply en" href="/#contact_us">Send us a message</a>
+</div>
+</div>
+</div>
+</div>
+<div class='dropdown-divider'></div>
+<div class='privacy-policy'>
+<a class="en" style="color: #918CA0;"  href="/privacy-policy">Privacy Policy</a> <a class="en" style="color: #918CA0;" href="/terms">Terms</a> <br>
+<span class="en" style="color: #918CA0;">© Reintech 2018 – 2024</span>
+</div>
+
+</footer>
+</body>
+</html>

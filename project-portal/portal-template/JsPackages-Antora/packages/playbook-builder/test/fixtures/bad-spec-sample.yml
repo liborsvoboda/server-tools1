@@ -1,0 +1,11 @@
+ext: .yml
+one:
+  one: '1'
+two: 42
+three: false
+four:
+- name: John
+  lastname: Lennon
+- name: Paul
+  lastname: McCartney
+five: Hello World!

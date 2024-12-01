@@ -1,0 +1,308 @@
+= What's New in Antora {page-component-version}
+:description: The new features, changes, and bug fixes included in Antora {page-component-version} and its patch releases.
+:doctype: book
+:route: New
+//:page-toclevels: 0
+:leveloffset: 1
+:url-releases-asciidoctor: https://github.com/asciidoctor/asciidoctor/releases
+:url-releases-asciidoctorjs: https://github.com/asciidoctor/asciidoctor.js/releases
+:url-gitlab: https://gitlab.com
+:url-issues: {url-repo}/issues
+:url-milestone-3-1-0: {url-issues}?scope=all&state=closed&label_name%5B%5D=%5BVersion%5D%203.1.0
+:url-milestone-3-1-1: {url-issues}?scope=all&state=closed&label_name%5B%5D=%5BVersion%5D%203.1.1
+:url-milestone-3-1-2: {url-issues}?scope=all&state=closed&label_name%5B%5D=%5BVersion%5D%203.1.2
+:url-milestone-3-1-3: {url-issues}?scope=all&state=closed&label_name%5B%5D=%5BVersion%5D%203.1.3
+:url-milestone-3-1-4: {url-issues}?scope=all&state=closed&label_name%5B%5D=%5BVersion%5D%203.1.4
+:url-milestone-3-1-5: {url-issues}?scope=all&state=closed&label_name%5B%5D=%5BVersion%5D%203.1.5
+:url-milestone-3-1-6: {url-issues}?scope=all&state=closed&label_name%5B%5D=%5BVersion%5D%203.1.6
+:url-milestone-3-1-7: {url-issues}?scope=all&state=closed&label_name%5B%5D=%5BVersion%5D%203.1.7
+:url-milestone-3-1-8: {url-issues}?scope=all&state=closed&label_name%5B%5D=%5BVersion%5D%203.1.8
+:url-milestone-3-1-9: {url-issues}?scope=all&state=closed&label_name%5B%5D=%5BVersion%5D%203.1.9
+:url-mr: {url-repo}/merge_requests
+
+= Antora {page-component-version}.9
+
+_**Release date:** 2024.07.05 | *Issue label:* {url-milestone-3-1-9}[3.1.9^]_
+
+The focus of this release is to fix changes from the previous release that did not adhere to semantic versioning.
+First, the file publisher was updated to work with a virtual file created by vinyl 3, thus fixing compatibility with the PDF extension.
+Second, an Asciidoctor extension registered as an Antora extension will be registered rather than skipped, though a warning will still be issued.
+
+== Resolved issues
+
+=== Changed
+
+Issue {url-issues}/1141[#1141^]::
+Detect and warn when an AsciiDoc extension is registered as an Antora extension, but do no skip it.
+(no issue)::
+Replace "AsciiDoc extension" with "Asciidoctor extension" in log messages
+
+=== Fixed
+
+Issue {url-issues}/1139[#1139^]::
+Wrap legacy stream on file when preparing files for output providers; remove listeners limit.
+Fixes compatibility with the Antora PDF extension.
+
+= Antora {page-component-version}.8
+
+_**Release date:** 2024.06.25 | *Issue label:* {url-milestone-3-1-8}[3.1.8^]_
+
+The focus of this release is primarily to upgrade or eliminate out-of-date dependencies, address compliance with Node.js 22, and fix bugs.
+
+== Resolved issues
+
+=== Added
+
+Issue {url-issues}/1084[#1084^]::
+Detect (and skip) Antora extension that's been registered as an AsciiDoc extension and log a warning (asciidoc-loader)
+Issue {url-issues}/1084[#1104^]::
+Detect (and skip) AsciiDoc extension registered as an Antora extension and log a warning (site-generator)
+
+=== Changed
+
+Issue {url-issues}/1121[#1121^]::
+Replace new fs.Stats() with plain JavaScript object (content-aggregator, ui-loader)
+Issue {url-issues}/1128[#1128^]::
+Replace @vscode/gulp-vinyl-zip with low-level zip file reader using yauzl (ui-loader)
+Issue {url-issues}/1128[#1129^]::
+Replace @vscode/gulp-vinyl-zip with low-level zip file writer using yazl (file-publisher)
+Issue {url-issues}/1088[#1088^]::
+Log warning if nav entry cannot be resolved (content-classifier)
+Issue {url-issues}/1109[#1109^]::
+Fix `page.role` assignment to read value from `role` attribute instead of from (non-existent) `docrole` attribute (page-composer)
+Issue {url-issues}/1121[#1121^]::
+Assign empty object to stat property of output file if file does not have stat property (file-publisher)
+Issue {url-issues}/1131[#1131^]::
+Replace vinyl-fs#dest with internal implementation (file-publisher)
+Issue {url-issues}/1133[#1133^]::
+Upgrade vinyl and vinyl-fs to address security and deprecation warnings
+(no issue)::
+* Update description for `extension` CLI option to clarify it may be specified multiple times.
+* Don't include file in archive (zip) if contents property is null; matches behavior of fs publisher (file-publisher)
+
+=== Fixed
+
+Issue {url-issues}/1112[#1112^]::
+Throw clearer error if antora.yml is empty or the data is not an object (content-aggregator)
+Issue {url-issues}/1110[#1110^]::
+Apply include tag filtering update from Asciidoctor (see https://github.com/asciidoctor/asciidoctor/pull/4233) to ported logic in Antora (asciidoc-loader)
+Issue {url-issues}/1114[#1114^]::
+Filter out cyclic aliases (i.e., redirect loops) (redirect-producer)
+Issue {url-issues}/1134[#1134^]::
+Create files streams for file publishers to process eagerly to avoid race condition (file-publisher)
+Issue {url-issues}/1137[#1137^]::
+Use raw value if attribute value set using `--attribute` option cannot be parsed as YAML (cli)
+
+= Antora {page-component-version}.7
+
+_**Release date:** 2024.01.02 | *Issue label:* {url-milestone-3-1-7}[3.1.7^]_
+
+== Resolved issues
+
+=== Changed
+
+Issue {url-issues}/1099[#1099^]::
+* Preserve all information in wrapped error (content-aggregator, ui-loader, file-publisher)
+Issue {url-issues}/1098[#1098^]::
+* Upgrade isomorphic-git to incorporate patch for properly handling network error (content-aggregator)
+* Add cause in log message when retrying failed fetch/clone operations in series (content-aggregator)
+Issue {url-issues}/1101[#1101^]::
+* Clear timeout and keep-alive settings on git HTTP connections that don't use custom agent (content-aggregator)
+(No issue)::
+* Don't retry failed clone/fetch operation if playbook only has one content source URL (content-aggregator)
+
+= Antora {page-component-version}.6
+
+_**Release date:** 2023.12.19 | *Issue label:* {url-milestone-3-1-6}[3.1.6^]_
+
+== Resolved issues
+
+=== Added
+
+Issue {url-issues}/1096[#1096^]:: Add `git.read_concurrency` playbook key to control how many git indexes to load into memory at once (playbook-builder)
+
+=== Changed
+
+Issue {url-issues}/1096[#1096^]::
+* Change default value of `git.fetch_concurrency` to 1 (playbook-builder).
+* Flag git clone/fetch error as recoverable if an unexpected network error occurs (content-aggregator).
+* Decouple step to load (fetch or clone) repositories from step to scan repositories to discover references and start paths and collect files (content-aggregator).
+(No issue)::
+* Don't read git tree twice if start path is empty; add dirname to tree object in same function (content-aggregator).
+* Fill in progress bar with incomplete marks if cloning a repository fails (content-aggregator).
+* Mention that credentials may have been rejected if server requests them, then sends 404 response (content-aggregator).
+
+=== Fixed
+
+Issue {url-issues}/1070[#1070^]:: Add hostname to ignore list to prevent hostname property on logged error from modifying logger name (logger)
+Issue {url-issues}/1096[#1096^]:: Retry failed fetch/clone operations in serial if git.fetch_concurrency > 1 and an unexpected error occurs (content-aggregator)
+
+= Antora {page-component-version}.5
+
+_**Release date:** 2023.11.22 | *Issue label:* {url-milestone-3-1-5}[3.1.5^]_
+
+== Resolved issues
+
+=== Changed
+
+Issue {url-issues}/1094[#1094^]:: Fix relative path computation when path is extensionless and to matches parent folder of from
+
+Change gulp-vinyl-zip dependency to @vscode/gulp-vinyl-zip to remove warning (no functional changes).
+
+=== Fixed
+
+Issue {url-issues}/1092[#1092^]:: Don't fail to load AsciiDoc if target of image macro resolves to an unpublished image
+Issue {url-issues}/1095[#1095^]:: Retry loadUi in isolation after aggregateContent if network connection occurs when retrieving remote UI bundle
+
+= Antora {page-component-version}.4
+
+_**Release date:** 2023.06.07 | *Issue label:* {url-milestone-3-1-4}[3.1.4^]_
+
+== Resolved issues
+
+=== Fixed
+
+Issue {url-issues}/1063[#1063^]:: Try credentials from credentials store if auth fails with credentials in URL.
+Issue {url-issues}/1064[#1064^]:: Consider local branches in non-managed bare repository that has at least one remote branch.
+
+= Antora {page-component-version}.3
+
+_**Release date:** 2023.04.02 | *Issue label:* {url-milestone-3-1-3}[3.1.3^]_
+
+== Resolved issues
+
+=== Fixed
+
+Issue {url-issues}/1049[#1049^]:: Restore error stack in log output when using pino-std-serializers >= 6.1
+(no issue)::
+* Correctly handle connection error when retrieving remote UI bundle
+* Do not fail to load AsciiDoc if pub or pub.moduleRootPath properties are not set on virtual file
+
+= Antora {page-component-version}.2
+
+_**Release date:** 2022.10.28 | *Issue label:* {url-milestone-3-1-2}[3.1.2^]_
+
+== Resolved issues
+
+=== Fixed
+
+Issue {url-issues}/1010[#1010^]:: Fix infinite auth loop if credentials embedded in content source URL are empty and repository requires auth.
+Issue {url-issues}/1018[#1018^]:: Fix crash if value of `worktrees` key on content source is `~` (`null`) and at least one branch is specified.
+Issue {url-issues}/1020[#1020^]:: Add guard to prevent `ContentCatalog#registerSiteStartPage` from registering alias loop.
+Issue {url-issues}/1022[#1022^]:: Decouple logic to compute default log format from process environment.
+Issue {url-issues}/1024[#1024^]:: Preserve target when creating static route if target is an absolute URL.
+Issue {url-issues}/1025[#1025^]:: Allow content aggregator to parse value of `content.branches` and `content.tags` playbook keys.
+Site generator:: Look for IS_TTY on `playbook.env` in site generator to decouple check from process environment.
+
+= Antora {page-component-version}.1
+
+_**Release date:** 2022.09.21 | *Issue label:* {url-milestone-3-1-1}[3.1.1^]_
+
+== Resolved issues
+
+=== Changed
+
+Issue {url-issues}/1004[#1004^]:: Use pretty log format by default if `IS_TTY` environment variable is set to `true`.
+Print success message if `IS_TTY` environment variable is set to `true`.
+See xref:playbook:runtime-log-format.adoc[] for more information.
+
+=== Fixed
+
+Issue {url-issues}/1003[#1003^]:: Prevent message from ignored log message from overwriting message from next reported log message.
+Update to Issue {url-issues}/984[#984^]:: Define public export `@antora/asciidoc-loader/include/resolve-include-file` for requiring `resolveIncludeFile` function.
+Site generator:: Don't require custom output provider to return a report object.
+CLI:: If logger can't be found, print error message to stderr instead of crashing during shutdown.
+
+= Antora {page-component-version}.0
+
+_**Release date:** 2022.08.22 | *Issue label:* {url-milestone-3-1-0}[3.1.0^]_
+
+The highlights of the Antora {page-component-version}.0 release include:
+
+* raising the minimum version of Node.js to Node.js 16,
+* locking down the exported require paths to clearly demarcate the public API,
+* adding support for attribute references in the value of xref:playbook:asciidoc-attributes.adoc#references-in-values[site attributes defined in the playbook] and xref:component-attributes.adoc#references-in-values[component version attributes defined in component version descriptors],
+* providing more context to log and error messages and formatting the information consistently,
+* including more information about content roots in the model for use by extensions, and
+* assigning additional xref:page:intrinsic-attributes.adoc#page-attributes[intrinsic page attributes] that relay more of a page's identity and origin.
+
+You can find a summary of the issues resolved in this release below.
+
+== Resolved issues
+
+=== Added
+
+Issue {url-issues}/221[#221^]:: Log info message if no references are found for content source.
+Issue {url-issues}/354[#354^]:: Assign edit URL of current page, if set, to `page-edit-url` AsciiDoc attribute.
+Define boolean `page-origin-private` AsciiDoc attribute if origin of page is private.
+Issue {url-issues}/525[#525^]:: Attach parsed component version descriptor to `descriptor` property on origin object.
+Issue {url-issues}/814[#814^]:: Add `removeFile` method to the content catalog and UI catalog.
+Issue {url-issues}/921[#921^]:: Define `page-component-latest-version` AsciiDoc attribute with value of version string from latest component version.
+Define boolean `page-component-version-is-latest` AsciiDoc attribute if page is in latest version of component.
+See xref:page:intrinsic-attributes.adoc#page-attributes[intrinsic page attributes] for more information.
+Issue {url-issues}/978[#978^]:: Add `origins` property containing unique origin objects to each entry in the content aggregate.
+Issue {url-issues}/981[#981^]:: Resolve attribute references in AsciiDoc attributes defined in the xref:playbook:asciidoc-attributes.adoc#references-in-values[playbook] ([.path]_antora-playbook.yml_) and xref:component-attributes.adoc#references-in-values[component version descriptors] ([.path]_antora.yml_), honoring any escaped attribute references.
+Issue {url-issues}/984[#984^]:: Define exports for all packages, locking down what paths can be required to the public API.
+Issue {url-issues}/988[#988^]::
+* Add `reftype` key with value of branch or tag to source object in structured log message.
+* Add `reftype` property to origin object to explicitly identify type of git reference (branch or tag).
+* Add `remote` key with value of remote tracking branch to source object in structured log message, if applicable.
+* Add `remote` property to origin object to identify a remote tracking branch.
+* Add `local` key with path of local repository to source object in structured log message, if applicable.
+
+=== Changed
+
+Issue {url-issues}/900[#900^]:: Include target in error message for broken or cyclic symbolic link in local content source or UI bundle directory.
+Issue {url-issues}/979[#979^]:: Set Node.js 16.0.0 as minimum supported Node.js version.
+Upgrade dependencies that require Node.js > 12 and remove workarounds.
+Issue {url-issues}/982[#982^]:: Move logic to collate AsciiDoc attributes to a helper function.
+Use helper function to collate AsciiDoc attributes from playbook and component version.
+Issue {url-issues}/985[#985^]:: Add context to error and preserve cause if failure occurs when reading supplemental UI files.
+Issue {url-issues}/986[#986^]:: Log warning message instead of throwing fatal error if file in worktree disappears or cannot be read.
+Issue {url-issues}/988[#988^]:: Consistently format origin information in log and error messages.
+Issue {url-issues}/993[#993^]:: Set `worktree` property on origin to false when branch or tag is local but not taken from worktree.
+Use isolated Handlebars environment instead of the default (global) environment.
+
+=== Fixed
+
+* Don't append `undefined` after path of file in stack in pretty log format if line is missing.
+* Make warning message about missing page layout consistent with other log messages.
+
+=== Removed
+
+Node.js 12 and 14 support:: Antora no longer supports Node.js < 16 (specifically dropping support for Node.js 12 and 14) since those Node.js release lines are now EOL.
+This change is consistent with Antora's Node.js support policy.
+
+== Antora 2 is EOL
+
+*Antora 2 is EOL*.
+Review the checklist on xref:install:upgrade-antora.adoc[] to learn about what changes you should make to your source content, including xref:asciidoctor-upgrade-notes.adoc[AsciiDoc syntax and Asciidoctor updates introduced in Asciidoctor 2.2], and Antora configuration prior to upgrading to from Antora 2 to Antora {page-component-version}.
+
+[#thanks-3-1-0]
+== Thank you!
+
+Most important of all, a huge *thank you!* to all the folks who helped make Antora even better.
+The {url-chat}[Antora community] has provided invaluable feedback and testing help during the development of Antora {page-component-version}.
+
+We also want to call out the following people for making contributions to this release:
+
+Gautier de Saint Martin Lacaze ({url-gitlab}/jabby[@jabby^]):: Add `removeFile` method to `contentCatalog` and `uiCatalog` ({url-issues}/814[#814^]).
+
+////
+Alexander Schwartz ({url-gitlab}/ahus1[@ahus1^])::
+Andreas Deininger ({url-gitlab}/deining[@deining^])::
+Ben Walding ({url-gitlab}/bwalding[@bwalding^])::
+Daniel Mulholland ({url-gitlab}/danyill[@danyill^])::
+Ewan Edwards ({url-gitlab}/eedwards[@eedwards^])::
+George Gastaldi ({url-gitlab}/gastaldi[@gastaldi^])::
+Germo Görtz ({url-gitlab}/aisbergde[@aisbergde^])::
+Guillaume Grossetie ({url-gitlab}/g.grossetie[@g.grossetie^])::
+Hugues Alary ({url-gitlab}/sturtison[@sturtison^])::
+Jared Morgan ({url-gitlab}/jaredmorgs[@jaredmorgs^])::
+Juracy Filho ({url-gitlab}/juracy[@juracy^])::
+Marcel Stör ({url-gitlab}/marcelstoer[@marcelstoer^])::
+Paul Wright ({url-gitlab}/finp[@finp^])::
+Raphael Das Gupta ({url-gitlab}/das-g[@das-g^])::
+Sturt Ison ({url-gitlab}/sturtison[@sturtison^])::
+Vladimir Markiev ({url-gitlab}/Grolribasi[@Grolribasi^])::
+////

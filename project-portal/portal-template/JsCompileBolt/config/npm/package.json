@@ -1,0 +1,26 @@
+{
+  "name": "@ephox/bolt",
+  "version": "1.9.0",
+  "description": "Bolt, AMD-like module system for JavaScript",
+  "bin": {
+    "bolt": "./bin/bolt.js",
+    "jsc": "./bin/jsc.js"
+  },
+  "main": "./npm/bolt.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Just run make\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ephox/bolt"
+  },
+  "author": "Ephox",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
+}

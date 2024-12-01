@@ -1,0 +1,5 @@
+[.new]
+= New Page!
+:page-aliases: the-freshness
+
+Content.

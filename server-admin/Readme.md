@@ -1,0 +1,1 @@
+zindexovat Readme nastroju tim z tech udelam knihu
